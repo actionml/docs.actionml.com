@@ -1,3 +1,4 @@
+{{#template name='a_demo'}}
 # Welcome to ActionML
 
 We help people build Machine learning into their Apps. We create, the systems, algorithms, and infrastructure to make machine intelligence practical. We help customize or invent what is needed then we maintain open source implementations of it all. Try it and if you need help [contact us](/#contact) us or ask for [community support](https://groups.google.com/forum/#!forum/actionml-user) 
@@ -23,3 +24,5 @@ We help people build Machine learning into their Apps. We create, the systems, a
 ## PredictionIO
 
 We maintain a fork of PredictionIO with some extra features. We use it to customize solutions and deliver scalable reliable systems. We deliver our algorithms as PredictionIO Templates. 
+
+{{/template}}
