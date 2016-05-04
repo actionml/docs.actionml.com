@@ -18,5 +18,7 @@ Combined emphasis with **asterisks and _underscores_**.
 
 Strikethrough uses two tildes. ~~Scratch this.~~
 
+inline `code` with backticks
+
 
 {{/template}}
