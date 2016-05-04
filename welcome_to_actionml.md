@@ -1,4 +1,4 @@
-{{#template name='a_demo'}}
+{{#template name='welcome_to_actionml'}}
 # Welcome to ActionML
 
 We help people build Machine learning into their Apps. We create, the systems, algorithms, and infrastructure to make machine intelligence practical. We help customize or invent what is needed then we maintain open source implementations of it all. Try it and if you need help [contact us](/#contact) us or ask for [community support](https://groups.google.com/forum/#!forum/actionml-user) 
