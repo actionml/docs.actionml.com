@@ -1,5 +1,5 @@
 {{#template name='welcome_to_actionml'}}
-#markdown examples
+# Markdown examples
 
 ```Headers
 
@@ -9,14 +9,6 @@
 #### H4
 ##### H5
 ###### H6
-
-Alternatively, for H1 and H2, an underline-ish style:
-
-Alt-H1
-======
-
-Alt-H2
-------
 ```
 
 # H1
@@ -26,14 +18,8 @@ Alt-H2
 ##### H5
 ###### H6
 
-Alternatively, for H1 and H2, an underline-ish style:
 
-Alt-H1
-======
-
-Alt-H2
-------
-
+# Emphasis
 ```
 Emphasis, aka italics, with *asterisks* or _underscores_.
 
@@ -51,6 +37,8 @@ Strong emphasis, aka bold, with **asterisks** or __underscores__.
 Combined emphasis with **asterisks and _underscores_**.
 
 Strikethrough uses two tildes. ~~Scratch this.~~
+
+# Lists
 
 ```Lists
 
@@ -95,6 +83,8 @@ Lists
 - Or minuses
 + Or pluses
 
+# Links
+
 ```
 Links
 
@@ -148,6 +138,8 @@ Some text to show that the reference links can follow later.
 [arbitrary case-insensitive reference text]: https://www.mozilla.org
 [1]: http://slashdot.org
 [link text itself]: http://www.reddit.com
+
+# Images
 
 ```Images
 
@@ -174,9 +166,9 @@ Reference-style:
 
 [logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 2"
 
-#Inline `code` with backticks
+# Inline `code` with backticks
 
-#Code blocks with tiple backticks and different hughlighting style per language
+# Code blocks with tiple backticks and different hughlighting style per language
 
 ```javascript
 var s = "JavaScript syntax highlighting";
@@ -193,7 +185,7 @@ No language indicated, so no syntax highlighting.
 But let's throw in a <b>tag</b>.
 ```
 
-#Tables
+# Tables
 
 Tables aren't part of the core Markdown spec, but they are part of GFM and Markdown Here supports them. They are an easy way of adding tables to your email -- a task that would otherwise require copy-pasting from another application.
 
@@ -233,7 +225,7 @@ Markdown | Less | Pretty
 *Still* | `renders` | **nicely**
 1 | 2 | 3
 
-#Blockquotes
+# Blockquotes
 
 ```
 > Blockquotes are very handy in email to emulate reply text.
@@ -251,7 +243,7 @@ Quote break.
 
 > This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can *put* **Markdown** into a blockquote. 
 
-#Horizontal Rule
+# Horizontal Rules
 
 ```
 Three or more...
@@ -281,7 +273,7 @@ Asterisks
 
 ___
 
-#Embedded objects
+# Embedded objects
 
 Youtube videos
 
