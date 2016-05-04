@@ -20,5 +20,13 @@ Strikethrough uses two tildes. ~~Scratch this.~~
 
 inline `code` with backticks
 
+    indented code
+    for blocks
+
+```
+triple backtick code block
+```
+
+regular text
 
 {{/template}}
