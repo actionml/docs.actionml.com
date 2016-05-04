@@ -1,5 +1,9 @@
 DocList = [
 {
+    title: 'Markdown test',
+    template: 'md_test'
+},
+{
     title: 'Welcome to ActionML',
     template: 'welcome_to_actionml',
     sections: [
