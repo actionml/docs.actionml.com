@@ -1,7 +1,7 @@
 DocList = [
 {
     title: 'Markdown test',
-    template: 'md_test'
+    template: 'docs_md_test'
 },
 {
     title: 'Welcome to ActionML',
