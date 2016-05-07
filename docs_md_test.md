@@ -80,6 +80,8 @@ Some text to show that the reference links can follow later.
 
 # Images
 
+Relative image src ![from /docs/images/md.jpeg](/docs/images/md.jpeg)
+
 Here's our logo (hover to see the title text):
 
 Inline-style: 
