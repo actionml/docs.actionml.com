@@ -1,3 +1,4 @@
+{{#template name='install'}}
 # ActionML's PredictionIO and Universal Recommender
 
 As of PredictionIO v0.9.6 and The Universal Recommender v0.3.0 ActionML has had to create a forked version, which is installed slightly differently than the Salesforce version. We are working to resolve these differences but in the meantime follow these steps.
@@ -49,3 +50,5 @@ Building a template with this version of PredictionIO is just the same as before
 
     $ cd /path/to/template/directory
     $ pio build
+
+{{/template}}
