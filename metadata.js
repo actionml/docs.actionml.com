@@ -7,35 +7,50 @@ DocList = [
         title: 'PredictionIO',
         template: 'predictionio_by_actionml',
         sections: [
-          'Placeholder title'
+            {
+                title: 'Placeholder title',
+                template: 'placeholder_title'
+            }
         ]
     },
     {
         title: 'Installing PredictionIO',
         template: 'install',
         sections: [
-          'Placeholder title',
+            {
+                title: 'Placeholder title',
+                template: 'placeholder_title'
+            }
         ]
     },
     {
         title: 'Deploying and engine',
         template: 'deploying_and_engine',
         sections: [
-          'Placeholder title',
+            {
+                title: 'Placeholder title',
+                template: 'placeholder_title'
+            }
         ]
     },
     {
         title: 'Choosing and algorithm(s)',
         template: 'choosing_and_algorithms',
         sections: [
-            'Placeholder title',
+            {
+                title: 'Placeholder title',
+                template: 'placeholder_title'
+            }
         ]
     },
     {
         title: 'Demo tutorials',
         template: 'demo_tutorials',
         sections: [
-            'Placeholder title',
+            {
+                title: 'Placeholder title',
+                template: 'placeholder_title'
+            }
         ]
     },
     {
