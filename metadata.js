@@ -7,7 +7,14 @@ DocList = [
         title: 'PredictionIO',
         template: 'predictionio_by_actionml',
         sections: [
-          {title:'Install', template: 'install'}
+          'Placeholder title'
+        ]
+    },
+    {
+        title: 'Installing PredictionIO',
+        template: 'install',
+        sections: [
+          'Placeholder title',
         ]
     },
     {

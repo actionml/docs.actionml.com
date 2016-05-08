@@ -1,8 +1,6 @@
 {{#template name='welcome_to_actionml'}}
 # Welcome to ActionML
 
-# Welcome to ActionML
-
 We help people build Machine learning into their Apps. We create the systems, algorithms, and infrastructure to make machine intelligence practical. We help customize or invent what is needed then we maintain open source implementations of it all. Try it and if you need help [contact us](/#contact) us or ask for [community support](https://groups.google.com/forum/#!forum/actionml-user) 
 
 ## Algorithms
@@ -21,19 +19,19 @@ We help people build Machine learning into their Apps. We create the systems, al
  
 ## Machine Learning Libraries
 
- - **Spark MLlib**: ![image](/docs/spark-mlib-logo.png)Many of our Big Data algorithms are taken from Spark's MLlib then built into our production ready system. This Library supplies the algorithms for classification, single action recommenders, and clustering.
+ - **Spark MLlib**: ![image](/docs/images/spark-mlib-logo.png)Many of our Big Data algorithms are taken from Spark's MLlib then built into our production ready system. This Library supplies the algorithms for classification, single action recommenders, and clustering.
 
  - **Vowpal Wabbit**: Our Small Data (only requires a single machine) or streaming online learning algorithms come from Vowpal Wabbit, a well respected Machine learning library.
  
- - **Apache Mahout**: ![image](/docs/spark-mlib-logo.png)Mahout Samsara is a reinvention of Mahout as a Big Data "roll your own math and algorithms" engine. Something like R but implemented in Scala as an R-like DSL, which runs on the latest fast execution engines like Spark and Flink. We use and commit to the project, which is at the core of the Universal Recommender.
+ - **Apache Mahout**: ![image](/docs/images/spark-mlib-logo.png)Mahout Samsara is a reinvention of Mahout as a Big Data "roll your own math and algorithms" engine. Something like R but implemented in Scala as an R-like DSL, which runs on the latest fast execution engines like Spark and Flink. We use and commit to the project, which is at the core of the Universal Recommender.
  
- - **Others**: We are constantly cherry-picking open source for the best new technologies to solve real problems. Describe what you want your app to do and we can help find the right technology. If you have enough data we can implement deep learning models with neural nets from several sources including [Google's TensorFlow](https://www.tensorflow.org/){:target="_blank"}.
+ - **Others**: We are constantly cherry-picking open source for the best new technologies to solve real problems. Describe what you want your app to do and we can help find the right technology. If you have enough data we can implement deep learning models with neural nets from several sources including [Google's TensorFlow](https://www.tensorflow.org/).
  
 ## PredictionIO
 
 We maintain a fork of PredictionIO with some extra features. We use it to customize solutions and deliver scalable reliable systems. We deliver many of our algorithms as PredictionIO Templates. We also support most standard PIO templates.
 
-For various reasons we recommend you get templates directly from their source on github and install PredictionIO using [these instructions](/docs/install).
+For various reasons we recommend you get templates directly from their source on github and [install PredictionIO](/docs/install).
 
 
 {{/template}}
