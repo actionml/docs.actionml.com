@@ -1,3 +1,4 @@
+{{#template name='predictionio_by_actionml'}}
 # PredictionIO by ActionML
 
 For various reasons ActionML has forked the PredictionIO project and maintains it's own repo. Unfortunately we released v0.9.6 of the project 3 weeks before Salesforce also released the same version. We are working to resolve this split and in the near future will at least rename out releases so they won't have colliding artifact names.
@@ -33,3 +34,4 @@ Installation instructions [here](https://github.com/actionml/cluster-setup/blob/
 
 **Note**: ActionML maintains a merged version for people who need SSL and other features of the ActionML v0.9.6 in a branch so contact ActionML on our [Google Group](https://groups.google.com/forum/#!forum/actionml-user) or email [support@actionml.com](mailto:support@actionml.com?subject=Need SSL/HTTPS Version of ActionML's PredictionIO v0.9.6) for instructions.
 
+{{/template}}
