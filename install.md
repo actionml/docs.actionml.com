@@ -1,5 +1,5 @@
 {{#template name='install'}}
-# ActionML's PredictionIO and Universal Recommender
+# Installing ActionML's PredictionIO
 
 As of PredictionIO v0.9.6 and The Universal Recommender v0.3.0 ActionML has had to create a forked version, which is installed slightly differently than the Salesforce version. We are working to resolve these differences but in the meantime follow these steps.
 
@@ -9,14 +9,14 @@ As of PredictionIO v0.9.6 and The Universal Recommender v0.3.0 ActionML has had 
 
 ### Remove v0.9.5 or Saleforce v0.9.6
 
- 1. Remove or rename the directory containing the old version of PredictionIO
- 2. `$ rm -r ~/.ivy2` This is required and will remove the local cache of classes created when building PredictionIO and templates.
+ 1. `mv /path/to/pio pio-old` move the directory containing the old version of PredictionIO, keep it for the configuration.
+ 2. `rm -r ~/.ivy2` This is required and will remove the local cache of classes created when building PredictionIO and templates.
  
 ### Download ActionML's fork of PredictionIO
 
 ActionML released v0.9.6 of our fork of PredictionIO 3 weeks before Salesforce did but they choose to use the same version number, which unfortunately causes a version clash and to use the Universal Recommender we must us ActionML's v0.9.6. To do this you must build PredictionIO from the ActionML github repo.
 
- 1. `$ git clone https://github.com/actionml/PredictionIO.git pio` clone to some directory
+ 1. `git clone https://github.com/actionml/PredictionIO.git pio` clone to some directory. **Make sure you are on the master branch** or use the tag for the desired release version. `git checkout master` is usually what you want.
  
 Proceed to **Build PredictionIO**
  
@@ -35,6 +35,10 @@ You must build PredictionIO from source to get needed classes installed in your 
  1. `cd /path/to/pio/source`
  2. `./make-distribution`
  
+     If you have installed a recent version of PIO in the past, copy the configuration for it.
+
+ 3. `cp old-pio/conf /path/to/pio`
+ 
 Make sure to install and configure all components using the methods described [here](https://github.com/actionml/cluster-setup/blob/master/readme.md).
 
 To test your installation run `pio status` to make sure pio is working. Also check with  to make sure HDFS and and Spark are running correctly since `pio status` does not check the running status of those services.
@@ -50,5 +54,4 @@ Building a template with this version of PredictionIO is just the same as before
 
     $ cd /path/to/template/directory
     $ pio build
-
 {{/template}}
