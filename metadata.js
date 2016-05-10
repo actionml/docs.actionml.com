@@ -11,6 +11,10 @@ DocList = [
             {
                 title: 'Installing',
                 template: 'install'
+            },
+            {
+                title: 'Fake Section',
+                template: 'fake_section'
             }
         ]
     },
