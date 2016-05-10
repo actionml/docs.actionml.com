@@ -1,9 +1,9 @@
 {{#template name='predictionio_by_actionml'}}
 # PredictionIO by ActionML
 
-For various reasons ActionML has forked the PredictionIO project and maintains it's own repo. Unfortunately we released v0.9.6 of the project 3 weeks before Salesforce also released the same version. We are working to resolve this split and in the near future will at least rename out releases so they won't have colliding artifact names.
+ActionML maintains an enhanced version of PredictionIO in it's own repo. We released v0.9.6 of the project 3 weeks before Salesforce also released the same version. Since the all-Salesforce group of committers have not merged our changes and since our changes are required for may applications including The Universal Recommender and other AML templates we maintain and are committed to supporting our branch in Open Source for the foreseeable future. This means you, the user, will have to choose the branch you want.
 
-For ActionML's PredictionIO v0.9.6 please follow [these instructions](https://github.com/actionml/cluster-setup/blob/master/install.md) to install or upgrade. 
+For ActionML's PredictionIO v0.9.6 please follow [these instructions](docs/install) to install or upgrade. 
 
 ## ActionML's PredictionIO v0.9.6
 
@@ -12,26 +12,26 @@ For ActionML's PredictionIO v0.9.6 please follow [these instructions](https://gi
  - Does not implement SSL/HTTPS and so operates with all existing SDKs
  - Requires Java 7, but works with Java 8
 
+## Use ActionML's PredictionIO v0.9.6
+- you don't want SSL/HTTPS **or** 
+- you want [The Universal Recommender](template-scala-parallel-universal-recommendation) v0.3.0+ **or** 
+- you want to use the new [SelfCleaningDataSource](docs/predictionio_versions) to maintain a fixed duration window of data for apps, aging out old data.
+
+Installation instructions [here](docs/install).
+
+**Note**: ActionML maintains a merged version for people who need SSL and other features of the ActionML v0.9.6 in a branch so contact ActionML on our [Google Group](https://groups.google.com/forum/#!forum/actionml-user) or email [support@actionml.com](mailto:support@actionml.com?subject=Need SSL/HTTPS Version of ActionML's PredictionIO v0.9.6) for instructions.
 
 ## Salesforce's PredictionIO v0.9.6
 
  - Requires java 8
  - Require SSL/HTTPS for pio REST APIs. This make it incompatible with existing code that queries or sends events to the EventServer. It also makes it incompatible with the SDKs which will not operate with this version without changes.
 
-## Use the [Salesforce Sponsored PredicitonIO v0.9.6](https://github.com/PredictionIO/PredictionIO)
+## Use the Salesforce Sponsored PredictionIO v0.9.6
 
 - you need SSL/HTTPS **and** 
 - you do not need The Universal Recommender v0.3.0+ **and** 
 - you do not use an SDK or are willing to modify the SDK code, use the Salesforce sponsored project on [github](https://github.com/PredictionIO/PredictionIO)
+- You have no problem with data accumulating forever in the EventStore for any given "app"
 
-## Use [ActionML's PredictionIO v0.9.6](https://github.com/actionml/cluster-setup/blob/master/install.md)
-
-- you don't want SSL/HTTPS **or** 
-- you want [The Universal Recommender](template-scala-parallel-universal-recommendation) v0.3.0+ **or** 
-- you want to use the new [SelfCleaningDataSource](https://github.com/actionml/cluster-setup/blob/master/changes-predictionio-v0.9.6.md) 
-
-Installation instructions [here](https://github.com/actionml/cluster-setup/blob/master/install.md).
-
-**Note**: ActionML maintains a merged version for people who need SSL and other features of the ActionML v0.9.6 in a branch so contact ActionML on our [Google Group](https://groups.google.com/forum/#!forum/actionml-user) or email [support@actionml.com](mailto:support@actionml.com?subject=Need SSL/HTTPS Version of ActionML's PredictionIO v0.9.6) for instructions.
 
 {{/template}}

@@ -1,4 +1,5 @@
-# Architecture and Scaling
+{{#template name= 'architecture_workflow'}}
+#Architecture and Workflow
 
 For most higher load production installations you will need to separate clustered services to avoid contention for resources like cores and memory. This is the case where you will use some machines to run PredictonIO EventServers and the Universal Recommender PredictionServers. You will also likely want to create a separate Elasticsearch cluster, HBase+HDFS cluster, and a Spark cluster.
 
@@ -65,3 +66,5 @@ Alternatively you can use an SDK or the REST API to send events to the running E
 ##Special Scaling Rules
 
 The Universal Recommender we need enough memory for all user and item ids to be stored in memory in the form a bi-directional hashmap. This will be proportional to the collection of all id strings but given the overhead of JVM strings, and BiMaps it will actually need something on the order of 4X the size of all strings. This is the first scaling need you are likely to run into.
+
+{{/template}}

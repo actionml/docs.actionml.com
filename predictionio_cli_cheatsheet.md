@@ -1,9 +1,10 @@
+{{#template name='predictionio_cli_cheatsheet'}}
 #PredictionIO CLI Cheatsheet
 
 PredictionIO can be seen as 2 types of servers, one takes in and stores events&mdash;the EvnetServer&mdash;and the other serves prediction&mdash;the PredictionServer. The general non-template specific commands can be run from anywhere, in any directory but the template specific commands must be run in the directory of the specific engine-instance being used, this is because some commands rely on files (like engine.json) to be available.
 
 #General Commands
-At any point you can run `pio help <some-command> to get a help screen printed with all supported options for a command.
+At any point you can run `pio help some-command` to get a help screen printed with all supported options for a command.
 
 ##Start/stop
 
@@ -16,9 +17,9 @@ At any point you can run `pio help <some-command> to get a help screen printed w
 
  - `pio status` this checks the config of PredictionIO and connects to the databased used, it does not connect to Spark or check the status of things like HDFS.
  - `pio app list` list information about apps the systems knows about, this is used primarily to see which collections of data are registered with the EventServer.
- - `pio app new <appname>` this creates an empty collection and a key that can be used to send events to the EventServer.
- - `pio app delete <appname>` remove app and all data from the EventServer
- - `pio app data-delete <appname>
+ - `pio app new some-appname` this creates an empty collection and a key that can be used to send events to the EventServer.
+ - `pio app delete some-appname` remove app and all data from the EventServer
+ - `pio app data-delete some-appname`
 
 #Workflow Commands
 
@@ -68,5 +69,4 @@ This assumes the following had been done:
 	pio train 
 
  
-
- 
+{{/template}}
