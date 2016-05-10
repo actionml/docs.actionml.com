@@ -6,7 +6,7 @@ DocList = [
     },
     {
         title: 'PredictionIO',
-        template: 'predictionio_by_actionml',
+        template: 'pio_by_actionml',
         sections: [
             {
                 title: 'Quickstart',
@@ -22,11 +22,11 @@ DocList = [
             },
             {
                 title: 'Cheatsheet',
-                template: 'predictionio_cli_cheatsheet'
+                template: 'pio_cli_cheatsheet'
             },
             {
                 title: 'Version History',
-                template: 'predictionio_versions'
+                template: 'pio_versions'
             }
         ]
     },
