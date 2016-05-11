@@ -23,6 +23,16 @@ DocList = [
         ]
     },
     {
+        title: 'The Universal Recommender',
+        template: 'ur',
+        sections: [
+            {
+                title: 'UR Quickstart',
+                template: 'ur_quickstart'
+            }
+        ]
+    },
+    {
         title: 'Markdown test',
         template: 'docs_md_test',
         sections: []

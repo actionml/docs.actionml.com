@@ -19,7 +19,11 @@ Strong with emphasis, ***triple asterisks***
 inline `code` with backticks
 
     indented code
-    for blocks
+    for blocks even in XML
+    <configuration>
+        <property>
+        </property>
+    </configuration>
 
 ```
 triple backtick code block
