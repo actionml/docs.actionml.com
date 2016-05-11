@@ -18,15 +18,22 @@ Strong with emphasis, ***triple asterisks***
 
 inline `code` with backticks
 
-    indented code
+    <pre><code>indented code
     for blocks even in XML
     <configuration>
         <property>
         </property>
     </configuration>
+    </code></pre>
 
 ```
 triple backtick code block
+even XML
+<configuration>
+    <property>
+    </property>
+</configuration>
+
 ```
 
 #Lists
