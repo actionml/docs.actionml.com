@@ -17,6 +17,10 @@ DocList = [
                 template: 'install'
             },
             {
+                title: 'Architecure and Workflow',
+                template: 'pio_architecture'
+            },
+            {
                 title: 'Cheatsheet',
                 template: 'pio_cli_cheatsheet'
             }
