@@ -43,18 +43,18 @@ pre
 
 triple backtick code block
 
+```
+    some code
+    more code
+```
+
+Even XML
+
 ```xml
-
-some code
-more code
-
-even XML
-
-<configuration>
-    <property>
-    </property>
-</configuration>
-
+    <configuration>
+        <property>
+        </property>
+    </configuration>
 ```
 
 #Lists
