@@ -25,7 +25,7 @@ inline `code` with backticks
 
 textarea
 
-<textarea>
+<textarea disabled readonly cols="100%" style="resize: none">
 <configuration>
     <property>
     </property>
@@ -43,7 +43,8 @@ pre
 
 triple backtick code block
 
-```
+```xml
+
 some code
 more code
 
