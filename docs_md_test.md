@@ -57,6 +57,27 @@ Even XML
     </configuration>
 ```
 
+
+XML Example
+```xml
+<note>
+<to>Tove</to>
+<from>Jani</from>
+<heading>Reminder</heading>
+<body>Don't forget me this weekend!</body>
+</note>
+```
+
+XML as a codeblock example
+```
+<note>
+  <to>Tove</to>
+  <from>Jani</from>
+  <heading>Reminder</heading>
+  <body>Don't forget me this weekend!</body>
+</note>
+```
+
 #Lists
 
 Github style with leading space-dash
