@@ -1,20 +1,38 @@
 DocList = [
     {
-        title: 'Welcome to great and glorious ActionML',
+        title: 'Welcome to ActionML',
         template: 'welcome_to_actionml',
         sections: []
     },
     {
         title: 'PredictionIO',
-        template: 'predictionio_by_actionml',
+        template: 'pio_by_actionml',
         sections: [
             {
-                title: 'Installing',
+                title: 'Quickstart',
+                template: 'pio_quickstart'
+            },
+            {
+                title: 'Upgrading',
                 template: 'install'
             },
             {
-                title: 'Fake Section',
-                template: 'fake_section'
+                title: 'Architecure and Workflow',
+                template: 'pio_architecture'
+            },
+            {
+                title: 'Cheatsheet',
+                template: 'pio_cli_cheatsheet'
+            }
+        ]
+    },
+    {
+        title: 'The Universal Recommender',
+        template: 'ur',
+        sections: [
+            {
+                title: 'UR Quickstart',
+                template: 'ur_quickstart'
             }
         ]
     },
@@ -22,5 +40,5 @@ DocList = [
         title: 'Markdown test',
         template: 'docs_md_test',
         sections: []
-    },
+    }
 ];

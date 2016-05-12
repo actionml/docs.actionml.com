@@ -19,10 +19,42 @@ Strong with emphasis, ***triple asterisks***
 inline `code` with backticks
 
     indented code
-    for blocks
+    for blocks even in XML
+
+# XML code with HTML below
+
+textarea
+
+<textarea disabled readonly cols="100%" style="resize: none">
+<configuration>
+    <property>
+    </property>
+</configuration>
+</textarea>
+
+pre
+
+<pre>
+<configuration>
+    <property>
+    </property>
+</configuration>
+</pre>
+
+triple backtick code block
 
 ```
-triple backtick code block
+    some code
+    more code
+```
+
+Even XML
+
+```xml
+    <configuration>
+        <property>
+        </property>
+    </configuration>
 ```
 
 

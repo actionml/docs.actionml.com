@@ -5,9 +5,7 @@ We help people build Machine learning into their Apps. We create, the systems, a
 
 ## Algorithms
 
- - **The Universal Recommender**: Perhaps the most flexible recommender in open source. Implemented as a complete end-to-end integrated system that you can run on premises or we can run it for you. The Universal Recommender contains a new Correlation Engine approach to ingesting data from many sources to make recommendations better. See the description [here](/docs/universal-recommender)
- 
- - **The Page Variant Recommender**: Based on a Contextual Multi-armed Bandit, this algorithm allows you to instrument a site or mobile app to evolve into something pleasing to specific users. Pick a set of pages and the PVR finds which versions cause the best response to which users types. [Contact us](/#contact) if you are interested while we are preparing it's release.
+ - [**The Universal Recommender**](/docs/universal_recommender): Perhaps the most flexible recommender in open source. Implemented as a complete end-to-end integrated system that you can run on premises or we can run it for you. The Universal Recommender contains a new Correlation Engine approach to ingesting data from many sources to make recommendations better.
  
  - **Behavioral Search**: This algorithm takes in data we know about users, learns what leads to purchases or reads, then hands this data back to you for inclusion in your content index. The augmenting data makes search personalized, which leads to greater user satisfaction as measured by sales (Amazon has claimed 3% sales lift for a similar algorithm).
  

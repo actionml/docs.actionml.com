@@ -46,7 +46,7 @@ To test your installation run `pio status` to make sure pio is working. Also che
 ## Build Universal Recommender
  
   1. `git clone https://github.com/actionml/template-scala-parallel-universal-recommendation.git ~/universal`
-  2. Proceed with UR installation described [here](https://github.com/actionml/template-scala-parallel-universal-recommendation#quick-start).
+  2. Proceed with UR installation described [here](/docs/ur_quickstart).
   
 ## Build Any Template
 
@@ -54,4 +54,6 @@ Building a template with this version of PredictionIO is just the same as before
 
     $ cd /path/to/template/directory
     $ pio build
+
+fini
 {{/template}}
