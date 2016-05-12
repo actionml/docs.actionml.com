@@ -1,11 +1,11 @@
-{{#template name='pio_by_actionml'}}
+{{#template name='pio_versions'}}
 # PredictionIO by ActionML
 
 ActionML maintains an enhanced version of PredictionIO in it's own repo. We released v0.9.6 of the project 3 weeks before Salesforce also released the same version. Since the all-Salesforce group of committers have not merged our changes and since our changes are required for may applications including The Universal Recommender and other AML templates we maintain and are committed to supporting our branch in Open Source for the foreseeable future. This means you, the user, will have to choose the branch you want.
 
 For ActionML's PredictionIO v0.9.6 please follow [these instructions](/docs/install) to install or upgrade. 
 
-## ActionML's PredictionIO v0.9.6
+## ActionML's PredictionIO v0.9.7-aml
 
  - Implements the `SelfCleaningDataSource` for the EventStore. This allows any template to specify a moving window of events in time, enable de-duplication of events, and compact $set/$unset property change events (see description below)
  - Implements `NullModel` for templates that do not store models in existing PIO data stores. The Universal Recommender requires this feature since it stores models in Elasticsearch.
@@ -14,7 +14,7 @@ For ActionML's PredictionIO v0.9.6 please follow [these instructions](/docs/inst
 
 ## Use ActionML's PredictionIO v0.9.6
 - you don't want SSL/HTTPS **or** 
-- you want [The Universal Recommender](/docs/universal_recommender) v0.3.0+ **or** 
+- you want [The Universal Recommender](/docs/ur) v0.3.0+ **or** 
 - you want to use the new [SelfCleaningDataSource](/docs/pio_versions) to maintain a fixed duration window of data for apps, aging out old data.
 
 Installation instructions [here](docs/install).

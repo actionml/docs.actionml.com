@@ -21,8 +21,16 @@ DocList = [
                 template: 'pio_architecture'
             },
             {
+                title: 'Single Machine Setup',
+                template: 'single_machine'
+            },
+            {
                 title: 'Cheatsheet',
                 template: 'pio_cli_cheatsheet'
+            },
+            {
+                title: 'Version History',
+                template: 'pio_versions'
             }
         ]
     },
