@@ -1,4 +1,4 @@
-{{#template name='pio_versions'}}
+{{#template name='pio_by_actionml'}}
 # PredictionIO by ActionML
 
 ActionML maintains an enhanced version of PredictionIO in it's own repo. We released v0.9.6 of the project 3 weeks before Salesforce also released the same version. Since the all-Salesforce group of committers have not merged our changes and since our changes are required for may applications including The Universal Recommender and other AML templates we maintain and are committed to supporting our branch in Open Source for the foreseeable future. This means you, the user, will have to choose the branch you want.
