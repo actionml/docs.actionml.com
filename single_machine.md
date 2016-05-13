@@ -267,7 +267,7 @@ This [tutorial](https://hbase.apache.org/book.html#quickstart_fully_distributed)
 
     <property>
         <name>hbase.zookeeper.quorum</name>
-        <value>some-master,some-slave-1,some-slave-2</value>
+        <value>localhost</value>
     </property>
 
     <property>
@@ -277,35 +277,26 @@ This [tutorial](https://hbase.apache.org/book.html#quickstart_fully_distributed)
 </configuration>
 ```
 
-- `conf/regionservers`
-
-		some-master
-		some-slave-1
-		some-slave-2
-
-- `conf/backupmasters`
-
-        some-slave-1
-
 - `conf/hbase-env.sh`
 
 		export JAVA_HOME=${JAVA_HOME}
 		export HBASE_MANAGES_ZK=true # when you want HBase to manage zookeeper
 
+The line with `HBASE_MANAGES_ZK` is super important otherwise you will get Zookeeper errors starting up.
+
 6.4.2 Start HBase
 
     `bin/start-hbase.sh`
 
-At this point you should see several different processes start on the master and slaves including regionservers and zookeeper servers. If there is an error check the log files referenced in the error message. These log files may reside on a different host as indicated in the file's name.
-
-**Note:** It is strongly recommend to setup these files in the master `/usr/local/hbase` folder and then copy **all** code and sub-folders or the to the slaves. All members of the cluster must have the same code and config
-
+At this point you should see several different processes start on the master including zookeeper. If there is an error check the log files referenced in the error message.
 
 ##7. Setup PredictionIO
 
 7.1 Build PredictionIO
 
-If you have installed in the past see the [upgrade instructions](/docs/install). We put PredictionIO in `/home/aml/pio-aml` so change to that location and run
+**Note**: if you have installed in the past see the [upgrade instructions](/docs/install). 
+
+We put PredictionIO in `/home/aml/pio-aml` so change to that location and run
 
     ./make-distribution
 
