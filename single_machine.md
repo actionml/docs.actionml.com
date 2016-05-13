@@ -255,11 +255,6 @@ This [tutorial](https://hbase.apache.org/book.html#quickstart_fully_distributed)
         <value>hdfs://some-master:9000/hbase</value>
     </property>
 
-        <property>
-        <name>hbase.cluster.distributed</name>
-        <value>true</value>
-    </property>
-
     <property>
         <name>hbase.zookeeper.property.dataDir</name>
         <value>hdfs://some-master:9000/zookeeper</value>
