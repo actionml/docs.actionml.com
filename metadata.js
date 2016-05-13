@@ -39,14 +39,25 @@ DocList = [
         template: 'ur',
         sections: [
             {
-                title: 'UR Quickstart',
+                title: 'Quickstart',
                 template: 'ur_quickstart'
+            },
+            {
+                title: 'Configuration',
+                template: 'ur_config'
+            },
+            {
+                title: 'Input',
+                template: 'ur_input'
+            },
+            {
+                title: 'Queries',
+                template: 'ur_queries'
+            },
+            {
+                title: 'Advanced Tuing',
+                template: 'ur_advanced_tuning'
             }
         ]
-    },
-    {
-        title: 'Markdown test',
-        template: 'docs_md_test',
-        sections: []
     }
 ];
