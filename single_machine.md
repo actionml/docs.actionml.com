@@ -58,7 +58,7 @@ Notice that we are now logged in as the `aml` user and are in the home directory
     # Use IPs for your hosts.
     10.0.0.1 some-master
 
-##2. Download Services on all Hosts:
+##2. Download Services
 
 Download everything to a temp folder like `/tmp/downloads`, we will later move them to the final destinations.
 
@@ -84,7 +84,7 @@ Download everything to a temp folder like `/tmp/downloads`, we will later move t
 
 ##3. Setup Java 1.7 or 1.8
 
-3.1 Install Java OpenJDK or Oracle JDK for Java 7 or 8, the JRE version is not sufficient.
+3.1 Install Java OpenJDK or Oracle JDK for Java 7 or 8, the JRE version is not sufficient. Java 7 works for now but to plan ahead we recommend java 8.
 
     sudo apt-get install openjdk-7-jdk
 
@@ -94,12 +94,9 @@ Download everything to a temp folder like `/tmp/downloads`, we will later move t
 
 3.3 Set JAVA_HOME env var.
 
-Don't include the `/bin` folder in the path. This can be problematic so if you get complaints about JAVA_HOME you may need to change xxx-env.sh depending on which service complains. For instance `hbase-env.sh` has a JAVA_HOME setting if HBase complains when starting.
-
-    vim /etc/environment
-    # add the following
+Don't include the `/bin` folder in the path. This can be problematic so if you get complaints about JAVA_HOME you may need to change xxx-env.sh depending on which service complains. For instance `hbase-env.sh` has a JAVA_HOME setting so if HBase complains about not finding Java when starting add the following to /etc/environment
+ 
     export JAVA_HOME=/path/to/open/jdk/jre
-    # some would rather add JAVA_HOME to /home/aml/.bashrc
 
 ##4. Create Folders:
 
@@ -119,7 +116,7 @@ Don't include the `/bin` folder in the path. This can be problematic so if you g
 
 5.1 Inside the `/tmp/downloads` folder, extract all downloaded services.
 
-5.2 Move extracted services to their folders. This can be done on the master and then copied to all hosts using `scp` as long as all hosts allow passwordless key based ssh and the ownership has been set correctly on all hosts to `aml:aml`
+5.2 Move extracted services to their folders.
 
 	sudo mv /tmp/downloads/hadoop-2.6.2 /opt/hadoop/
 	sudo mv /tmp/downloads/spark-1.6.0 /opt/spark/
@@ -188,8 +185,6 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_enviornment_set
 
     ```
     some-master
-    some-slave-1
-    some-slave-2
     ```
 
   - `etc/hadoop/hadoop-env.sh` make sure the following values are set
@@ -227,37 +222,34 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_enviornment_set
 
     ```
     some-master
-    some-slave-1
-    some-slave-2
     ```
 
 - Start all nodes in the cluster
 
     `sbin/start-all.sh`
 
+This starts Spark in pseudo-clustered "stand-alone" mode, meaning the driver and one executor will run on `some-master`, which is the current host. It also means the jobs are managed by Spark rather than Yarn or Mesos. This mode most closely resemble how you would set up Spark in a real cluster.
 
 #### 6.3. Setup Elasticsearch Cluster
 
-- Change the `/usr/local/elasticsearch/config/elasticsearch.yml` file as shown below. This is minimal and allows all hosts to act as backup masters in case the acting master goes down. Also all hosts are data/index nodes so can respond to queries and host shards of the index.
+- Change the `/usr/local/elasticsearch/config/elasticsearch.yml` file as shown below. This is minimal and allows all hosts to act as backup masters in case the acting master goes down. Also all hosts are data/index nodes so can respond to queries and host shards of the index. So even though we are using one machine it most closely resembles a clustered setup.
 
 ```
 cluster.name: your-app-name
 discovery.zen.ping.multicast.enabled: false # most cloud services don't allow multicast
-discovery.zen.ping.unicast.hosts: ["some-master", "some-slave-1", "some-slave-2"] # add all hosts, masters and/or data nodes
+discovery.zen.ping.unicast.hosts: ["some-master"] # add all hosts, masters and/or data nodes
 ```
 
-- copy Elasticsearch and config to all hosts using `scp -r /opt/elasticsearch/... aml@some-host://opt/elasticsearch`. Like HBase, all hosts are identical.
+#### 6.4. Setup HBase
 
-#### 6.4. Setup HBase Cluster (abandon hope all ye who enter here)
-
-This [tutorial](https://hbase.apache.org/book.html#quickstart_fully_distributed) is the **best guide**, many others produce incorrect results . The primary thing to remember is to install and configure on a single machine, adding all desired hostnames to `backupmasters`, `regionservers`, and to the `hbase.zookeeper.quorum` config param, then copy **all code and config** to all other machines with something like `scp -r ...` Every machine will then be identical.
+This [tutorial](https://hbase.apache.org/book.html#quickstart_fully_distributed) is the **best guide**, many others produce incorrect results. We are using one host in this guide so no multi-host copying is needed but this setup most closely resembles a clustered setup.
 
 6.4.1 Configure with these changes to `/usr/local/hbase/conf`
 
   - `conf/hbase-site.xml`
 
 ```
-        <configuration>
+<configuration>
     <property>
         <name>hbase.rootdir</name>
         <value>hdfs://some-master:9000/hbase</value>
@@ -291,11 +283,11 @@ This [tutorial](https://hbase.apache.org/book.html#quickstart_fully_distributed)
 		some-slave-1
 		some-slave-2
 
-  - `conf/backupmasters`
+- `conf/backupmasters`
 
         some-slave-1
 
-  - `conf/hbase-env.sh`
+- `conf/hbase-env.sh`
 
 		export JAVA_HOME=${JAVA_HOME}
 		export HBASE_MANAGES_ZK=true # when you want HBase to manage zookeeper
@@ -313,11 +305,11 @@ At this point you should see several different processes start on the master and
 
 7.1 Build PredictionIO
 
-We put PredictionIO in `/home/aml/pio-aml`. If you have installed in the past see the [upgrade instructions](/docs/install). Change to that location and run
+If you have installed in the past see the [upgrade instructions](/docs/install). We put PredictionIO in `/home/aml/pio-aml` so change to that location and run
 
     ./make-distribution
 
-This will create executable jars for PredictionIO-0.9.
+This will create executable jars for PredictionIO-0.9.7-aml
 
 7.2 Setup Path for PIO commands
 
