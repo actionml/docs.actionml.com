@@ -20,9 +20,11 @@ Proceed to **Build PredictionIO**
 
 For a completely fresh new install, do not use the script on PredictionIO's docs site do the following:
 
- 1. `bash -c "$(curl -s https://github.com/actionml/PredictionIO/blob/develop/bin/install.sh`
+ 1. `bash -c "$(curl -s https://raw.githubusercontent.com/actionml/PredictionIO/develop/bin/install.sh)"`
  
-This will create a `vendors` subdirectory with needed services installed there. This is only for a single machine developer setup and is not advised for Production.
+This will create a `vendors` subdirectory with needed services installed there. It will also trigger an build of PIO so make sure you put it in a place where you have permission to read/write. q
+
+**Note**: this is only for a single machine developer setup and is not advised for production.
 
 ## Build PredictionIO
 
@@ -31,13 +33,15 @@ You must build PredictionIO from source to get needed classes installed in your 
  1. `cd /path/to/pio-aml`
  2. `./make-distribution`
  
-     If you have installed a recent version of PIO in the past, copy the configuration for it.
+## Configuration
+
+If you have installed a recent version of PIO in the past, copy the configuration for it.
 
  3. `cp old-pio/conf /path/to/pio-aml`
  
-Make sure to install and configure all components using the methods described [here](https://github.com/actionml/cluster-setup/blob/master/readme.md).
+Make sure to configure all components using one of the setup guides [here](/docs/pio_quickstart).
 
-To test your installation run `pio status` to make sure pio is working. Also check with  to make sure HDFS and and Spark are running correctly since `pio status` does not check the running status of those services.
+To test your installation run `pio status` to make sure pio is working. Also check to make sure HDFS and and Spark are running correctly since `pio status` does not check the running status of those services.
  
 ## Build Universal Recommender
  
