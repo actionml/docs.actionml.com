@@ -17,12 +17,6 @@ The above script will complete the installation for you including prerequisites.
 
 ## Method 2: Manual Installation Guides
 
-Choose the guide that best fits your needs.
-
- - **[Single Machine](single_machine)**: This sets up a single machine to run all services but does so in a way that allows for easier cluster expansion in the future.
- 
- - **[Small High Availability Cluster](small_ha)**: This sets up a 3 machine cluster with all services running on all machines with no single point of failure. This setup will allow you to expand by moving clustered services into their own cluster as needed. For instance Spark may be moved to separate machines for scaling purposes. 
-  
- - **[Fully Distributed Clusters](single_driver_machine)**: This sets up a single machine to run all services but does so in a way that allows for easier cluster expansion in the future.
+{{> piosetupguides}}
 
 {{/template}}

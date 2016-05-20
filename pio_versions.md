@@ -1,5 +1,5 @@
 {{#template name='pio_versions'}}
-# PredictionIO-aml-v0.9.7
+# PredictionIO-{{> pioversion}}
 
 ActionML maintains an enhanced version of PredictionIO starting with v0.9.6. The key changes from v0.9.5 are:
 

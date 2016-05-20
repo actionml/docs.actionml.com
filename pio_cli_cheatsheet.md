@@ -21,18 +21,43 @@ At any point you can run `pio help some-command` to get a help screen printed wi
  - `pio app delete some-appname` remove app and all data from the EventServer
  - `pio app data-delete some-appname`
 
+## Import Data
+
+The EventServer can hold data as soon as you have created an app as above. Then you can choose to import JSON events from files (the fastest method) or use the REST API to import.
+
+ - `pio import` will import files with JSON events to an app created with `pio app new appname`
+
+If you want to use the REST method you will use and SDK or make raw REST post calls. To add events from a shell script you would use `curl` to post to the EventServer on port 7070 of your host. Like this:
+
+    $ curl -i -X POST http://localhost:7070/events.json?accessKey=some-key \
+    -H "Content-Type: application/json" \
+    -d '{
+      "event": "my_event",
+      "entityType": "user"
+      "entityId": "user-id",
+      "targetType": "item",
+      "targetEntityId": "item-id"
+      "eventTime" : "2004-12-13T21:39:45.618-07:00"
+    }'
+
+Events are defined by the template so check the specific template docs for encoding data in events.
+
 #Workflow Commands
 
-For some pio commands you must `cd` to an engine-instance directory. This is because the `engine.json` and/or `manifest.json` are either needed or are modified. These commands implement the workflow for creating a "model" from events and launching the PreditionServer to serve queries.
-
-**Important Note:** use standard **or** multi-tenant workflow, not both mixed! If you mix these things will get out of sync for the engine-instance. Reset things by deleting 'manifest.json' and sticking to one or the other. 
+For some pio commands you must `cd` to an engine-instance directory. This is because the `engine.json` and/or `manifest.json` are either needed or are modified. These commands implement the workflow for creating a "model" from events and launching the PredictionServer to serve queries.
 
 ##Standard Workflow
+
 These commands must be run in this order, but can be repeated once previous commands are run. So many trains are expected after a build and many deploys of the same model are allowed.
+
 
  - `pio build` this registers the `engine.json` params with the meta-store as defined in the `pio-env.sh`, it also uses sbt to compile and create jars from the engine code. Any change to `engine.json` will only take effect after `pio build` even if the code has not changed.
  - `pio train` pulls data from the event store and creates a model
  - `pio deploy` creates a PredictionServer instance to serve query results based on the last trained model
  - `nohup pio deploy &` creates a daemon of the PredictionServer for the current engine-instance
+ 
+##<a id='ur-workflow'></a> Universal Recommender Example
+
+{{> urworkflow}}
  
 {{/template}}

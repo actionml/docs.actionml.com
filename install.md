@@ -1,22 +1,45 @@
 {{#template name='install'}}
-# Upgrading ActionML's PredictionIO
+# Upgrading or Installing
 
-As of PredictionIO v0.9.7-aml and The Universal Recommender v0.3.0 follow these steps to upgrade.
+As of PredictionIO {{> pioversion}} using The Universal Recommender {{> urversion}} as an example template follow these steps to upgrade or do a quick install.
 
-## Move old PIO
+## Upgrade
+
+If you already have some version of PIO you should upgrade.
+
+### Move old PIO
 
  1. `mv /path/to/pio pio-old` move the directory containing the old version of PredictionIO, keep it for the configuration.
- 2. `rm -r ~/.ivy2` This is required and will remove the local cache of classes created when building PredictionIO and templates.
+ 2. `rm -r ~/.ivy2` This is required and will remove the old version of the local cache of classes created when building PredictionIO and templates.
  
-## Download ActionML's Release of PredictionIO
+### Download ActionML's Release of PredictionIO
 
 ActionML has enhanced the original version of PredcitionIO v0.9.5 and has been enhancing it through several new versions. Our templates rely on these enhancements so use these installation instructions. to get the right version&mdash;do not rely on docs.prediciton.io
 
  1. `git clone https://github.com/actionml/PredictionIO.git pio-aml` clone to some directory. **Make sure you are on the master branch** or use the tag for the desired release version. `git checkout master` is usually what you want.
  
-Proceed to **Build PredictionIO**
+### Build PredictionIO
+
+You must build PredictionIO from source to get needed classes installed in your local cache or the Universal Recommender will not build, you will get error in `pio build`. This is pretty easy:
+
+ 1. `cd /path/to/pio-aml`
+ 2. `./make-distribution`
  
-## Install From a Script
+### Configuration
+
+If you have installed a recent version of PIO in the past, copy the configuration for it.
+
+ 3. `cp old-pio/conf /path/to/pio-aml`
+ 
+Make sure to configure all components using one of the setup guides [here](/docs/pio_quickstart).
+
+To test your installation run `pio status` to make sure pio is working. Also check to make sure HDFS and and Spark are running correctly since `pio status` does not check the running status of those services.
+
+## Install Fresh
+
+For a first-time install on a single machine
+
+### Install From a Script
 
 For a completely fresh new install, do not use the script on PredictionIO's docs site do the following:
 
@@ -26,33 +49,22 @@ This will create a `vendors` subdirectory with needed services installed there. 
 
 **Note**: this is only for a single machine developer setup and is not advised for production.
 
-## Build PredictionIO
+### Manual Installation Guides
 
-You must build PredictionIO from source to get needed classes installed in your local cache or the Universal Recommender will not build, you will get error in `pio build`. This is pretty easy:
+{{> piosetupguides}}
 
- 1. `cd /path/to/pio-aml`
- 2. `./make-distribution`
+## Templates
  
-## Configuration
-
-If you have installed a recent version of PIO in the past, copy the configuration for it.
-
- 3. `cp old-pio/conf /path/to/pio-aml`
+ - The Universal Recommender
  
-Make sure to configure all components using one of the setup guides [here](/docs/pio_quickstart).
-
-To test your installation run `pio status` to make sure pio is working. Also check to make sure HDFS and and Spark are running correctly since `pio status` does not check the running status of those services.
- 
-## Build Universal Recommender
- 
-  UR installation described [here](/docs/ur_quickstart).
+   UR installation described [here](/docs/ur_quickstart).
   
-## Build Any Template
+ - Build Any Template
 
-Building a template with this version of PredictionIO is just the same as before:
+   Building a template with this version of PredictionIO is just the same as before:
 
-    git clone https://github-repo.git /path/to/template/directory
-    cd /path/to/template/directory
-    pio build
+       git clone https://github-repo.git/path/to/template /path/to/template/directory
+       cd /path/to/template/directory
+       pio build
 
 {{/template}}

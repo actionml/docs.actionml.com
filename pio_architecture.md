@@ -12,12 +12,12 @@ This translates to realtime input and queries&mdash;with background re-calculati
 
 It is important to note that PIO does not store state outside of it's component services, which are all highly scalable and cluster-aware. This means that to scale PIO most of what you must do is scale its component services. These are:
 
- - **HBase**: a NoSQL database that has proven stable, performant, and scalable. One of its dependencies is Hadoop's distributed file system (HDFS)
- - **HDFS**: implements a scalable redundant file system for sharing data between nodes of a cluster and is used by execution engines like Spark.
- - **Spark**: is the most high performance execution engine running on the HDFS infrastructure. It uses internal (mostly) in-memory data structures to get something like 10x better performance than Hadoop's own Mapreduce.
- - **Elasticsearch**: provides fast clusterable indexed storage and a K-Nearest Neighbors (KNN) engine for PIO internal metadata and algorithm usage.
+ - **HBase**: a NoSQL database that has proven stable, performant, and scalable. One of its dependencies is Hadoop's distributed file system (HDFS). We recommend HBase {{> hbaseversion}}.
+ - **HDFS**: implements a scalable redundant file system for sharing data between nodes of a cluster and is used by execution engines like Spark.We recommend Hadoop {{> hdfsversion}}.
+ - **Spark**: is the most high performance execution engine running on the HDFS infrastructure. It uses internal (mostly) in-memory data structures to get something like 10x better performance than Hadoop's own Mapreduce. We recommend Spark {{> sparkversion}}.
+ - **Elasticsearch**: provides fast clusterable indexed storage and a K-Nearest Neighbors (KNN) engine for PIO internal metadata and algorithm usage. We recommend Elasticsearch {{> elasticsearchversion}}.
 
-## Architecture and Data Flow
+## Logical Architecture and Data Flow
 
 
 The internal architecture of PredictionIO and the data flow for **all** use modes is shown below.
