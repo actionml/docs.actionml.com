@@ -25,6 +25,14 @@ DocList = [
                 template: 'single_machine'
             },
             {
+                title: 'Small HA Cluster',
+                template: 'small_ha_cluster'
+            },
+            {
+                title: 'Distributed Cluster',
+                template: 'single_driver_machine'
+            },
+            {
                 title: 'Cheatsheet',
                 template: 'pio_cli_cheatsheet'
             },

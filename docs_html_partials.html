@@ -10,14 +10,38 @@
   v0.3.0
 </template>
 <template name="hdfsversion">
-  v2.6.0
+  v{{>hdfsversionnum}}
 </template>
 <template name="sparkversion">
-  v1.6.1
+  v{{> sparkversionnum}}
 </template>
 <template name="elasticsearchversion">
-  v1.7.5
+  v{{> elasticsearchversionnum}}
 </template>
 <template name="hbaseversion">
-  v1.1.4
+  v{{> hbaseversionnum}}
+</template>
+<template name="hdfsversionnum">
+  2.6.2
+</template>
+<template name="sparkversionnum">
+  1.6.1
+</template>
+<template name="elasticsearchversionnum">
+  1.7.5
+</template>
+<template name="hbaseversionnum">
+  1.2.1
+</template>
+<template name="hdfsdownload">
+  <a href="http://www.eu.apache.org/dist/hadoop/common/hadoop-2.6.2/hadoop-2.6.2.tar.gz">Hadoop 2.6.2</a>
+</template>
+<template name="sparkdownload">
+  <a href="http://www.us.apache.org/dist/spark/spark-1.6.1/spark-1.6.1-bin-hadoop2.6.tgz">Spark 1.6.1</a>
+</template>
+<template name="esdownload">
+  <a href="https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.5.tar.gz">Elasticsearch 1.7.5</a>
+</template>
+<template name="hbasedownload">
+  <a href="http://www-us.apache.org/dist/hbase/1.2.1/hbase-1.2.1-bin.tar.gz">HBase 1.2.1</a>
 </template>

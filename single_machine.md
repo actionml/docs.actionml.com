@@ -3,29 +3,28 @@
 
 This is a guide to setting up PredictionIO-aml and the Universal Recommender on a single large memory (32G) machine. This will allow "real data" to be processed but will not focus on horizontal scaling.
 
-###Other Guides:
+#### Other Guides:
 
-Choose the guide that best fits your needs.
+ Choose the guide that best fits your needs.
 
- - **[Small High Availability Cluster](/docs/small_ha)**: This sets up a 3 machine cluster with all services running on all machines with no single point of failure. This setup will allow you to expand by moving clustered services into their own cluster as needed. For instance Spark may be moved to separate machines for scaling purposes. 
-  
- - **[Fully Distributed Clusters](/docs/single_driver_machine)**: This sets up a single machine to run all services but does so in a way that allows for easier cluster expansion in the future.
+{{> piosmallhaguide}}
+{{> piodistributedguide}}
 
-**Note**: the details of having any single machine reboot and rejoin all clusters are left to the reader and not covered here.
+## Requirements
 
-##Requirements
+In this guide, all servers share all services, except PredictionIO, which runs only on the master server. Setup of multiple EventServers and PredictionServers is done with load-balancers and is out of the scope of this guide.
 
-In this guide we create a master that runs all services, is an EventServer and PredictionServer, as well as running Spark, HDFS, Elasticsearch, and HBase. This guide describes how to install:
+Here we'll install and setup:
 
-- Hadoop 2.6.2
-- Spark 1.6.1
-- Elasticsearch 1.7.5
-- HBase 1.1.4
-- PredictionIO 0.9.7-aml
-- 'Nix server, some instructions below are specific to Ubuntu or Debian and Mac OS X. When using Windows it is advised that you run a VM with a Linux OS.
+- Hadoop {{> hdfsversion}}
+- Spark {{> sparkversion}}
+- Elasticsearch {{> elasticsearchversion}}
+- HBase {{> hbaseversion}} due to a bug in 1.1.2 and earlier HBase it is advised you move to {{> pioversion}} installation [instructions here](/docs/pio_quickstart).
+- Universal Recommender [here](/docs/ur_quickstart)
+- 'Nix server, some instructions below are specific to Ubuntu, a Debian derivative and Mac OS X. Using Windows it is advised that you run a VM with a Linux OS.
 
 
-##1. Setup User, SSH, and Host Naming:
+## 1. Setup User, SSH, and Host Naming:
 
 1.1 Create user for PredictionIO `aml` in each server
 
@@ -58,17 +57,17 @@ Notice that we are now logged in as the `aml` user and are in the home directory
     # Use IPs for your hosts.
     10.0.0.1 some-master
 
-##2. Download Services
+## 2. Download Services
 
 Download everything to a temp folder like `/tmp/downloads`, we will later move them to the final destinations.
 
-2.1 Download [Hadoop 2.6.2](http://www.eu.apache.org/dist/hadoop/common/hadoop-2.6.2/hadoop-2.6.2.tar.gz)
+2.1 Download {{> hdfsdownload}}
 
-2.2 Download [Spark 1.6.0](http://www.us.apache.org/dist/spark/spark-1.6.0/spark-1.6.0-bin-hadoop2.6.tgz)
+2.2 Download {{> sparkdownload}}
 
-2.3 Download [Elasticsearch 1.7.4](https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.4.tar.gz
+2.3 Download {{> esdownload}}
 
-2.4 Download [HBase 1.1.4](http://www-us.apache.org/dist/hbase/1.1.4/hbase-1.1.4-bin.tar.gz)
+2.4 Download {{> hbasedownload}}
 
 2.5 Clone the ActionML version of PredictionIO from its root repo into `~/pio-aml`
 
@@ -80,9 +79,9 @@ Download everything to a temp folder like `/tmp/downloads`, we will later move t
 
     git clone https://github.com/actionml/template-scala-parallel-universal-recommendation.git universal
 	cd ~/universal
-	git checkout master # or get the latest release
+	git checkout master # or get the tag you want
 
-##3. Setup Java 1.7 or 1.8
+## 3. Setup Java 1.7 or 1.8
 
 3.1 Install Java OpenJDK or Oracle JDK for Java 7 or 8, the JRE version is not sufficient. Java 7 works for now but to plan ahead we recommend java 8.
 
@@ -98,11 +97,11 @@ Don't include the `/bin` folder in the path. This can be problematic so if you g
  
     export JAVA_HOME=/path/to/open/jdk/jre
 
-##4. Create Folders:
+## 4. Create Folders:
 
 4.1 Create folders in `/opt`
 
-	mkdir /opt/hadoop
+    mkdir /opt/hadoop
 	mkdir /opt/spark
 	mkdir /opt/elasticsearch
 	mkdir /opt/hbase
@@ -111,27 +110,11 @@ Don't include the `/bin` folder in the path. This can be problematic so if you g
 	chown aml:aml /opt/elasticsearch
 	chown aml:aml /opt/hbase
 
-
 ##5. Extract Services
 
 5.1 Inside the `/tmp/downloads` folder, extract all downloaded services.
 
-5.2 Move extracted services to their folders.
-
-	sudo mv /tmp/downloads/hadoop-2.6.2 /opt/hadoop/
-	sudo mv /tmp/downloads/spark-1.6.0 /opt/spark/
-	sudo mv /tmp/downloads/elasticsearch-1.7.4 /opt/elasticsearch/
-	sudo mv /tmp/downloads/hbase-1.1.4 /opt/hbase/
-
-**Note:** Keep version numbers, if you upgrade or downgrade in the future just create new symlinks.
-
-5.3 Symlink Folders
-
-	sudo ln -s /opt/hadoop/hadoop-2.6.2 /usr/local/hadoop
-	sudo ln -s /opt/spark/spark-1.6.0 /usr/local/spark
-	sudo ln -s /opt/elasticsearch/elasticsearch-1.7.4 /usr/local/elasticsearch
-	sudo ln -s /opt/hbase/hbase-1.1.4 /usr/local/hbase
-	sudo ln -s /home/aml/pio-aml /usr/local/pio-aml		
+{{> setsymlinks}}
 
 ##6. Setup Services
 
