@@ -18,10 +18,10 @@ In this guide, all servers share all services, except PredictionIO, which runs o
 
 Here we'll install and setup:
 
-- Hadoop {{> hdfsversion}}
-- Spark {{> sparkversion}}
-- Elasticsearch {{> elasticsearchversion}}
-- HBase {{> hbaseversion}} due to a bug in 1.1.2 and earlier HBase it is advised you move to {{> pioversion}} installation [instructions here](/docs/pio_quickstart).
+- Hadoop {{> hdfsversion}} (Clustered, standby master needed for full HA)
+- Spark {{> sparkversion}} (Clustered)
+- Elasticsearch {{> elasticsearchversion}} (Clustered, standby master)
+- HBase {{> hbaseversion}} (Clustered, standby master) due to a bug in 1.1.2 and earlier HBase it is advised you move to {{> pioversion}} installation [instructions here](/docs/pio_quickstart).
 - Universal Recommender [here](/docs/ur_quickstart)
 - 'Nix server, some instructions below are specific to Ubuntu, a Debian derivative and Mac OS X. Using Windows it is advised that you run a VM with a Linux OS.
 

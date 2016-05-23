@@ -1,11 +1,11 @@
 {{#template name='pio_by_actionml'}}
 # PredictionIO by ActionML
 
-ActionML maintains an enhanced version of PredictionIO in it's own repo. We released v0.9.6 of the project 3 weeks before Salesforce also released the same version. Since the all-Salesforce group of committers have not merged our changes and since our changes are required for may applications including The Universal Recommender and other AML templates we maintain and are committed to supporting our branch in Open Source for the foreseeable future. This means you, the user, will have to choose the branch you want.
+ActionML maintains an enhanced version of PredictionIO in our own repo. Since our changes are required for our own templates, including The Universal Recommender, we maintain and are committed to supporting our branch in Open Source for the foreseeable future. This means you, the user, will have to choose the branch you want.
 
-For ActionML's PredictionIO v0.9.6 please follow [these instructions](/docs/install) to install or upgrade. 
+For ActionML's PredictionIO {{> pioversion}} please follow [these instructions](/docs/install) to install or upgrade. 
 
-## ActionML's PredictionIO v0.9.7-aml
+## ActionML's PredictionIO {{> pioversion}}
 
  - {{> pioversion}} implements the `SelfCleaningDataSource` for the EventStore. This allows any template to specify a moving window of events in time, enable de-duplication of events, and compact $set/$unset property change events (see description below)
  - Implements `NullModel` for templates that do not store models in existing PIO data stores. The Universal Recommender requires this feature since it stores models in Elasticsearch.
@@ -25,13 +25,13 @@ Installation instructions [here](docs/install).
 ## Salesforce's PredictionIO v0.9.6
 
  - Requires java 8
- - Require SSL/HTTPS for pio REST APIs. This make it incompatible with existing code that queries or sends events to the EventServer. It also makes it incompatible with the SDKs which will not operate with this version without changes.
+ - Require SSL/HTTPS for pio REST APIs. This make it incompatible with existing code that queries or sends events to the EventServer. It also makes it incompatible with the SDKs which will not operate with this version.
 
 ## Use the Salesforce Sponsored PredictionIO v0.9.6
 
 - you need SSL/HTTPS **and** 
 - you do not need The Universal Recommender v0.3.0+ **and** 
-- you do not need to trim old event or compact duplicates and property change events
+- you do not need to trim old events or compact duplicates and property change events **and**
 - you do not use an SDK or are willing to modify the SDK code, use the Salesforce sponsored project on [github](https://github.com/PredictionIO/PredictionIO)
 
 {{/template}}
