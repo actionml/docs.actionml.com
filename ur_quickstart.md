@@ -11,6 +11,10 @@ It all is well proceed with the Universal Recommender
 
 ## Prerequisites
 
+ - python 2.7.9+
+ - pip, the package installer for python
+ - git, for version control and installing templates like the UR
+
 The Universal Recommender has an integration test written in Python. If you want to run the test make sure you have it installed
 
     python --version
@@ -25,8 +29,9 @@ If you don't have it see these [installation instructions](http://pip.readthedoc
     
 ## Get The Universal Recommender Template
 
-    git clone https://github.com/actionml/template-scala-parallel-universal-recommendation/tree/master ~/universal
+    git clone https://github.com/actionml/template-scala-parallel-universal-recommendation.git ~/universal
     cd ~/universal
+    git checkout master # or whatever tagged release you want
 
 It's recommended that you run the UR integration test
 

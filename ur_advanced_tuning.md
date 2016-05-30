@@ -63,6 +63,102 @@ Another case for removing items fro recommendations can be seen from looking at 
 
 For example you might get "your recommendations", then when you ask for "recommended for you in SciFi" you might pass in a blacklist if each item returned in "your recommendations" so as to avoid any duplicates. The **query** parameter to add is `"blacklistItems": ["array", "of", "item-ids"]`
 
+## <a name="date_filters"></a>Date Range Filters
+
+Dates ranges can be attached to items and compared to the current date, or they can be specified in the query and compared to a date attached to items. In either case they are a strict filter so recommendations that do not match will not be returned.
+
+Choose one and only one of the following methods.
+
+### <a name="item_date_range"></a>Item Available/Expire Dates
+
+2 dates in a range will be attached to **every** item and checked against the current date or a date passed in with the query. If not in the query the date to check against the item's range is the prediction server date. This mode requires that all items have a upper and lower dates attached to them as a property. It is designed to be something like an "available after" and "expired after". 
+
+**Note: Both dates must** be attached to items or they will not be recommended. To have one-sided filter make the available date some time far in the past and/or the expire date some time in the far future.
+
+**`engine.json`**
+
+```
+...
+   "expireDateName": "expire",
+   "availableDateName": "available",
+
+```
+
+Substitute your own field names. **Both** dates must be set for **every** item with a string property encoded as ISO-8601 dates. **Note:** Other properties are set as *arrays of strings* so dates are the only property that is set as a string like this:
+
+```
+{
+    "event" : "$set",
+    "entityType" : "item",
+    "entityId" : "some-item-id",
+    "properties" : {
+        "expire": "2018-10-05T21:02:49.228Z",
+        "available": "2015-10-05T21:02:49.228Z"
+    },
+    "eventTime" : "2015-10-05T21:02:49.228Z"
+}
+```
+
+**query**
+
+```
+{
+  “user”: “some-user-id”, 
+  "currentDate": "2015-08-15T11:28:45.114-07:00",
+  ...
+}
+```
+
+If the `"currentDate"` is left out of the query the server date is used. **Note:** this means that all recommendations will be filtered by the date fields specified in `engine.json` no matter the query.
+
+```
+{
+  “user”: "some-user-id", 
+  ...
+}
+```
+
+### <a name="query_date_range"></a> Query Date Range
+
+A "dateRange" can be specified in the query and the recommended items must have a date that lies between the range dates. If items do not have a date property attached to them they will never be returned by a dateRange filtered query.
+
+**`engine.json`**
+
+```
+...
+   "dateName": "published",
+...
+```
+
+Substitute your own field name. Remember that all items must have this field or they will never be recommended if using a `dateRange` in the query. Set the item with a string property encoded as ISO-8601 dates. **Note:** Other properties are set as *arrays of strings* so dates are the only property that is set as a string like this:
+
+```
+{
+    "event" : "$set",
+    "entityType" : "item",
+    "entityId" : "some-item-id",
+    "properties" : {
+        "published": "2015-10-05T21:02:49.228Z"
+    },
+    ...
+}
+```
+
+**query**
+
+```
+{
+    “user”: “some-user-id”, 
+    "dateRange": {
+        "name": "published",
+        "beforeDate": "2015-09-15T11:28:45.114-07:00",
+        "afterDate": "2015-08-15T11:28:45.114-07:00"
+    }
+}
+```
+
+Both `"beforeDate"` and `"afterDate"` must be specified together so if you want a one-sided query, make one or the other dates far in the past or future. If no `"dateRange"` is used in the query, all recommendations will be returned based on other conditions.
+
 ##Mixing Item-similarity and User Recommendations
 
 When showing an item, such as when you are on a detail page of an e-com site, it is common to show "similar items" otherwise know as "people who bought this also bought these". This works for completely anonymous users with no history. But in cases where you do know user history you might want to show personalized recommendations. In fact you might want to show personalized except when you have no user history. It is possible to mix items from both recommendation types by simply passing in a user-id and an item-id to the query. To favor user-based personal recommendations set the **query** param `“itemBias”` to something between 1 and 0, which will disfavor item recommendations. If there are no user recommendations because you have no history for the user then item-similarity based recs will be returned as fallback, and if neither is available popular items will be returned. Likewise if you want to favor item recommendations set `“itemBias”` to something larger than 1. This will boost items-similarity recommendations higher than user-based ones.

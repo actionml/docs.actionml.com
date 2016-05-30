@@ -6,10 +6,10 @@ The default settings of the UR are good for many purposes but getting optimum re
 
 ### Start Here: Find Your Primary Indicator
 
-To start using a recommender you must have a primary indicator of user preference so ask yourself 2 questions:
+To start using a recommender you must have a primary indicator of user preference. This is generally defined in a conversion. A conversion event is a "buy", "watch", "read", "share", or some other action that you consider to be the ideal thing for your users. Ask yourself 2 questions:
 
  1. *"What item type do I want to recommend?"* For ecom this will be a product, for media it will be a story or video.
- 2. *"Of all the data I have what is the most pure and unambiguous indication of user preference for this item?"* For ecom a "buy" is good, for media a "read" or "watch90" (for watching 90% of a video). Try to avoid ambiguous things like ratings, after all what does a rating of 3 mean for a 1-5 range? Does a rating of 2 mean a like or dislike? If you have ratings then 4-5 is a pretty unambiguous "like" so the other ratings may not apply to a primary indicator&mdash;though they may still be useful so read on.
+ 2. *"Of all the data I have what is the most pure and unambiguous indication of user preference for this item?"* This tends to be a "conversion"; for ecom a "buy" is good, for media a "read" or "watch90" (for watching 90% of a video). Try to avoid ambiguous things like ratings, after all what does a rating of 3 mean for a 1-5 range? Does a rating of 2 mean a like or dislike? If you have ratings then 4-5 is a pretty unambiguous "like" so the other ratings may not apply to a primary indicator&mdash;though they may still be useful so read on.
  
 Take the item from #1, the indicator-name from #2 and the user-id and you have the data to create a "primary indicator" of the form **(user-id, "indicator-name", item-id)**. 
 
@@ -30,18 +30,15 @@ Think of bias as a multiplier to the score of the items that meet the condition 
 
 One example of a filter is where it may make sense to show only "electronics" recommendations when the user is viewing an electronics product. Biases are often applied to a list of data, for instance the user is looking at a video page with a cast of actors. The "cast" list is metadata attached to items and a query can show "people who liked this, also liked these" type recommendations but also include the current cast boosted by 1.01. This can be seen as showing similar item recommendations but using the cast members to gently boost the similar items (since by default they have a neutral 1.0 boost). The result would be similar items favoring ones with similar cast members.
 
-###Dates
+### Dates
 
-Dates are only used for filters but apply in all recommendation modes including popularity quereies. Dates can be used to filter recommendations in one of two ways, where the date range is attached to items or is specified in the query:
+Dates are only used for filters but apply in all recommendation modes including popularity queries. Dates can be used to filter recommendations in one of two ways, which should **never be used together**. Decide if you want the date range attached to queries or to the items themselves (for example available/expire dates) where the date range is attached to items or is specified in the query (for example the publish date between some range in a query). See [Date Range Filters](/docs/ur_advanced_tuning/#date_filters) for details.
 
- 1. The date range can be attahed to every item and checked against the current date or a date passed in with the query. If not in the query the date to check against the item's range is the predoiction server date. This mode requires that all items have a upper and lower dates attached to them as a property. It is designed to be something like an "available after" and "expired after". **Note**: Both dates must be attached to items or they will not be recommended. To have one-sided filter make the avialable date some time far in the past and/or the expire date some time in the far future.
- 2. A "dateRange" can be specified in the query and the recommended items must have a date that lies between the range dates. If items do not have a date property attached to them they will never be returned by a dateRange filtered query.
- 
-###Engine.json
+### Engine.json
 
 This file allows the user to describe and set parameters that control the engine operations. Many values have defaults so the following can be seen as the minimum for an ecom app with only one "buy" event. Reasonable defaults are used so try this first and add tunings or new event types and item property fields as you become more familiar.
 
-####Simple Default Values
+#### Simple Default Values
     {
 	  "comment":" This config file uses default settings for all but the required values see README.md for docs",
 	  "id": "default",
