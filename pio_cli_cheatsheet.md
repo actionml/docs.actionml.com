@@ -8,6 +8,13 @@ At any point you can run `pio help some-command` to get a help screen printed wi
 
 ##Start/stop
 
+PredictionIO assumes that HDFS and Spark are running. From a clean start launch them first.
+
+ - `/path/to/hadoop/sbin/start-dfs.sh` this assumes you have formatted the namenode&mdash;see hadoop docs if this sounds unfamiliar to you.
+ - `/path/to/spark/sbin/start-all.sh`
+ 
+HDFS and Spark may be left running since nothing in this cheatsheet will stop them.
+
  - `pio-start-all` this can only be used reliably on a single server setup with all services on a single machine.
  - `pio-stop-all` likewise this is only for a single machine setup.
  - `pio eventserver` this starts an EventServer on port 7070 of localhost
@@ -50,12 +57,13 @@ For some pio commands you must `cd` to an engine-instance directory. This is bec
 
 These commands must be run in this order, but can be repeated once previous commands are run. So many trains are expected after a build and many deploys of the same model are allowed.
 
+Assuming there is data in the EventServer and engine.json is configured correctly:
 
  - `pio build` this registers the `engine.json` params with the meta-store as defined in the `pio-env.sh`, it also uses sbt to compile and create jars from the engine code. Any change to `engine.json` will only take effect after `pio build` even if the code has not changed.
- - `pio train` pulls data from the event store and creates a model
- - `pio deploy` creates a PredictionServer instance to serve query results based on the last trained model
- - `nohup pio deploy &` creates a daemon of the PredictionServer for the current engine-instance
- 
+ - `pio train` pulls the latest data from the event store and creates a model
+ - `pio deploy` creates a PredictionServer to answer queries
+ - `nohup pio deploy &` creates a daemon of the PredictionServer
+  
 ##<a id='ur-workflow'></a> Universal Recommender Example
 
 {{> urworkflow}}
