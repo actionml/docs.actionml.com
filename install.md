@@ -43,7 +43,7 @@ For a first-time install on a single machine
 
 For a completely fresh new install, do not use the script on PredictionIO's docs site do the following:
 
- 1. `bash -c "$(curl -s https://raw.githubusercontent.com/actionml/PredictionIO/develop/bin/install.sh)"`
+ 1. `bash -c "$(curl -s https://raw.githubusercontent.com/actionml/PredictionIO/master/bin/install.sh)"`
  
 This will create a `vendors` subdirectory with needed services installed there. It will also trigger an build of PIO so make sure you put it in a place where you have permission to read/write. q
 
