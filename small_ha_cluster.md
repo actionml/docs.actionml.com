@@ -222,7 +222,7 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_multi_node_clus
 - Change the `/usr/local/elasticsearch/config/elasticsearch.yml` file as shown below. This is minimal and allows all hosts to act as backup masters in case the acting master goes down. Also all hosts are data/index nodes so can respond to queries and host shards of the index.
 
 ```
-cluster.name: your-app-name
+cluster.name: some-cluster # write the same cluster name as in elasticsearch section on pio-env.sh
 discovery.zen.ping.multicast.enabled: false # most cloud services don't allow multicast
 discovery.zen.ping.unicast.hosts: ["some-master", "some-slave-1", "some-slave-2"] # add all hosts, masters and/or data nodes
 ```
@@ -283,7 +283,7 @@ This [tutorial](https://hbase.apache.org/book.html#quickstart_fully_distributed)
 
 6.4.2 Start HBase
 
-    `bin/start-hbase.sh`
+`bin/start-hbase.sh`
 
 At this point you should see several different processes start on the master and slaves including regionservers and zookeeper servers. If there is an error check the log files referenced in the error message. These log files may reside on a different host as indicated in the file's name.
 
@@ -332,7 +332,7 @@ You have PredictionIO in `~/aml` so edit ~/pio-aml/conf/pio-env.sh to have these
     # Safe config that will work if you expand your cluster later
     SPARK_HOME=/usr/local/spark
     ES_CONF_DIR=/usr/local/elasticsearch
-    HADOOP_CONF_DIR=/usr/local/hadoop/etc/handoop
+    HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
     HBASE_CONF_DIR=/usr/local/hbase/conf
     
     
@@ -368,7 +368,7 @@ You have PredictionIO in `~/aml` so edit ~/pio-aml/conf/pio-env.sh to have these
     PIO_STORAGE_SOURCES_ELASTICSEARCH_TYPE=elasticsearch
     PIO_STORAGE_SOURCES_ELASTICSEARCH_HOME=/usr/local/elasticsearch
     # The next line should match the ES cluster.name in ES config
-    PIO_STORAGE_SOURCES_ELASTICSEARCH_CLUSTERNAME=some-cluster-name
+    PIO_STORAGE_SOURCES_ELASTICSEARCH_CLUSTERNAME=some-cluster
     
     # For clustered Elasticsearch (use one host/port if not clustered)
     PIO_STORAGE_SOURCES_ELASTICSEARCH_HOSTS=some-master,some-slave-1,some-slave-2
