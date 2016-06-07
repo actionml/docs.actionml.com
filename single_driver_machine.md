@@ -67,7 +67,7 @@ Notice the `hbase.zookeeper.quorum` is localhost. Substituting
 
         pio-start-all
 
- - to restart pio serives
+ - to restart pio services
 
         pio-stop-all
         jps -lm 

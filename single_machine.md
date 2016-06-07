@@ -217,8 +217,11 @@ This starts Spark in pseudo-clustered "stand-alone" mode, meaning the driver and
 
 - Change the `/usr/local/elasticsearch/config/elasticsearch.yml` file as shown below. This is minimal and allows all hosts to act as backup masters in case the acting master goes down. Also all hosts are data/index nodes so can respond to queries and host shards of the index. So even though we are using one machine it most closely resembles a clustered setup.
 
+    The `cluster.name` defines the Elasticsearch machines that form a cluster. This is used by Elasticsearch to discover other machines and should not be set to any other PredictionIO id like appName. It is also important that the cluster name not be left as default or your machines may join up with others on the same LAN.
+
+
 ```
-cluster.name: your-app-name
+cluster.name: some-cluster-name
 discovery.zen.ping.multicast.enabled: false # most cloud services don't allow multicast
 discovery.zen.ping.unicast.hosts: ["some-master"] # add all hosts, masters and/or data nodes
 ```
@@ -347,7 +350,7 @@ You have PredictionIO in `~/pio-aml` so edit ~/pio-aml/conf/pio-env.sh to have t
 	PIO_STORAGE_SOURCES_ELASTICSEARCH_TYPE=elasticsearch
 	PIO_STORAGE_SOURCES_ELASTICSEARCH_HOME=/usr/local/elasticsearch
 	# the next line should match the cluster.name in elasticsearch.yml
-	PIO_STORAGE_SOURCES_ELASTICSEARCH_CLUSTERNAME=some-cluster
+	PIO_STORAGE_SOURCES_ELASTICSEARCH_CLUSTERNAME=some-cluster-name
 
 	# For single host Elasticsearch, may add hosts and ports later
 	PIO_STORAGE_SOURCES_ELASTICSEARCH_HOSTS=some-master

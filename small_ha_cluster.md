@@ -221,8 +221,10 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_multi_node_clus
 
 - Change the `/usr/local/elasticsearch/config/elasticsearch.yml` file as shown below. This is minimal and allows all hosts to act as backup masters in case the acting master goes down. Also all hosts are data/index nodes so can respond to queries and host shards of the index.
 
+    The `cluster.name` defines the Elasticsearch machines that form a cluster. This is used by Elasticsearch to discover other machines and should not be set to any other PredictionIO id like appName. It is also important that the cluster name not be left as default or your machines may join up with others on the same LAN.
+
 ```
-cluster.name: your-app-name
+cluster.name: some-cluster-name
 discovery.zen.ping.multicast.enabled: false # most cloud services don't allow multicast
 discovery.zen.ping.unicast.hosts: ["some-master", "some-slave-1", "some-slave-2"] # add all hosts, masters and/or data nodes
 ```
@@ -332,7 +334,7 @@ You have PredictionIO in `~/aml` so edit ~/pio-aml/conf/pio-env.sh to have these
     # Safe config that will work if you expand your cluster later
     SPARK_HOME=/usr/local/spark
     ES_CONF_DIR=/usr/local/elasticsearch
-    HADOOP_CONF_DIR=/usr/local/hadoop/etc/handoop
+    HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
     HBASE_CONF_DIR=/usr/local/hbase/conf
     
     
