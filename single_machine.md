@@ -218,7 +218,7 @@ This starts Spark in pseudo-clustered "stand-alone" mode, meaning the driver and
 - Change the `/usr/local/elasticsearch/config/elasticsearch.yml` file as shown below. This is minimal and allows all hosts to act as backup masters in case the acting master goes down. Also all hosts are data/index nodes so can respond to queries and host shards of the index. So even though we are using one machine it most closely resembles a clustered setup.
 
 ```
-cluster.name: your-app-name
+cluster.name: some-cluster # write the same cluster name as in elasticsearch section on pio-env.sh
 discovery.zen.ping.multicast.enabled: false # most cloud services don't allow multicast
 discovery.zen.ping.unicast.hosts: ["some-master"] # add all hosts, masters and/or data nodes
 ```
@@ -264,7 +264,7 @@ The line with `HBASE_MANAGES_ZK` is super important otherwise you will get Zooke
 
 6.4.2 Start HBase
 
-    `bin/start-hbase.sh`
+`bin/start-hbase.sh`
 
 At this point you should see several different processes start on the master including zookeeper. If there is an error check the log files referenced in the error message.
 
