@@ -285,7 +285,7 @@ This [tutorial](https://hbase.apache.org/book.html#quickstart_fully_distributed)
 
 6.4.2 Start HBase
 
-    `bin/start-hbase.sh`
+    bin/start-hbase.sh
 
 At this point you should see several different processes start on the master and slaves including regionservers and zookeeper servers. If there is an error check the log files referenced in the error message. These log files may reside on a different host as indicated in the file's name.
 

@@ -267,7 +267,7 @@ The line with `HBASE_MANAGES_ZK` is super important otherwise you will get Zooke
 
 6.4.2 Start HBase
 
-    `bin/start-hbase.sh`
+    bin/start-hbase.sh
 
 At this point you should see several different processes start on the master including zookeeper. If there is an error check the log files referenced in the error message.
 
