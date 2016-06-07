@@ -315,7 +315,7 @@ You have PredictionIO in `~/pio-aml` so edit ~/pio-aml/conf/pio-env.sh to have t
 	# Safe config that will work if you expand your cluster later
 	SPARK_HOME=/usr/local/spark
 	ES_CONF_DIR=/usr/local/elasticsearch
-	HADOOP_CONF_DIR=/usr/local/hadoop/etc/handoop
+	HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
     HBASE_CONF_DIR=/usr/local/hbase/conf
 
 	# Filesystem paths where PredictionIO uses as block storage.
