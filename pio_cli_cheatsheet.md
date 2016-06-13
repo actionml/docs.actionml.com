@@ -11,9 +11,9 @@ The typical process from install to your first query is:
  4. import data into the EventServer
  5. Download a template
  6. Build the template
- 7. Train the template, which read data and creates a model
+ 7. Train the template, which reads data and creates a model
  8. Deploy the template
- 9. you are now ready to query the deployed template
+ 9. You are now ready to query the deployed template
 
 #General Commands
 At any point you can run `pio help some-command` to get a help screen printed with all supported options for a command.
