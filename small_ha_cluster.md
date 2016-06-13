@@ -176,30 +176,32 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_multi_node_clus
     export HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-"/etc/hadoop"}
     ```
 
- - Format Namenode
+  - Format Namenode
 
-      bin/hadoop namenode -format
+    `bin/hadoop namenode -format`
 
     This will result actions logged to the terminal, make sure there are no errors
 
- - Start dfs servers only.
+  - Start dfs servers only.
 
-        sbin/start-dfs.sh
+    `sbin/start-dfs.sh`
 
     Do not use `sbin/start-all.sh` because it will needlessly start mapreduce and yarn. These can work together with PredictionIO but for the purposes of this guide they are not needed.
 
- - Create required HDFS directories
+  - Create required HDFS directories
 
-        hdfs dfs -mkdir /hbase
-        hdfs dfs -mkdir /zookeeper
-        hdfs dfs -mkdir /models
-        hdfs dfs -mkdir /user
-        hdfs dfs -mkdir /user/aml # will be like ~ for user "aml"
+    ```
+    hdfs dfs -mkdir /hbase
+    hdfs dfs -mkdir /zookeeper
+    hdfs dfs -mkdir /models
+    hdfs dfs -mkdir /user
+    hdfs dfs -mkdir /user/aml # will be like ~ for user "aml"
+    ```
 
 
 #### 6.2. Setup Spark Cluster.
-- Read and follow [this tutorial](http://spark.apache.org/docs/latest/spark-standalone.html) The primary thing that must be setup is the masters and slaves, which for our purposes will be the same as for hadoop
--  `conf/masters` One master for this config.
+Read and follow [this tutorial](http://spark.apache.org/docs/latest/spark-standalone.html) The primary thing that must be setup is the masters and slaves, which for our purposes will be the same as for hadoop
+  -  `conf/masters` One master for this config.
 
 	```
 	some-master
@@ -207,12 +209,13 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_multi_node_clus
 
   - `conf/slaves` Slaves for Spark means they are workers so the master be included
 
-        some-master
-        some-slave-1
-        some-slave-2
+    ```
+    some-master
+    some-slave-1
+    some-slave-2
+    ```
 
-
-- Start all nodes in the cluster
+  - Start all nodes in the cluster
 
     `sbin/start-all.sh`
 
