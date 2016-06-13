@@ -64,7 +64,7 @@ To test your installation run `pio status` to make sure pio is working. Also che
 
 ## Install Fresh
 
-For a first-time install on a single machine
+For a first-time install on a single machine. **NOTE**: do not install as "root"! Create a sudoer user as described above.
 
 ### Install From a Script
 
