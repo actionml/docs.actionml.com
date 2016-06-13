@@ -5,7 +5,7 @@ PredictionIO can be seen as 2 types of servers, one takes in and stores events&m
 
 The typical process from install to your first query is:
 
- 1. Install {{> pioversion}} using instructions [here](/docs/install)
+ 1. Install {{> pioname}} using instructions [here](/docs/install)
  2. Start pio with one of the methods listed below, perhaps just `pio-start-all` if you are using a single machine and check it with `pio status`
  3. Create an app in the EventServer to store data to
  4. import data into the EventServer
