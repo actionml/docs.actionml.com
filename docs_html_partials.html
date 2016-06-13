@@ -3,8 +3,14 @@
      be translated into a <em> tag
 -->
 
+<template name="pioname">
+  PredictionIO-{{> pioversionnum}}
+</template>
 <template name="pioversion">
-  v0.9.7-aml
+  v{{> pioversionnum}}
+</template>
+<template name="pioversionnum">
+  0.9.7-aml
 </template>
 <template name="urversion">
   v0.3.0

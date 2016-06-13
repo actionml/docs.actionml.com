@@ -3,6 +3,18 @@
 
 PredictionIO can be seen as 2 types of servers, one takes in and stores events&mdash;the EvnetServer&mdash;and the other serves prediction&mdash;the PredictionServer. The general non-template specific commands can be run from anywhere, in any directory but the template specific commands must be run in the directory of the specific engine-instance being used, this is because some commands rely on files (like engine.json) to be available.
 
+The typical process from install to your first query is:
+
+ 1. Install {{> pioversion}} using instructions [here](/docs/install)
+ 2. Start pio with one of the methods listed below, perhaps just `pio-start-all` if you are using a single machine and check it with `pio status`
+ 3. Create an app in the EventServer to store data to
+ 4. import data into the EventServer
+ 5. Download a template
+ 6. Build the template
+ 7. Train the template, which read data and creates a model
+ 8. Deploy the template
+ 9. you are now ready to query the deployed template
+
 #General Commands
 At any point you can run `pio help some-command` to get a help screen printed with all supported options for a command.
 
