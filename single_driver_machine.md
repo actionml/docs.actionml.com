@@ -12,28 +12,195 @@ Focus on this part of the standard PIO workflow.
 
 ## AWS
 
-Create an instance on AWS orother cloud PaaS provider, and make sure the machine has enough memory to run the training part of pio. For the UR this will vary greatly from 8g upwards. This will be something like an r3.xlarge or r3.2xlarge. The machine should match the Spark Executor machines for memory size since the driver and executors need roughly the same amount.
+Create an instance on AWS or other cloud PaaS provider, and make sure the machine has enough memory to run the training part of pio. For the UR this will vary greatly from 8g upwards. This will be something like an r3.xlarge or r3.2xlarge. The machine should match the Spark Executor machines for memory size since the driver and executors need roughly the same amount.
 
-## Before You Start
+## Prep the Machine
 
 Read the [Small HA Cluster instructions](/docs/small-ha-cluster.md) but note that we need instalation jars only for getting configuration information, scripts, or client launcher code (in the case of Spark).
 
+### 1. Setup User, SSH, and host naming on All Hosts:
 
+1.1 Create user for PredictionIO `aml`
 
-	
- - get the Universal Recommender
+    adduser aml # Give it some password
 
-        git clone https://github.com/actionml/template-scala-parallel-universal-recommendation/tree/v0.3.0 universal
-        cd universal
-        pio app list # to see datasets in the EventServer
-        pio app new handmade # if the app is not there
-        python examples/import_handmade.py --access_key key-from-app-list
+1.2 Give the `aml` user sudoers permissions and login to the new user. This setup assumes the aml user as the **owner of all services** including Spark and Hadoop (HDFS).
 
- - to retrain after any change to data or engin.json
- 
-        pio build # do this before every train
-        pio train -- --master spark://some-master:7077 --driver-memory 3g
+    usermod -a -G sudo aml
+    sudo su aml # or exit and login as the aml user
 
- - to retrain after a pio config change first restart pio as above, them retrain, no need to reimport unless you have rebuild HBase, in which case start from "start platform services" above.
+Notice that we are now logged in as the `aml` user
+
+1.3 Setup passwordless ssh to other cluster machines? Not sure that this is required.
+
+## 2. Setup Java 1.7 or 1.8
+
+2.1 Install Java OpenJDK or Oracle JDK for Java 7 or 8, the JRE version is not sufficient.
+
+    sudo apt-get install openjdk-7-jdk
+
+2.2 Check which versions of Java are installed and pick a 1.7 or greater.
+
+    sudo update-alternatives --config java
+
+2.3 Set JAVA_HOME env var.
+
+Don't include the `/bin` folder in the path. This can be problematic so if you get complaints about JAVA_HOME you may need to change xxx-env.sh depending on which service complains. For instance `hbase-env.sh` has a JAVA_HOME setting if HBase complains when starting.
+
+    vim /etc/environment
+    # add the following
+    export JAVA_HOME=/path/to/open/jdk/jre
+    # some would rather add JAVA_HOME to /home/aml/.bashrc
+
+## 3. Download Installation Jars:
+
+Download everything to a temp folder like `/tmp/downloads`, we will later move them to the final destinations.
+
+3.1 Download:
+
+ - {{> hdfsdownload}}
+
+ - {{> sparkdownload}}
+
+ - {{> esdownload}}
+
+ - {{> hbasedownload}}
+
+3.2 Create folders in `/opt`
+
+```
+mkdir /opt/hadoop
+mkdir /opt/spark
+mkdir /opt/elasticsearch
+mkdir /opt/hbase
+chown aml:aml /opt/hadoop
+chown aml:aml /opt/spark
+chown aml:aml /opt/elasticsearch
+chown aml:aml /opt/hbase
+```
+
+3.3 Inside the `/tmp/downloads` folder, extract all downloaded services.
+
+3.4 Move extracted services to their folders.
+
+```
+sudo mv /tmp/downloads/hadoop-2.6.2 /opt/hadoop/
+sudo mv /tmp/downloads/spark-1.6.1 /opt/spark/
+sudo mv /tmp/downloads/elasticsearch-1.7.5 /opt/elasticsearch/
+sudo mv /tmp/downloads/hbase-1.2.1 /opt/hbase/
+```
+
+Note: Keep version numbers, if you upgrade or downgrade in the future just create new symlinks.
+
+3.4 Symlink Folders
+
+```
+sudo ln -s /opt/hadoop/hadoop-2.6.2 /usr/local/hadoop
+sudo ln -s /opt/spark/spark-1.6.1 /usr/local/spark
+sudo ln -s /opt/elasticsearch/elasticsearch-1.7.5 /usr/local/elasticsearch
+sudo ln -s /opt/hbase/hbase-1.2.1 /usr/local/hbase
+sudo ln -s /home/aml/pio-aml /usr/local/pio-aml
+```	
+
+## 4. Install {{> pioname}}
+
+4.1 Clone the ActionML version of PredictionIO from its root repo into `~/pio-aml`
+
+    git clone https://github.com/actionml/PredictionIO.git pio-aml
+    cd ~/pio-aml
+    git checkout master #get the latest branch
+    ./make-distribution # needed to build templates
+
+4.2 Configure PIO
+
+Edit `/usr/local/pio/conf/pio-env.sh` replace the contents with the following, making sure to update all server IP addresses:
+
+    # Safe config that will work if you expand your cluster later
+    SPARK_HOME=/usr/local/spark
+    ES_CONF_DIR=/usr/local/elasticsearch
+    HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+    HBASE_CONF_DIR=/usr/local/hbase/conf
+    
+    
+    # Filesystem paths where PredictionIO uses as block storage.
+    PIO_FS_BASEDIR=$HOME/.pio_store
+    PIO_FS_ENGINESDIR=$PIO_FS_BASEDIR/engines
+    PIO_FS_TMPDIR=$PIO_FS_BASEDIR/tmp
+    
+    # PredictionIO Storage Configuration
+    #
+    # This section controls programs that make use of PredictionIO's built-in
+    # storage facilities. Default values are shown below.
+    
+    # Storage Repositories
+    
+    # Default is to use PostgreSQL but for clustered scalable setup we'll use
+    # Elasticsearch
+    PIO_STORAGE_REPOSITORIES_METADATA_NAME=pio_meta
+    PIO_STORAGE_REPOSITORIES_METADATA_SOURCE=ELASTICSEARCH
+    
+    PIO_STORAGE_REPOSITORIES_EVENTDATA_NAME=pio_event
+    PIO_STORAGE_REPOSITORIES_EVENTDATA_SOURCE=HBASE
+    
+    # Need to use HDFS here instead of LOCALFS to enable deploying to 
+    # machines without the local model
+    PIO_STORAGE_REPOSITORIES_MODELDATA_NAME=pio_model
+    #PIO_STORAGE_REPOSITORIES_MODELDATA_SOURCE=LOCALFS
+    PIO_STORAGE_REPOSITORIES_MODELDATA_SOURCE=HDFS
+    
+    # Storage Data Sources, lower level that repos above, just a simple storage API
+    # to use
+    
+    # Elasticsearch Example
+    PIO_STORAGE_SOURCES_ELASTICSEARCH_TYPE=elasticsearch
+    PIO_STORAGE_SOURCES_ELASTICSEARCH_HOME=/usr/local/elasticsearch
+    # The next line should match the ES cluster.name in ES config
+    PIO_STORAGE_SOURCES_ELASTICSEARCH_CLUSTERNAME=elasticsearch
+    
+    # For clustered Elasticsearch (use one host/port if not clustered)
+    PIO_STORAGE_SOURCES_ELASTICSEARCH_HOSTS=ip-172-31-2-118
+    PIO_STORAGE_SOURCES_ELASTICSEARCH_PORTS=9300
+    
+    #PIO_STORAGE_SOURCES_LOCALFS_TYPE=localfs
+    #PIO_STORAGE_SOURCES_LOCALFS_HOSTS=$PIO_FS_BASEDIR/models
+    PIO_STORAGE_SOURCES_HDFS_TYPE=hdfs
+    PIO_STORAGE_SOURCES_HDFS_PATH=hdfs://ip-172-31-2-118:9000/models
+    
+    # HBase Source config
+    PIO_STORAGE_SOURCES_HBASE_TYPE=hbase
+    PIO_STORAGE_SOURCES_HBASE_HOME=/usr/local/hbase
+    
+    # Hbase clustered config (use one host/port if not clustered)
+    PIO_STORAGE_SOURCES_HBASE_HOSTS=ip-172-31-2-118
+    PIO_STORAGE_SOURCES_HBASE_PORTS=0
+
+## 5. Install your Template
+
+5.1 Clone Universal Recommender Template from its root repo into `~/universal` or do similar for any other template.
+
+    git clone https://github.com/actionml/template-scala-parallel-universal-recommendation.git universal
+	cd ~/universal
+	git checkout master # or get the tag you want
+
+5.2 Build the Template
+
+    pio build # do this before every train
+
+## 6. Spin Up a Spark Cluster
+
+Here lies Docker magic to create AWS instances and install and launch Spark containers. 
+
+## 7. Train the Template
+
+If there is data in the EventSever you may now run:
+
+    pio train -- \ # tells pio the rest of the params are for SparkSubmit
+        --driver-memory 4g \
+        --executor-memory 4g \
+        --master spark://<some-spark-master>:7077 \
+        --conf spark.eventLog.enabled=true \
+        --conf spark.eventLog.dir=hdfs://<some-hdfs-master>:9000/spark-events
+
+*NOTE*: the hdfs path `/spark-events` must already be created
 
 {{/template}}
