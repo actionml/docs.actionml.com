@@ -18,7 +18,7 @@ Create an instance on AWS or other cloud PaaS provider, and make sure the machin
 
 Read the [Small HA Cluster instructions](/docs/small-ha-cluster.md) but note that we need instalation jars only for getting configuration information, scripts, or client launcher code (in the case of Spark).
 
-### 1. Setup the `aml` User:
+### 1. Setup the aml User:
 
 1.1 Create user for PredictionIO `aml`
 
@@ -96,7 +96,7 @@ Note: Keep version numbers, if you upgrade or downgrade in the future just updat
 
 ## 4. Install {{> pioname}}
 
-4.1 Clone the ActionML version of PredictionIO from its root repo into `~/pio-aml`
+4.1 Get the ActionML version of PredictionIO and build it. Building is required because the process populates `/home/aml/.ivy2/...` cache with dependency jars that are built from the downloaded pio code. These are not available in nexus repos yet. So do not try to skip building by downloading a binary.
 
     git clone https://github.com/actionml/PredictionIO.git pio-aml
     cd ~/pio-aml
