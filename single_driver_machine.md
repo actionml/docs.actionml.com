@@ -94,16 +94,152 @@ Note: Keep version numbers, if you upgrade or downgrade in the future just updat
     sudo ln -s /opt/hbase/hbase-1.2.1 /usr/local/hbase
     sudo ln -s /home/aml/pio-aml /usr/local/pio-aml
 
-## 4. Install {{> pioname}}
+# 4.Configure Services
 
-4.1 Get the ActionML version of PredictionIO and build it. Building is required because the process populates `/home/aml/.ivy2/...` cache with dependency jars that are built from the downloaded pio code. These are not available in nexus repos yet. So do not try to skip building by downloading a binary.
+The client code for some services may expect to find configuration on the client/driver machine so it needs to be configured exactly as it is on the machines that run the services. Some of this config information may not be needed, only trial and error will tell for sure.
+
+## 4.1. Setup Hadoop Cluster
+
+Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_multi_node_cluster.htm)
+
+Files config: this defines the defines where the root of HDFS will be. Edit `/usr/local/hadoop/etc/hadoop/core-site.xml`
+
+```
+<configuration>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://<some-hdfs-master>:9000</value>
+  </property>
+</configuration>
+```
+
+**NOTE**: Not sure this needs to be set.
+
+Edit `/usr/local/hadoop/etc/hadoop/hadoop/hdfs-site.xml` This sets the actual filesystem location that hadoop will use to save data and how many copies of the data to be kept. In case of storage corruption, hadoop will restore from a replica and eventually restore replicas. If a server goes down, all data on that server will be re-created if you have at a `dfs.replication` of least 2.
+
+```
+<configuration>
+   <property>
+      <name>dfs.data.dir</name>
+      <value>file:///usr/local/hadoop/dfs/name/data</value>
+      <final>true</final>
+   </property>
+
+   <property>
+      <name>dfs.name.dir</name>
+      <value>file:///usr/local/hadoop/dfs/name</value>
+      <final>true</final>
+   </property>
+
+   <property>
+      <name>dfs.replication</name>
+      <value>2</value>
+   </property>
+</configuration>
+```
+
+**NOTE**: Not sure this needs to be set.
+
+Edit `/usr/local/hadoop/etc/hadoop/masters` One master for this config.
+
+	```
+	<some-hdfs-master>
+	```
+
+**NOTE**: Not sure this needs to be set.
+
+Edit `/usr/local/hadoop/etc/hadoop/slaves` Slaves for HDFS means they have datanodes so the master may also host data with this config
+
+        <some-hdfs-master>
+        <some-hdfs-slave-1>
+        <some-hdfs-slave-2>
+
+
+**NOTE**: Not sure this needs to be set but it makes more sense than the xml files above since the client will use this. But again, not sure the CLI client is needed for HDFS.
+
+Edit `/usr/local/hadoop/etc/hadoop/hadoop-env.sh` make sure the following values are set
+
+    ```
+    export JAVA_HOME=${JAVA_HOME}
+    # this has been set for hadoop historically but not sure it is needed anymore
+    export HADOOP_OPTS=-Djava.net.preferIPv4Stack=true
+    export HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-"/etc/hadoop"}
+    ```
+
+## 4.2. Setup Elasticsearch Cluster
+
+- Change the `/usr/local/elasticsearch/config/elasticsearch.yml` file as shown below. This is minimal and allows all hosts to act as backup masters in case the acting master goes down. Also all hosts are data/index nodes so can respond to queries and host shards of the index.
+
+    The `cluster.name` defines the Elasticsearch machines that form a cluster. This is used by Elasticsearch to discover other machines and should not be set to any other PredictionIO id like appName. It is also important that the cluster name not be left as default or your machines may join up with others on the same LAN.
+
+```
+cluster.name: some-cluster-name
+discovery.zen.ping.multicast.enabled: false # most cloud services don't allow multicast
+discovery.zen.ping.unicast.hosts: ["some-master", "some-slave-1", "some-slave-2"] # add all hosts, masters and/or data nodes
+```
+
+## 4.3. Setup HBase Cluster (abandon hope all ye who enter here)
+
+This [tutorial](https://hbase.apache.org/book.html#quickstart_fully_distributed) is the **best guide**, many others produce incorrect results . The primary thing to remember is to install and configure on a single machine, adding all desired hostnames to `backupmasters`, `regionservers`, and to the `hbase.zookeeper.quorum` config param, then copy **all code and config** to all other machines with something like `scp -r ...` Every machine will then be absolutely identical.
+
+4.3.1 Configure with these changes to `/usr/local/hbase/conf`
+
+  - Edit `hbase-site.xml`
+
+```
+<configuration>
+    <property>
+        <name>hbase.rootdir</name>
+        <value>hdfs://<some-hdfs-master>:9000/hbase</value>
+    </property>
+
+    <property>
+        <name>hbase.cluster.distributed</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>hbase.zookeeper.property.dataDir</name>
+        <value>hdfs://<some-hdfs-master>:9000/zookeeper</value>
+    </property>
+
+    <property>
+        <name>hbase.zookeeper.quorum</name>
+        <value><some-hbase-node>,<some-other-hbase-node>,...
+    </property>
+
+    <property>
+        <name>hbase.zookeeper.property.clientPort</name>
+        <value>2181</value>
+    </property>
+</configuration>
+```
+
+  - Edit `regionservers`
+
+		<some-hbase-node>
+		<some-other-hbase-node>
+		...
+
+  - Edit `backupmasters`
+
+        some-slave-1
+
+  - Edit `hbase-env.sh`
+
+		export JAVA_HOME=${JAVA_HOME}
+		export HBASE_MANAGES_ZK=true # when you want HBase to manage zookeeper
+
+## 5. Install {{> pioname}}
+
+5.1 Get the ActionML version of PredictionIO and build it. Building is required because the process populates `/home/aml/.ivy2/...` cache with dependency jars that are built from the downloaded pio code. These are not available in nexus repos yet. So do not try to skip building by downloading a binary.
 
     git clone https://github.com/actionml/PredictionIO.git pio-aml
     cd ~/pio-aml
     git checkout master #get the latest branch
     ./make-distribution # needed to build templates
 
-4.2 Configure PIO
+5.2 Configure PIO
 
 Edit `/usr/local/pio/conf/pio-env.sh` replace the contents with the following, making sure to update all server IP addresses:
 
@@ -164,23 +300,23 @@ Edit `/usr/local/pio/conf/pio-env.sh` replace the contents with the following, m
     PIO_STORAGE_SOURCES_HBASE_HOSTS=<some-hbase-master>,<some-other-hbase-master>,...
     PIO_STORAGE_SOURCES_HBASE_PORTS=0,0,...
 
-## 5. Install your Template
+## 6. Install your Template
 
-5.1 Clone Universal Recommender Template from its root repo into `~/universal` or do similar for any other template.
+6.1 Clone Universal Recommender Template from its root repo into `~/universal` or do similar for any other template.
 
     git clone https://github.com/actionml/template-scala-parallel-universal-recommendation.git universal
 	cd ~/universal
 	git checkout master # or get the tag you want
 
-5.2 Build the Template
+6.2 Build the Template
 
     pio build # do this before every train
 
-## 6. Spin Up a Spark Cluster&mdash;Docker Magic
+## 7. Spin Up a Spark Cluster&mdash;Docker Magic
 
 Here lies Docker magic to create AWS instances and install and launch Spark containers. 
 
-## 7. Train the Template
+## 8. Train the Template
 
 If the EventServer is running and there is data in the appName listed in `engine.json` you may now run:
 
