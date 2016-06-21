@@ -18,7 +18,7 @@ Create an instance on AWS or other cloud PaaS provider, and make sure the machin
 
 Read the [Small HA Cluster instructions](/docs/small-ha-cluster.md) but note that we need instalation jars only for getting configuration information, scripts, or client launcher code (in the case of Spark).
 
-### 1. Setup User, SSH, and host naming on All Hosts:
+### 1. Setup the `aml` User:
 
 1.1 Create user for PredictionIO `aml`
 
@@ -31,7 +31,7 @@ Read the [Small HA Cluster instructions](/docs/small-ha-cluster.md) but note tha
 
 Notice that we are now logged in as the `aml` user
 
-1.3 Setup passwordless ssh to other cluster machines? Not sure that this is required.
+**NOTE**: Setup passwordless ssh to other cluster machines? Not sure that this is required.
 
 ## 2. Setup Java 1.7 or 1.8
 
@@ -43,20 +43,18 @@ Notice that we are now logged in as the `aml` user
 
     sudo update-alternatives --config java
 
-2.3 Set JAVA_HOME env var.
+2.3 Set `JAVA_HOME` env var.
 
 Don't include the `/bin` folder in the path. This can be problematic so if you get complaints about JAVA_HOME you may need to change xxx-env.sh depending on which service complains. For instance `hbase-env.sh` has a JAVA_HOME setting if HBase complains when starting.
 
-    vim /etc/environment
-    # add the following
+    # add the following to /home/aml/.bashrc
     export JAVA_HOME=/path/to/open/jdk/jre
-    # some would rather add JAVA_HOME to /home/aml/.bashrc
 
 ## 3. Download Installation Jars:
 
 Download everything to a temp folder like `/tmp/downloads`, we will later move them to the final destinations.
 
-3.1 Download:
+3.1 Download and extract service code:
 
  - {{> hdfsdownload}}
 
@@ -68,39 +66,33 @@ Download everything to a temp folder like `/tmp/downloads`, we will later move t
 
 3.2 Create folders in `/opt`
 
-```
-mkdir /opt/hadoop
-mkdir /opt/spark
-mkdir /opt/elasticsearch
-mkdir /opt/hbase
-chown aml:aml /opt/hadoop
-chown aml:aml /opt/spark
-chown aml:aml /opt/elasticsearch
-chown aml:aml /opt/hbase
-```
+    mkdir /opt/hadoop
+    mkdir /opt/spark
+    mkdir /opt/elasticsearch
+    mkdir /opt/hbase
+    chown aml:aml /opt/hadoop
+    chown aml:aml /opt/spark
+    chown aml:aml /opt/elasticsearch
+    chown aml:aml /opt/hbase
 
 3.3 Inside the `/tmp/downloads` folder, extract all downloaded services.
 
 3.4 Move extracted services to their folders.
 
-```
-sudo mv /tmp/downloads/hadoop-2.6.2 /opt/hadoop/
-sudo mv /tmp/downloads/spark-1.6.1 /opt/spark/
-sudo mv /tmp/downloads/elasticsearch-1.7.5 /opt/elasticsearch/
-sudo mv /tmp/downloads/hbase-1.2.1 /opt/hbase/
-```
+    sudo mv /tmp/downloads/hadoop-2.6.2 /opt/hadoop/
+    sudo mv /tmp/downloads/spark-1.6.1 /opt/spark/
+    sudo mv /tmp/downloads/elasticsearch-1.7.5 /opt/elasticsearch/
+    sudo mv /tmp/downloads/hbase-1.2.1 /opt/hbase/
 
-Note: Keep version numbers, if you upgrade or downgrade in the future just create new symlinks.
+Note: Keep version numbers, if you upgrade or downgrade in the future just update symlinks.
 
 3.4 Symlink Folders
 
-```
-sudo ln -s /opt/hadoop/hadoop-2.6.2 /usr/local/hadoop
-sudo ln -s /opt/spark/spark-1.6.1 /usr/local/spark
-sudo ln -s /opt/elasticsearch/elasticsearch-1.7.5 /usr/local/elasticsearch
-sudo ln -s /opt/hbase/hbase-1.2.1 /usr/local/hbase
-sudo ln -s /home/aml/pio-aml /usr/local/pio-aml
-```	
+    sudo ln -s /opt/hadoop/hadoop-2.6.2 /usr/local/hadoop
+    sudo ln -s /opt/spark/spark-1.6.1 /usr/local/spark
+    sudo ln -s /opt/elasticsearch/elasticsearch-1.7.5 /usr/local/elasticsearch
+    sudo ln -s /opt/hbase/hbase-1.2.1 /usr/local/hbase
+    sudo ln -s /home/aml/pio-aml /usr/local/pio-aml
 
 ## 4. Install {{> pioname}}
 
@@ -145,7 +137,6 @@ Edit `/usr/local/pio/conf/pio-env.sh` replace the contents with the following, m
     # Need to use HDFS here instead of LOCALFS to enable deploying to 
     # machines without the local model
     PIO_STORAGE_REPOSITORIES_MODELDATA_NAME=pio_model
-    #PIO_STORAGE_REPOSITORIES_MODELDATA_SOURCE=LOCALFS
     PIO_STORAGE_REPOSITORIES_MODELDATA_SOURCE=HDFS
     
     # Storage Data Sources, lower level that repos above, just a simple storage API
@@ -155,24 +146,23 @@ Edit `/usr/local/pio/conf/pio-env.sh` replace the contents with the following, m
     PIO_STORAGE_SOURCES_ELASTICSEARCH_TYPE=elasticsearch
     PIO_STORAGE_SOURCES_ELASTICSEARCH_HOME=/usr/local/elasticsearch
     # The next line should match the ES cluster.name in ES config
-    PIO_STORAGE_SOURCES_ELASTICSEARCH_CLUSTERNAME=elasticsearch
+    PIO_STORAGE_SOURCES_ELASTICSEARCH_CLUSTERNAME=<some-cluster-name>
     
     # For clustered Elasticsearch (use one host/port if not clustered)
-    PIO_STORAGE_SOURCES_ELASTICSEARCH_HOSTS=ip-172-31-2-118
-    PIO_STORAGE_SOURCES_ELASTICSEARCH_PORTS=9300
+    PIO_STORAGE_SOURCES_ELASTICSEARCH_HOSTS=<some-elasticsearch-node>,<some-other-elasticsearch-node>,...
+    PIO_STORAGE_SOURCES_ELASTICSEARCH_PORTS=9300,9300,...
     
-    #PIO_STORAGE_SOURCES_LOCALFS_TYPE=localfs
-    #PIO_STORAGE_SOURCES_LOCALFS_HOSTS=$PIO_FS_BASEDIR/models
+    # model storage, required to be in hdfs but not really used
     PIO_STORAGE_SOURCES_HDFS_TYPE=hdfs
-    PIO_STORAGE_SOURCES_HDFS_PATH=hdfs://ip-172-31-2-118:9000/models
+    PIO_STORAGE_SOURCES_HDFS_PATH=hdfs://<some-hdfs-master>:9000/models
     
     # HBase Source config
     PIO_STORAGE_SOURCES_HBASE_TYPE=hbase
     PIO_STORAGE_SOURCES_HBASE_HOME=/usr/local/hbase
     
     # Hbase clustered config (use one host/port if not clustered)
-    PIO_STORAGE_SOURCES_HBASE_HOSTS=ip-172-31-2-118
-    PIO_STORAGE_SOURCES_HBASE_PORTS=0
+    PIO_STORAGE_SOURCES_HBASE_HOSTS=<some-hbase-master>,<some-other-hbase-master>,...
+    PIO_STORAGE_SOURCES_HBASE_PORTS=0,0,...
 
 ## 5. Install your Template
 
@@ -186,13 +176,13 @@ Edit `/usr/local/pio/conf/pio-env.sh` replace the contents with the following, m
 
     pio build # do this before every train
 
-## 6. Spin Up a Spark Cluster
+## 6. Spin Up a Spark Cluster&mdash;Docker Magic
 
 Here lies Docker magic to create AWS instances and install and launch Spark containers. 
 
 ## 7. Train the Template
 
-If there is data in the EventSever you may now run:
+If the EventServer is running and there is data in the appName listed in `engine.json` you may now run:
 
     pio train -- \ # tells pio the rest of the params are for SparkSubmit
         --driver-memory 4g \
@@ -201,6 +191,8 @@ If there is data in the EventSever you may now run:
         --conf spark.eventLog.enabled=true \
         --conf spark.eventLog.dir=hdfs://<some-hdfs-master>:9000/spark-events
 
-*NOTE*: the hdfs path `/spark-events` must already be created
+**NOTE**: the hdfs path `/spark-events` must already be created.
+
+**NOTE 2**: `pio train` finds data previously stored in the EventServer directly by communicating with HBase, not through the EventServer's REST API so no pointer is needed to it.
 
 {{/template}}
