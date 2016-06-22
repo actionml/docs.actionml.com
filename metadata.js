@@ -37,6 +37,10 @@ DocList = [
                 template: 'pio_cli_cheatsheet'
             },
             {
+                title: 'Start/Stop PIO',
+                template: 'pio_start_stop'
+            },
+            {
                 title: 'Version History',
                 template: 'pio_versions'
             }
