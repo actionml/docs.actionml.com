@@ -2,7 +2,7 @@
 
 # Start and Stop a PredictionIO Cluster
 
-There are several Services that together are needed to run PredictionIO and the Universal Recommender. It is important that these be started and stopped in the right order. If you used the action(ML) cluster setup guide then the instructions below will apply verbatim, if you setup you own clustered environment you may need to substitute the right paths but the order of commands will be the same.
+There are several Services that together are needed to run PredictionIO and the Universal Recommender. It is important that these be started and stopped in the right order. If you used the ActionML cluster setup guide then the instructions below will apply, if you setup your own clustered environment you may need to substitute the right paths but the order of commands will be the same.
 
 ## Startup
 Assume all servers are rebooted and running linux with no additional processes running. Assume the entire cluster is being restarted. This does not describe how to restart a single node so that it rejoins the cluster without disruption, which is beyond the scope of this doc. Each of the services is capable of doing this but uses a different mechanism. Elasticsearch, for instance, can just be restarted on each node and will automatically recontact the other cluster members and rejoin them. Hadoop and Spark on the other hand are often started or stopped from the master, though the slaves can also be started separately.
