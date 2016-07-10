@@ -166,7 +166,7 @@ Edit `/usr/local/hadoop/etc/hadoop/hadoop-env.sh` make sure the following values
     export HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-"/etc/hadoop"}
     ```
 
-## 4.2. Setup Elasticsearch Cluster
+## 4.2. Setup an Elasticsearch Cluster
 
 - Change the `/usr/local/elasticsearch/config/elasticsearch.yml` file as shown below. This is minimal and allows all hosts to act as backup masters in case the acting master goes down. Also all hosts are data/index nodes so can respond to queries and host shards of the index.
 
@@ -175,8 +175,31 @@ Edit `/usr/local/hadoop/etc/hadoop/hadoop-env.sh` make sure the following values
 ```
 cluster.name: some-cluster-name
 discovery.zen.ping.multicast.enabled: false # most cloud services don't allow multicast
-discovery.zen.ping.unicast.hosts: ["some-master", "some-slave-1", "some-slave-2"] # add all hosts, masters and/or data nodes
+discovery.zen.ping.unicast.hosts: ["some-master", "some-slave-1", "some-slave-2",... ]# add all hosts, masters and/or data nodes
 ```
+
+ - Edit `pio-env.sh (in $PIO_HOME/conf)`
+
+```
+...
+PIO_STORAGE_SOURCES_ELASTICSEARCH_CLUSTERNAME=some_cluster_name
+PIO_STORAGE_SOURCES_ELASTICSEARCH_HOSTS="some-master", "some-slave-1", "some-slave-2",...
+PIO_STORAGE_SOURCES_ELASTICSEARCH_PORTS=9200,9200,9200,...
+```
+
+There should be one port per host. Since this is the Elasticsearch TransportClient the default is `9200`
+
+ - Edit `engine.json` in your template directory. You will also need to connect from Spark executors to Elasticsearch using both the TransportClient and the REST API. The transpost client is specified in `pio-env.sh` but the REST nodes must be put in `engine.json` of your template, and only of the template uses the Elasticsearch REST API, like the Universal Recommender.
+
+```
+"sparkConf": {
+    ...
+    "es.nodes": "some-master,some-slave-1,some-slave-2,...",
+},
+```
+
+If you are not using port `9300` for Elasticsearch REST include the port number in engine.json with `some-slave-1:xxxx` where `xxxx` is the port used.
+
 
 ## 4.3. Setup HBase Cluster (abandon hope all ye who enter here)
 
