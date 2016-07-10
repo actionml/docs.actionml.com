@@ -175,7 +175,7 @@ Edit `/usr/local/hadoop/etc/hadoop/hadoop-env.sh` make sure the following values
 ```
 cluster.name: some-cluster-name
 discovery.zen.ping.multicast.enabled: false # most cloud services don't allow multicast
-discovery.zen.ping.unicast.hosts: ["some-master", "some-slave-1", "some-slave-2",... ]# add all hosts, masters and/or data nodes
+discovery.zen.ping.unicast.hosts: ["some-host-1", "some-host-2", "some-host-3",... ]# add all hosts
 ```
 
  - Edit `pio-env.sh (in $PIO_HOME/conf)`
@@ -183,7 +183,7 @@ discovery.zen.ping.unicast.hosts: ["some-master", "some-slave-1", "some-slave-2"
 ```
 ...
 PIO_STORAGE_SOURCES_ELASTICSEARCH_CLUSTERNAME=some_cluster_name
-PIO_STORAGE_SOURCES_ELASTICSEARCH_HOSTS="some-master", "some-slave-1", "some-slave-2",...
+PIO_STORAGE_SOURCES_ELASTICSEARCH_HOSTS=some-host-1,some-host-2,some-host-3,... 
 PIO_STORAGE_SOURCES_ELASTICSEARCH_PORTS=9200,9200,9200,...
 ```
 
@@ -198,7 +198,7 @@ There should be one port per host. Since this is the Elasticsearch TransportClie
 },
 ```
 
-If you are not using port `9300` for Elasticsearch REST include the port number in engine.json with `some-slave-1:xxxx` where `xxxx` is the port used.
+If you are not using port `9300` for Elasticsearch REST include the port number in engine.json with `some-host-1:xxxx` where `xxxx` is the port used.
 
 
 ## 4.3. Setup HBase Cluster (abandon hope all ye who enter here)
