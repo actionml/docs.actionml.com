@@ -11,7 +11,7 @@ Requirements:
 
 On Linux / Mac OS X, PredictionIO can now be installed with a single command:
 
-`bash -c "$(curl -s https://raw.githubusercontent.com/actionml/PredictionIO/develop/bin/install.sh)"`
+`bash -c "$(curl -s https://raw.githubusercontent.com/actionml/PredictionIO/master/bin/install.sh)"`
 
 The above script will complete the installation for you including prerequisites. If you already have some prerequisites or plan a custom or clustered config use the manual install instructions. 
 
