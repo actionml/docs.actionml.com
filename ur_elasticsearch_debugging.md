@@ -11,7 +11,7 @@ Get the Chrome extension called [Sense](https://chrome.google.com/webstore/detai
 
 Install and enable Sense and launch it from the app buttons in Chrome. Set the Elasticsearch server and point it to port 9200, which is the default REST port for Elasticsearch. From now on any REST URL + JSON body will be sent to the server and the result will be pretty printed JSON in the result Pane. For example, to get cluster health execute the highlighted REST command.
 
-![image](/docs/image/ur-sense-cluster-health.png)
+![image](/docs/images/ur-sense-cluster-health.png)
 
 ## Example of a Good Model
 
