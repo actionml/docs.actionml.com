@@ -67,8 +67,12 @@ DocList = [
                 template: 'ur_queries'
             },
             {
-                title: 'Advanced Tuing',
+                title: 'Advanced Tuning',
                 template: 'ur_advanced_tuning'
+            },
+            {
+                title: 'Model Debugging',
+                template: 'ur_elasticsearch_debugging'
             }
         ]
     }
