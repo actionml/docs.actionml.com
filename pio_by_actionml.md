@@ -18,7 +18,7 @@ For ActionML's PredictionIO {{> pioversion}} please follow [these instructions](
 - you want [The Universal Recommender](/docs/ur) v0.3.0+ **or** 
 - you want to use the new [SelfCleaningDataSource](/docs/pio_versions) to maintain a fixed duration window of data for apps, aging out old data.
 
-Installation instructions [here](docs/install).
+Installation instructions [here](install).
 
 **Note**: ActionML maintains a merged version for people who need SSL and other features of the ActionML {{> pioversion}} in a branch so contact ActionML on our [Google Group](https://groups.google.com/forum/#!forum/actionml-user) or email [support@actionml.com](mailto:support@actionml.com?subject=Need SSL/HTTPS Version of ActionML's PredictionIO v0.9.6) for instructions.
 
