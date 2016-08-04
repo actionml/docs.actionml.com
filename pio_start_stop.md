@@ -79,9 +79,9 @@ Shutdown is in the opposite order of startup but if the startup is automated the
 
 	    $ /usr/local/hadoop/sbin/stop-dfs.sh
 
-## Reboot
+## Monitoring
 
-To be added...
+See [**Monitoring PredictionIO**](pio_monitoring)
 
 
 {{/template}}
