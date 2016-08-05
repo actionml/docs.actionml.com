@@ -403,6 +403,6 @@ See the template setup instructions. The Universal Recommender can be installed 
 
 ## 9. Scaling for Load Balancers
 
-See 
+See [**PredictionIO Load Balancing**](pio_load_balancing)
 
 {{/template}}
