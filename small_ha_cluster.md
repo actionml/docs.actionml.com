@@ -399,6 +399,10 @@ The status of all the stores is checked and will be printed but no check is made
 
 ##8. Setup Your Template
 
-See the template setup instructions. The Universal Recommender can be installed with its [quickstart](/docs/ur_quickstart). 
+See the template setup instructions. The Universal Recommender can be installed with its [quickstart](/docs/ur_quickstart).
+
+## 9. Scaling for Load Balancers
+
+See 
 
 {{/template}}
