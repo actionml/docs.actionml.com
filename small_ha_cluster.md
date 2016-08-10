@@ -34,6 +34,8 @@ Here we'll install and setup:
 
 1.2 Give the `aml` user sudoers permissions and login to the new user. This setup assumes the aml user as the **owner of all services** including Spark and Hadoop (HDFS).
 
+**Note**: to do the following you may need to create a group called `sudo` and edit `/etc/sudoers` to add `%sudo  ALL = (ALL) NOPASSWD: ALL`
+
     usermod -a -G sudo aml
     sudo su aml # or exit and login as the aml user
 
@@ -50,7 +52,7 @@ Notice that we are now logged in as the `aml` user
 
 ## 2. Download Services on all Hosts:
 
-Download everything to a temp folder like `/tmp/downloads`, we will later move them to the final destinations.
+Download everything to a temp folder like `/tmp/downloads`, we will later move them to the final destinations. **Note**: You may need to install `wget` with `yum` or `apt-get`.
 
 2.1 Download {{> hdfsdownload}}
 
@@ -77,7 +79,11 @@ Download everything to a temp folder like `/tmp/downloads`, we will later move t
 
 3.1 Install Java OpenJDK or Oracle JDK for Java 7 or 8, the JRE version is not sufficient.
 
-    sudo apt-get install openjdk-7-jdk
+    sudo apt-get install openjdk-8-jdk
+    # for centos
+    # sudo yum install java-1.8.0-openjdk
+    
+**Note**: on Centos/RHEL you may need to install java-1.8.0-openjdk-devel if you get complaints about missing `javac` or `javadoc`
 
 3.2 Check which versions of Java are installed and pick a 1.7 or greater.
 
@@ -85,7 +91,7 @@ Download everything to a temp folder like `/tmp/downloads`, we will later move t
 
 3.3 Set JAVA_HOME env var.
 
-Don't include the `/bin` folder in the path. This can be problematic so if you get complaints about JAVA_HOME you may need to change xxx-env.sh depending on which service complains. For instance `hbase-env.sh` has a JAVA_HOME setting if HBase complains when starting.
+Don't include the `/bin` folder in the path. This can be problematic so if you get complaints about JAVA\_HOME you may need to change xxx-env.sh depending on which service complains. For instance `hbase-env.sh` has a JAVA\_HOME setting if HBase complains when starting.
 
     vim /etc/environment
     # add the following
