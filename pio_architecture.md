@@ -37,7 +37,7 @@ This is the typical input mode of the system where clients or web app backends a
 
 ![image](https://docs.google.com/drawings/d/1S4GDPsVMVBhN2UxdnEXd2xuNBxyltPiwdE6abSmx9WA/pub?w=960&h=720)
 
-###Training a Model
+### <a href="#pio-train"></a>Training a Model
 
 In Data-Science jargon the template creates a new model from the EventServer's data taken as a whole every time `pio train` is called. This is the background part of the Lambda Architecture. As a rule of thumb it's best to re-train when enough new data has come in to require retraining&mdash;for a recommender this is when new items with interactions exist since a recommender cannot recommend items that is hasn't seem in training data.
 
