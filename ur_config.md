@@ -2,14 +2,14 @@
 # Universal Recommender Tuning
 The default settings of the UR are good for many purposes but getting optimum results may require tuning and at very least many users will wish to know the meaning of the various tuning params.
 
-## UR Parameters
+## UR Parameters v0.4.0
 
-### Start Here: Find Your Primary Indicator
+### Start Here: Find Your Primary Conversion Indicator
 
-To start using a recommender you must have a primary indicator of user preference. This is generally defined in a conversion. A conversion event is a "buy", "watch", "read", "share", or some other action that you consider to be the ideal thing for your users. Ask yourself 2 questions:
+To start using a recommender you must have a primary indicator of user preference. This is sometimes called the "conversion" event. If it is not obvious ask yourself 2 questions:
 
  1. *"What item type do I want to recommend?"* For ecom this will be a product, for media it will be a story or video.
- 2. *"Of all the data I have what is the most pure and unambiguous indication of user preference for this item?"* This tends to be a "conversion"; for ecom a "buy" is good, for media a "read" or "watch90" (for watching 90% of a video). Try to avoid ambiguous things like ratings, after all what does a rating of 3 mean for a 1-5 range? Does a rating of 2 mean a like or dislike? If you have ratings then 4-5 is a pretty unambiguous "like" so the other ratings may not apply to a primary indicator&mdash;though they may still be useful so read on.
+ 2. *"Of all the data I have what is the most pure and unambiguous indication of user preference for this item?"* For ecom a "buy" is good, for media a "read" or "watch90" (for watching 90% of a video). Try to avoid ambiguous things like ratings, after all what does a rating of 3 mean for a 1-5 range? Does a rating of 2 mean a like or dislike? If you have ratings then 4-5 is a pretty unambiguous "like" so the other ratings may not apply to a primary indicator&mdash;though they may still be useful so read on.
  
 Take the item from #1, the indicator-name from #2 and the user-id and you have the data to create a "primary indicator" of the form **(user-id, "indicator-name", item-id)**. 
 
@@ -115,6 +115,14 @@ A full list of tuning and config parameters is below. See the field description 
             "indexName": "urindex",
             "typeName": "items",
             "eventNames": ["buy", "view"]
+            "indicators": [
+                {
+                    "name": "purchase"
+                },{
+                    "name": "view",
+                    "maxCorrelatorsPerItem": 50
+                }
+            ],
             "blacklistEvents": ["buy", "view"],
             "maxEventsPerEventType": 500,
             "maxCorrelatorsPerEventType": 50,
@@ -122,13 +130,23 @@ A full list of tuning and config parameters is below. See the field description 
             "num": 20,
             "seed": 3,
             "recsModel": "all",
-			"backfillField": {
-				"name": "popRank"
-  				"backfillType": "popular",
-  				"eventNames": ["buy", "view"],
-  				"duration": "3 days", // note that this has changed from v0.2.3
-  				"endDate": "ISO8601-date" //most recent date to end the duration
-  			},
+			"rankings": [
+              {
+                "name": "popRank"
+                "type": "popular", // or "trending" or "hot"
+                "eventNames": ["buy", "view"],
+                "duration": "3 days",
+                "endDate": "ISO8601-date" // most recent date to end the duration
+              },
+              {
+                "name": "uniqueRank"
+                "type": "random"
+              },
+              {
+                "name": "weightRank"
+                "type": "userDefined"
+              }
+            ],
             "expireDateName": "expireDateFieldName",
             "availableDateName": "availableDateFieldName",
             "dateName": "dateFieldName",
@@ -151,7 +169,7 @@ A full list of tuning and config parameters is below. See the field description 
 
 The `datasource: params:` section controls input data. This section is Algorithm independent and is meant to manage the size of data in the EventServer and do compaction. Is changes the persisted state of data. A fixed `timeWindow: duration:` will have the effect of making the UR calculate a model in a fixed amount of time as long as soon as there are enough events to start dropping old ones.
 
- - **eventNames**: enumerates the event types to be used, the first of which is the primary event.
+ - **eventNames**: enumerates the event types to be used. Required and must match either eventsNames or indicators in algorithms: params.
  - **eventWindow**: This is optional and controls how much of the data in the EventServer to keep and how to compress events. The default it to not have a time window and do no compression. This will compact and drop old events from the EventServer permanently in the persisted data&mdash;so make sure to have some other archive of events it you are playing with the `timeWindow: duration:`.
 	 - **duration**: This is parsed for "days", "hours", "minutes", or smaller periods and becomes a Scala `Duration` object defining the time from now backward to the point where older events will be dropped. $set property change event are never dropped.
 	 - **removeDuplicates** a boolean telling the Datasource to de-duplicate non$set type events, defaults to `false`.
@@ -164,9 +182,12 @@ The `Algorithm: params:` section controls most of the features of the UR. Possib
 * **appName**: required string describing the app using the engine. Must be the same as is seen with `pio app list`
 * **indexName**: required string describing the index for all correlators, something like "urindex". The Elasticsearch URI for its REST interface is `http:/**elasticsearch-machine**/indexName/typeName/...` You can access ES through its REST interface here.
 * **typeName**: required string describing the type in Elasticsearch terminology, something like "items". This has no important meaning but must be part of the Elasticsearch URI for queries.
-* **eventNames**: required array of string identifiers describing action events recorded for users, things like “purchase”, “watch”, “add-to-cart”, even “location”, or “device” can be considered actions and used in recommendations. The first action is to be considered the primary action because it **must** exist in the data and is considered the strongest indication of user preference for items, the others are secondary for cooccurrence and cross-cooccurrence calculations. The secondary actions/events may or may not have target entity ids that correspond to the items to be recommended, so they are allowed to be things like category-ids, device-ids, location-ids... For example: a category-pref event would have a category-id as the target entity id but a view would have an item-id as the target entity id (see Events below). Both work fine as long as all usage events are tied to users. 
-* **maxEventsPerEventType** optional (use with great care), default = 500. Amount of usage history to keep use in model calculation.
-* **maxCorrelatorsPerEventType**: optional (use with great care), default = 50. An integer that controls how many of the strongest correlators are created for every event type named in `eventNames`.
+* **eventNames**: this OR the `indicators` array is required. An array of string identifiers describing action events recorded for users, things like “purchase”, “watch”, “add-to-cart”, even “location”, or “device” can be considered actions and used in recommendations. The first action is to be considered the primary action because it **must** exist in the data and is considered the strongest indication of user preference for items, the others are secondary for cooccurrence and cross-cooccurrence calculations. The secondary actions/events may or may not have target entity ids that correspond to the items to be recommended, so they are allowed to be things like category-ids, device-ids, location-ids... For example: a category-pref event would have a category-id as the target entity id but a view would have an item-id as the target entity id (see Events below). Both work fine as long as all usage events are tied to users. 
+* **maxEventsPerEventType**: optional (use with great care), default = 500. Amount of usage history to keep use in model calculation.
+* **maxCorrelatorsPerEventType**: optional, default = 50. this applies to all event types, use `indicators` to apply to specific event types&mdash;called indicators. An integer that controls how many of the strongest correlators are created for every event type named in `eventNames`.
+* **indicators**: either this of `eventNames` are required. This method for naming event types also allows for setting downsampling per event type. These are more properly called "indicators" because they may not be triggered by events but always are assumed to be something known about users, which we think "indicates" something about their taste or preferences:
+  * **name**: name for the indicator, as in eventNames.
+  * **maxCorrelatorsPerItem**: number of correlated items per recommended item. This is set to give best results for the indicator type and is often set to less than 50 (the default value) if the number of different ids for this event type is small. For example if the indicator is "gender" there will only be 2 ids M and F so downsampleing may preform better if set to 1, which would find the gender that best correlates with a primary event on the recommended items like a purchase of a product. Without this setting the default of 50 would apply, meaning to take the top 50 gender ids that correlate with the primary/conversion item. With enough data you may get all genders to correlate, meaning none would be of higher value than another, meaning in turn that gender would not help recommend. Taking 1 correlator would force the UR to choose which is more highly correlated instead of taking up to 50 of the highest.
 * **maxQueryEvents**: optional (use with great care), default = 100. An integer specifying the number of most recent user history events used to make recommendations for an individual. More implies some will be less recent actions. Theoretically using the right number will capture the user’s current interests.
 * **num**: optional, default = 20. An integer telling the engine the maximum number of recommendations to return per query but less may be returned if the query produces less results or post recommendations filters like blacklists remove some.
 * **blacklistEvents**: optional, default = the primary action. An array of strings corresponding to the actions taken on items, which will cause them to be removed from recommendations. These will have the same values as some user actions - so “purchase” might be best for an ecom application since there is often little need to recommend something the user has already bought. If this is not specified then the primary event is assumed. To blacklist no event, specify an empty array. Note that not all actions are taken on the same items being recommended. For instance every time a user goes to a category page this could be recorded as a category preference so if this event is used in a blacklist it will have no effect, the category and item ids should never match. If you want to filter certain categories, use a field filter and specify all categories allowed.
@@ -177,13 +198,25 @@ The `Algorithm: params:` section controls most of the features of the UR. Possib
 * **availableDateName** optional, name of the item properties field that contains the date the item is available to recommend. 
 * **dateName** optional, a date or timestamp used in a `dateRange` recommendations filter.
 * **returnSelf**: optional, default = false. Boolean asking to include the item that was part of the query (if there was one) as part of the results. The default is false and this is by far the most common use so this is seldom required.
-* **recsModel** optional, default = "all", which means  collaborative filtering with popular items returned when no other recommendations can be made. Otherwise: "all", "collabFiltering", "backfill". If only "backfill" is specified then the train will create only some backfill type like popular. If only "collabFiltering" then no backfill will be included when there are no other recommendations.
-* **backfillField** optional (use with great care), this set of parameters defines the calculation of the popularity model that ranks all items by their events in one of three different ways corresponding to: event counts (popular), change in event counts over time (trending), and change in trending over time (hot). If there are not enough recommendations to return teh number asked for, popular items will fill in the remaining recommendations asked for&mdash;hence the term "backfill". Purely popular items may be requested in the query by specifying no user of item.
-	* **name** give the field a name in the model and defaults to "popRank"
-	* **backfillType**  "popular", "trending", and "hot". These are event counts, velocity of change in event counts, or the acceleration of event counts. **Note**: when using "hot" the algorithm divides the events into three periods and since events tend to be cyclical by day, 3 days will produce results mostly free of daily effects for all types. Making this time period smaller may cause odd effects from time of day the algorithm is executed. Popular is not split and trending splits the events in two. So choose the duration accordingly. 
-	* **eventNames** an array of eventNames to use in calculating the popularity model, this defaults to the single primary events&mdash;the first in the `algorithm: eventNames:` 
-	* **duration** a duration like "3 days" (which is the default), which defines the time from now back to the last event to count in the popularity calculation.
-	* **endDate** an ISO8601-date string to use to start the duration&mdash;the first event to count. This is almost never used live system but may be used in tests on batch imported events.
+* **recsModel** optional, default = "all", which means  collaborative filtering with popular items or other ranking method returned when no other recommendations can be made. Otherwise: "all", "collabFiltering", "backfill". If only "backfill" is specified then the train will create only some backfill or ranking type like popular. If only "collabFiltering" then no backfill will be included when there are no other recommendations.
+* **rankings** optional, the default is to use only `"type": "popular"` counting all primary events. This parameter, when specified, is a list of ranking methods used to rank items as fill-in when not enough recommendations can be returned using the CCO algorithm. Popular items usually get the best results and so are the default. It is sometimes useful to be able to return any item, even if it does not have events (popular would not return these) so we allow random ranking as a method to return items. There may also be a user defined way to rank items so this is also supported.
+     
+  This parameter is a list of ranking methods that work in the order specified. For instance if popular is first and it cannot return enough items the next method in the list will be used&mdash;perhaps random. Random is always able to return all items defined so it should be last in the list. 
+  
+  When the `"type"` is **"popular", "trending", or "hot"** this set of parameters defines the calculation of the popularity model that ranks all items by their events in one of three different ways corresponding to: event counts (popular), change in event counts over time (trending), and change in trending over time (hot).
+  
+  When the `"type"` is **"random"** all items are ranked randomly regardless of any usage events. This is useful if some items have no events but you want to present them to users given no other method to recommend.
+  
+  When the `"type"` is **"userDefined"** the property defined in `"name"` is expected to rank any items that you wish to use as backfill. This may be useful, for instance, if you wish to show promoted items when no other method to recommend is possible. 
+  
+  In all cases the property value defined by `"name"` must be given a unique float value. For `"popular"`, `"trending"`, `"hot"`, and `"random"` the value is calculated by the UR. For `"userDefined"` the value is set using a `$set` event like any other property, only the value must be a float. See "Property Change Events" [here](http://actionml.com/docs/ur_input).
+  
+	* **name** give the field a name in the model and defaults to those mentioned above in the JSON.
+	* **type**  `"popular"`, `"trending"`, `"hot"`, `"userDefined"`,and `"random"`. `"popular"`, `"trending"`, `"hot"` use event counts that are just count, velocity of change in event counts, or the acceleration of event counts respectively. **Note**: when using "hot" the algorithm divides the events into three periods and since events tend to be cyclical by day, 3 days will produce results mostly free of daily effects for all types. Making this time period smaller may cause odd effects from time of day the algorithm is executed. Popular is not split and trending splits the events in two. So choose the duration accordingly.
+	* **eventNames** this is allowed only with one of the popularity types and is  array of eventNames to use in calculating the popularity model, this defaults to the primary/conversion event&mdash;the first in the `algorithm: eventNames:` list. 
+	* **duration**  this is allowed only with one of the popularity type and is a duration like "3 days" (which is the default), which defines the time from now back to the last event to count in the popularity calculation.
+	* **endDate**  this is allowed only with one of the popularity type and is an ISO8601-date string to use to start the duration&mdash;in other words it defines the first event to count. **This is almost never used a live system** but may be used in tests on batch imported events.
+first event to count. This is almost never used live system but may be used in tests on batch imported events.
 * **seed** Set this if you want repeatable downsampling for some offline tests. This can be ignored and shouldn't be set in production. 
 
 {{/template}}
