@@ -4,6 +4,8 @@ The default settings of the UR are good for many purposes but getting optimum re
 
 ## UR Parameters v0.4.0
 
+**Notice:** This version requires you to build Mahout v0.13.0-SNAPSHOT from source. If you do not need v0.4.0 features you can stick with v0.3.0 by pulling that tag from the UR repo. See git instructions to pull and checkout a specific tag. To use v0.4.0 You will need to pull the latest master of Mahout v0.13.0 from the [Apache Mahout repo](https://github.com/apache/mahout.git) and build it locally on the machine you expect to build the Universal Recommender. We will update the UR as soon as Mahout v0.13.0 is released to avoid this extra build. Also notice that this version is not compatible with Apache PredcitionIO v0.10.0 since it has not been released yet. Continue to use the ActionML version of PredictionIO-0.9.7-aml.
+
 ### Start Here: Find Your Primary Conversion Indicator
 
 To start using a recommender you must have a primary indicator of user preference. This is sometimes called the "conversion" event. If it is not obvious ask yourself 2 questions:
