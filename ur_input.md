@@ -59,14 +59,15 @@ To attach properties to items use a $set event like this:
 	{
 		"event":"$set",
 		"entityType":"item",
-		"entityId":"tweek_",
+		"entityId":"Mr Robot",
 		"properties": {
-			"content-type":["tv_show"],
-			"genres":["10751","16"],
-			"actor":["1513229","89756","215384","120310"],
-			"keywords":["409"],
-			"first_air_at":["1960"]
+			"content-type":["tv show"],
+			"genres":["suspense","sci-fi", "drama"],
+			"actor":["Rami Malek", "Christian Slater"],
+			"keywords":["hacker"],
+			"first_air_at":["2015"]
 		}
+		"eventTime" : "2016-10-05T21:02:49.228Z"
 	}
 
 
