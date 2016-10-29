@@ -54,11 +54,16 @@ It's recommended that you run the UR integration test
     
 You will have a diff printed of expected and actual results. The order if returned items may vary **if** they have the same score, otherwise results should match.
 
-After the integration test you will have a prediction server running on port 8000 of localhost. Try some queries:
-
+The integration test will launch a The UR querey server (PredictionServer) and take it down afterwards. To try some sample queries, launch it again:
+    
+    pio deploy
+    # switch to a new terminal and
+    cd ~/universal
     ./examples/multi-query-handmade.sh
 
-This is the set of queries used in the test. Take a look at the file and pull out an individual query like:
+On the `pio deploy` terminal you will see the internal Elasticsearch queries, in the UR query terminal you will see the recommendations results.
+
+Take a look at `examples/multi-query-handmade.sh` and pull out an individual query like:
 
     curl -H "Content-Type: application/json" -d '
     {
@@ -68,8 +73,8 @@ This is the set of queries used in the test. Take a look at the file and pull ou
 There are many examples of queries in the examples so use it to see how to form them in JSON. You can also query using one of the SDKs for several different languages. SDKs are available from the primary language package installers just as we used the python version above.
 
  - [Python](https://github.com/actionml/PredictionIO-Python-SDK)
- - [Ruby](https://github.com/PredictionIO/PredictionIO-Ruby-SDK)
- - [Java](https://github.com/PredictionIO/PredictionIO-Java-SDK)
- - [PHP](https://github.com/PredictionIO/PredictionIO-PHP-SDK)
+ - [Ruby](https://github.com/actionml/PredictionIO-Ruby-SDK)
+ - [Java](https://github.com/actionml/PredictionIO-Java-SDK)
+ - [PHP](https://github.com/actionml/PredictionIO-PHP-SDK)
 
 {{/template}}
