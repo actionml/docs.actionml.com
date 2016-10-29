@@ -27,9 +27,16 @@ If you don't have it see these [installation instructions](http://pip.readthedoc
 
     sudo pip install predictionio datetime
     
-## Get The Universal Recommender Template
+## Build The Universal Recommender Template
 
-**Notice:** If you want to use the UR v0.4.0 or above, it will require a local build of Mahout 0.13.0-SNAPSHOT  Pull the latest master of Mahout v0.13.0 from the [Apache Mahout repo](https://github.com/apache/mahout.git) and build it locally on the machine you expect to build the Universal Recommender. We will update the UR as soon as Mahout v0.13.0 is released to avoid this extra build. 
+**Notice:** If you want to use the UR v0.4.2+, it will require a local build of Mahout 0.13.0-pat, until Mahout 0.13.0 is released.  Pull the repo from Github and build it locally on the machine you expect to build the Universal Recommender. We will update the UR as soon as Mahout v0.13.0 is released to avoid this extra step. 
+
+    git clone https://github.com/pferrel/mahout.git mahout
+    cd mahout
+    # if you do not have Maven 3.x installed see instructions here: 
+    mvn clean install -DskipTests
+
+Now get The Universal Recommender
 
     git clone https://github.com/actionml/template-scala-parallel-universal-recommendation.git ~/universal
     cd ~/universal
