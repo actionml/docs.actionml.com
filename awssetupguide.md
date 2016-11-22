@@ -25,17 +25,20 @@ You will need an ssh terminal that is compatible with OpenSSH. This is pre-insta
 
  - Add your ssh pubic key to the "aml" user and logout
 
-
-    sudo su - aml
-    ssh-keygen # hit enter for all options
-    nano .ssh/autorized_keys # add your ssh public key
-    # save and exit
-    exit
+```
+sudo su - aml
+ssh-keygen # hit enter for all options
+nano .ssh/autorized_keys # add your ssh public key
+# save and exit
+exit
+```
    
    This will give you a passwordless login to the machine that is secure.
    
-    ssh aml@<<public-ip-address-of-ami>
-    pio status
+```
+ssh aml@<<public-ip-address-of-ami>
+pio status
+```
    
    You should get a status check that is clean, pio is ready to start but not yet running. You can now create pio "apps", which are actually datasets, and check status. All required services like Elasticsearch, HBase, Hadoop Distributed File System are running and will restart when the instance is restarted but the PIO servers are not yet running.
 
