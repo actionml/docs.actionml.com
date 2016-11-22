@@ -13,7 +13,7 @@ This is a guide for launching PredictionIO from the AWS-Markeplace AMI, it inclu
 
 ## Create
 
-Goto the AWS Marketplace [here]() This will setup you through creating and instance, pick the size of machine and storage you need and choose the options to "create new keys". Download the .pem file to your computer and do the equivalent of the Linux `chmod 600 /path/to/pem-file`
+Goto the AWS Marketplace [here]() This will step you through creating an instance. As you create in instance pick the size of machine and storage you need and choose the option to "create new keys". Download the .pem file to your computer and do the equivalent of the Linux `chmod 600 /path/to/pem-file`
 
 ## Login
 
