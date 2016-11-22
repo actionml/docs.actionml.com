@@ -4,7 +4,7 @@
 
 ***Coming Soon&mdash;we are awaiting AWS approval***
 
-This is a guide for launching PredictionIO from the AWS-Markeplace AMI, it includes the latest Universal Recommender {{urversion}}. We recommend that you create this on a machine with at least 16G of memory. You may need 32g to process "real data" and to be useful for small production installations but it is primarily focused on being a development / proof of concept tool. 
+Go to the AWS Marketplace [here]() This will step you through creating an instance. This guide helps you use the AWS instance, which has Apache PredictionIO {{> pioversion}} and the latest Universal Recommender {{> urversion}} pre-installed from the AWS-Markeplace.
 
 ## Requirements
 
@@ -13,7 +13,7 @@ This is a guide for launching PredictionIO from the AWS-Markeplace AMI, it inclu
 
 ## Create
 
-Goto the AWS Marketplace [here]() This will step you through creating an instance. As you create in instance pick the size of machine and storage you need and choose the option to "create new keys". Download the .pem file to your computer and do the equivalent of the Linux `chmod 600 /path/to/pem-file`
+As you create in instance pick the size of machine and storage you need and choose the option to "create new keys". Download the .pem file to your computer and do the equivalent of the Linux `chmod 600 /path/to/pem-file`
 
 ## Login
 
