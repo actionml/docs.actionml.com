@@ -169,11 +169,6 @@ DocsHtmlPartials = [
     ismd: true
   },
   {
-    name: 'pioawsguide',
-    template: '- **[Single AWS Machine](/docs/single_machine_aws)**: This sets up a single AWS-Marketplace AMI to run all services and includes the Universal Recommender {{> urversion}}. It maybe be used to process "real data" but is primarily focused on being a deveoplment proof of concept machine.',
-    ismd: true
-  },
-  {
     name: "piosinglemachineguide",
     template: "- **[Single Machine](/docs/single_machine)**: This sets up a single machine to run all services but does so in a way that allows for easier cluster expansion in the future.",
     ismd: true
