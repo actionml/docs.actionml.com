@@ -1,4 +1,3 @@
-{{#template name='ur_advanced_tuning'}}
 # Advanced Tuning
 	
 ## Out of Memory Error
@@ -25,7 +24,7 @@ In pio the `--` separates any pio command line parameters from the `sparksubmit`
 
 **Why?** The driver for `pio train` creates a BiMap (made of 2 Hashmaps) for each id type, so one for user-ids, and one for each item-id set. These are then broadcast to each executor/worker/node in the Spark cluster. So the minimum will be 2 copies, one for the driver and one of the single executor.
 
-##Tuning For Recency of User Intent
+## Tuning For Recency of User Intent
 
 In "newsy" applications where an item has a short lifetime as far as usefulness to users, you will see interactions with items diminish quite rapidly. This is because some items are only of interest when they are new. The UR allows us to tune several parts of the algorithm to meet this need.
 
@@ -39,7 +38,7 @@ In "newsy" applications where an item has a short lifetime as far as usefulness 
           "afterDate": some-back-date
         }
 	   
-##Better Model at the Expense of Training/Query Time
+## Better Model at the Expense of Training/Query Time
 
 At the core of the Universal Recommender is the "Correlated Cross-Occurrence" algorithm, which creates the model used in making recommendations. The more data you include, the better the model will work but this is true with rapidly diminishing returns. One study of this effect was done by one of the CCO creators [here](https://ssc.io/pdf/rec11-schelter.pdf). This leads us to limit the actual data used to calculate the CCO model by downsampling. This will produce slightly worse results but keep the training time O(n) where n is the number of downsampled interactions used. 
 
@@ -47,7 +46,7 @@ To effectively disable downsampling change `"maxEventsPerEventType": 500` to som
 
 If training and query times are not a factor these can safely be increased with little chance of other bad side effects.
 
-##Blacklist
+## Blacklist
 
 The default `"blacklistEvents"` in the **engine parameters** is the single primary event. This means that if the user took the primary event on an item it will not be returned in recommendations. This is often the right thing to do but there are exceptions.
 
@@ -57,7 +56,7 @@ It is possible with this setting to get only things the user is already familiar
 
 In other cases you may want to be more restrictive and use more than the primary event  to filter out items from recs. Setting to `"blacklistEvents": ["buy", "view"]` is a good example, where anything the use bought or any item detail page the user viewed will not be returned as recommendations.
 
-##Anti Flood
+## Anti Flood
 
 Another case for removing items fro recommendations can be seen from looking at a web page with lots of recommendations in different categories. Think of the Netflix Web UI. If we were to show "your recommendations", and "recommended for you in SciFi", and so on, there is a chance that we will show the same items over and over, effectively waisting screen real-estate. In this case it may be better to avoid repeating recommendations, which would "flood" the page with duplicates. To do this, a list of blacklisted items can be passed in to the query and works only for that query.
 
@@ -159,18 +158,18 @@ Substitute your own field name. Remember that all items must have this field or 
 
 Both `"beforeDate"` and `"afterDate"` must be specified together so if you want a one-sided query, make one or the other dates far in the past or future. If no `"dateRange"` is used in the query, all recommendations will be returned based on other conditions.
 
-##Mixing Item-similarity and User Recommendations
+## Mixing Item-similarity and User Recommendations
 
 When showing an item, such as when you are on a detail page of an e-com site, it is common to show "similar items" otherwise know as "people who bought this also bought these". This works for completely anonymous users with no history. But in cases where you do know user history you might want to show personalized recommendations. In fact you might want to show personalized except when you have no user history. It is possible to mix items from both recommendation types by simply passing in a user-id and an item-id to the query. To favor user-based personal recommendations set the **query** param `“itemBias”` to something between 1 and 0, which will disfavor item recommendations. If there are no user recommendations because you have no history for the user then item-similarity based recs will be returned as fallback, and if neither is available popular items will be returned. Likewise if you want to favor item recommendations set `“itemBias”` to something larger than 1. This will boost items-similarity recommendations higher than user-based ones.
 
-##Randomization
+## Randomization
 Although this is not yet implemented in the UR it is always a good idea to randomize the ranking of recommendations to some small extent. This can be done by returning 40 recs and adding normally distributed random noise to the ranking number then re-ranking by the result. This will make the 40th recommendation sometimes become the 19th (for example) and if you are showing 20 it means that they 40th recommendation will sometimes get a chance at being recommended. If the user picks it, this will be fed back into the next training session and will improve the trained model. If the user doesn't pick it the ranking will not be increased. This technique turns a recommender in to a giant array of "multi-armed-bandits" that show somewhat randomly sampled items and learn which to favor. This is a very important technique for improving recommendations over time and should not be discounted as a fringe method. This should  always be done for all recommender implementations and will be incorporated into the UR in the Universal Recommender v0.4.0 release.
 
-##Controlling The Popularity Model (popModel)
+## Controlling The Popularity Model (popModel)
 
 The UR allows all items to be ranked by one of several popularity metrics. The need to rank all items is so popularity will work for all forms of property based boosts and filters. This makes the calculation a fairly heavy weight thing that must be done at training time, not at query time. In other words the popularity ranking is pre-calculated by the time the query is made. It is possible to train on all data at one rate (daily, weekly?) and re-train the popularity model alone on a much more frequent rate (hourly?) if needed. This is to account for rapid recent changes in popularity.
 
-###The Popularity Algorithm Parameters
+### The Popularity Algorithm Parameters
 
 For the meaning and method for setting these values see the Universal Recommender docs in the [readme.md](https://github.com/actionml/template-scala-parallel-universal-recommendation)
 
@@ -183,27 +182,27 @@ For the meaning and method for setting these values see the Universal Recommende
 		"endDate": "ISO8601-date" // used in tests, avoid usage otherwise
 	},
     
-###Long Term Popularity
+### Long Term Popularity
 
 The `"recsModel"` defaults to `"all"` which means to return CCO based recommendations and backfill, if necessary from the type of popularity defined in `"backfillField"`. The `"backfillField"` defaults to ranking all items by the count of primary indicators/event for all time in the training data. This calculates popularity over the long term.
 
-###Update the Popularity Model only
+### Update the Popularity Model only
 
 If you need to update the popularity model only rather than all CCO model data, set `"recsModel"` to `"backfill"`. This means that only the `"backfillField"` will be updated in the currently deployed model. To calculate the normal combined model daily and the `"backfillField"` hourly  you would have one engine.json for daily use and one set for `"recsModel": "backfill"` for hourly training. This type of training is much faster than full model calculation and so better suite to quicker updates.
 
-###Short Term Popularity
+### Short Term Popularity
 
 Whether popular items are being used to backfill when not enough recommendations are available or if they are being queried for directly all popular items are based on the `backfillField: duration:`, which defines the period from now to `duration` in the past. Any of the events listed in `eventNames` are used in the calculation. For example if the period is an hour set the `"duration": "1 hour"`. The string is parsed by the Scala `Duration` class.
 
-###Finding Trending Items
+### Finding Trending Items
 
 The `"backfillType": "popular"` means to simply count events for all items from "now" to the `"duration"` into the past. A more sophisticated metric might be how quickly the rate of new events is increasing. This is the change in event count over the change in time, which can be thought of as the velocity of events for the duration. If some items have a rapidly increasing number of events over the last period of time it is said to be "trending". To calculate a **trending** popularity model change to `"backfillType": "trending"`. This will divide the `"duration"` in 2 creating 2 event counts and calculate the rate of event increase in events for all items. So trending = ((#events in period 1) - (#events in period 1)/change in time), and since the change in time doesn't matter for ranking purposes it is not used in the denominator. Period 1 is the most recent and period 2 is the furthest back in time.
 
-###Finding Hot Items
+### Finding Hot Items
 
 Taking the trending idea one step further the UR also supports `"backfillType": "hot"`, which calculates how quickly trending items are moving up the list. Think of **hot** and being a measure of acceleration. It catches items that may not be globally popular yet, but are quickly moving up. These items are sometimes said to be "going viral". The actual calculation is is similar to Trending but looks at 3 periods and calculates the increase in trending rather than increase in event counts.
 
-###Popular Items Query
+### Popular Items Query
 
 The query of any of the above popModel configurations is the same since they all rank all items. You ask for recommendations but do not specify user or item.
 
@@ -224,7 +223,7 @@ This query takes all of the same parameters as any other query so you can use bo
    	
 The `bias: -1` will turn it into a filter, meaning to return nothing that does not contain the `"categories": ["phones"]` so your results will be the most popular items as specified by the popModel tuning params.
 
-##Setting the eventWindow
+## Setting the eventWindow
 
 The `datasource: params: eventWindow` controls the events stored in the EventServer. The parameters control cleaning and compaction of the persisted events in the EventServer and will drop events so be careful with it and make backups of the EventServer contents before experimenting with this feature. The default is to use no `eventWindow` so it is safe to ignore until you need to limit the data you are accumulating.
 
@@ -235,10 +234,10 @@ Rules for setting the `eventWindow` params:
  	- De-duplication applies to usage events, and for many algorithms only one such event is actually used so if your data gathering happens to create a lot of dups this will be useful to do
  	-  
 
-#Picking the Best Tuning Parameters
+# Picking the Best Tuning Parameters
 Several of the methods mentioned above can be tested with cross-validation tests but others cannot. For instance increasing data used in training or queries will almost always increase cross-validation test results but randomizations will almost always decrease scores. tuning for recency will also decrease cross-validation results. Unfortunately some of these results are known to be contrary to real-world results from something that trumps offline cross-validation tests&mdash;A/B tests. 
 
-##Finding the Strongest User Indicators
+## Finding the Strongest User Indicators
 
 A great many different things known about the user may reflect on their taste. We have discussed the e-com "buy" and "view" indicators for example. But we don't have to stop there, maybe we know the manufacturer of a purchase, the category of purchase, the search terms the user entered, their gender or location. Intuitively these seem to be possible preference indicators but they also are not likely to be as strong as "buy". 
 
@@ -246,4 +245,3 @@ There may even be cases where we know things that could be considered candidates
 
 ## <a id="mapk"></a>MAP@k
 To determine this we start with a tool for measuring the relative predictive strength of a given indicator type. This, relies on cross-validation tests. Some of the tuning examples above can also be tested this way but others cannot. For instance Randomization will always give lower MAP@k results but is also universally good when measuring using with A/B testing. That said MAP@k is a good way to test predictive strength of indicator types. See MAP@k testing for a discussion of this testing technique.
-{{/template}}

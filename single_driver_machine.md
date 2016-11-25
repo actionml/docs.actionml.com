@@ -1,4 +1,3 @@
-{{#template name='single_driver_machine'}}
 # PredictionIO Standalone Server Guide: The Driver Machine
 
 This is a guide to setting up the PredictionIO model training machine for templates like the Universal Recommender, which only use Spark for `pio train`. For the UR there is no need to run this on more than one machine since the input data, model (created by `pio train`), and queries are using shared services. This means the Spark "driver" (`pio train`) can be run on a temporary machine that is created, trained on, then destroyed along with a temporary Spark cluster. This will have no effect on the other parts of the systems that ingest data and return query results.
@@ -240,9 +239,11 @@ This [tutorial](https://hbase.apache.org/book.html#quickstart_fully_distributed)
 
   - Edit `regionservers`
 
-		<some-hbase-node>
-		<some-other-hbase-node>
+  ```
+  <some-hbase-node>
+  <some-other-hbase-node>
 		...
+  ```
 
   - Edit `backupmasters`
 
@@ -353,5 +354,3 @@ If the EventServer is running and there is data in the appName listed in `engine
 **NOTE**: the hdfs path `/spark-events` must already be created.
 
 **NOTE 2**: `pio train` finds data previously stored in the EventServer directly by communicating with HBase, not through the EventServer's REST API so no pointer is needed to it.
-
-{{/template}}

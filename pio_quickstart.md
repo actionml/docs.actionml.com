@@ -1,4 +1,3 @@
-{{#template name='pio_quickstart'}}
 # Quickstart
 
 Requirements:
@@ -18,5 +17,3 @@ The above script will complete the installation for you including prerequisites.
 ## Method 2: Manual Installation Guides
 
 {{> piosetupguides}}
-
-{{/template}}

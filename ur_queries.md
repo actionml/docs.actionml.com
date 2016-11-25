@@ -1,4 +1,3 @@
-{{#template name='ur_queries'}}
 # Queries
 
 The Universal Recommender has a reasonable set of defaults so queries can be very simple or, when the need arises, very flexible. The configuration parameters of the UR control much of what is returned so [see that section](/docs/ur_config) for a description.
@@ -158,5 +157,3 @@ When setting an available date and expire date on **items** you will set the nam
 This returns items based on user xyz history or similar to item 53454543513 but favoring user history recommendations. These are filtered by categories and boosted to favor more genre specific items. 
 
 **Note**:This query should be considered **experimental**. mixing user history with item similarity is possible but may have unexpected results. If you use this you should realize that user and item recommendations may be quite divergent and so mixing the them in query may produce nonsense. Use this only with the engine.json settings for "userbias" and "itembias" to favor one over the other.
-
-{{/template}}

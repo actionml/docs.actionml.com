@@ -1,4 +1,3 @@
-{{#template name='single_machine'}}
 # Single Machine Setup Guide
 
 This is a guide to setting up PredictionIO-aml and the Universal Recommender on a single large memory (32G) machine. This will allow "real data" to be processed but will not focus on horizontal scaling.
@@ -110,13 +109,13 @@ Don't include the `/bin` folder in the path. This can be problematic so if you g
 	chown aml:aml /opt/elasticsearch
 	chown aml:aml /opt/hbase
 
-##5. Extract Services
+## 5. Extract Services
 
 5.1 Inside the `/tmp/downloads` folder, extract all downloaded services.
 
 {{> setsymlinks}}
 
-##6. Setup Services
+## 6. Setup Services
 
 ### 6.1. Setup Hadoop Pseudo-Distributed Mode
 
@@ -271,7 +270,7 @@ The line with `HBASE_MANAGES_ZK` is super important otherwise you will get Zooke
 
 At this point you should see several different processes start on the master including zookeeper. If there is an error check the log files referenced in the error message.
 
-##7. Setup PredictionIO
+## 7. Setup PredictionIO
 
 7.1 Build PredictionIO
 
@@ -307,7 +306,7 @@ Run `source ~/.bashrc` to get changes applied.
 7.3 Setup PredictionIO to connect to the services
 
 You have PredictionIO in `~/pio-aml` so edit ~/pio-aml/conf/pio-env.sh to have these settings:
-
+```
 	#!/usr/bin/env bash
 
 	# PredictionIO Main Configuration
@@ -367,6 +366,7 @@ You have PredictionIO in `~/pio-aml` so edit ~/pio-aml/conf/pio-env.sh to have t
 	# Hbase single master config
 	PIO_STORAGE_SOURCES_HBASE_HOSTS=some-master
 	PIO_STORAGE_SOURCES_HBASE_PORTS=0
+```
 
 Then you should be able to run
 
@@ -378,8 +378,6 @@ The status of all the stores is checked and will be printed but no check is made
  - HDFS: http://some-master:50070
  - Spark: http://some-master:8080
 
-##8. Setup Your Template
+## 8. Setup Your Template
 
 See the template setup instructions. The Universal Recommender can be installed with its [quickstart](/docs/ur_quickstart). 
-
-{{/template}}

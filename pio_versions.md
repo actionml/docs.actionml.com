@@ -1,4 +1,3 @@
-{{#template name='pio_versions'}}
 # PredictionIO-{{> pioversion}}
 
 ActionML maintains an enhanced version of PredictionIO starting with v0.9.6. The key changes from v0.9.5 are:
@@ -56,4 +55,3 @@ Then configure the DataSource operation in engine.json as follows:
 	 - **duration**: This is parsed for "days", "hours", and "minutes" and becomes a Scala `Duration` object defining the time from now backward to the point where older events will be dropped. $set property change events are never dropped. Default is to never drop events.
 	 - **removeDuplicates** a boolean telling the DataSource to de-duplicate events, defaults to `false`.
 	 - **compressProperties**: a boolean telling the Datasource to compress property change events into one event expressing the current state of all properties, defaults to `false`.
-{{/template}}

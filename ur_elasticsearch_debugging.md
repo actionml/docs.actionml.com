@@ -1,5 +1,3 @@
-{{#template name='ur_elasticsearch_debugging'}}
-
 # Debugging Your Model In Elasticsearch
 
 We often get questions about why a query returns no results. The answer is seldom a bug in the code (never say never I guess) but is a bug in the model. In other words the input has caused a mistake in the model so queries don't seem to work as expected.
@@ -12,13 +10,13 @@ Get the Chrome extension called [Sense](https://chrome.google.com/webstore/detai
 
 Install and enable Sense and launch it from the app buttons in Chrome. Set the Elasticsearch server and point it to port 9200, which is the default REST port for Elasticsearch. From now on any REST URL + JSON body will be sent to the server and the result will be pretty printed JSON in the result Pane. For example, to get cluster health execute the highlighted REST command.
 
-![image](/docs/images/ur-sense-cluster-health.png)
+![image](/images/ur-sense-cluster-health.png)
 
 ## Example of a Good Model
 
 The UR comes with some sample trivial data. scripts to input, and build a model, which is stored in Elasticsearch. Run `./examples/integration-test` to populate Elasticsearch with model data. It will look something like this.
 
-![image](/docs/images/ur-sense-good-model.png)
+![image](/images/ur-sense-good-model.png)
 
 Notice that only the `_source` section of the document is important, the rest are for internal ES use.
 
@@ -106,5 +104,3 @@ If you see no data for the indicators in an ES query like this:
 
     
 It means the EventServer has no data for that user. If this seems like an error, check to see that usage event input is formatted correctly or look at your original source data.
-
-{{/template}}

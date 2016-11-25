@@ -1,4 +1,3 @@
-{{#template name='ur_quickstart'}}
 # UR Quickstart
 
 We assume you have already installed pio-aml, by following one the the [guides](/docs/install). 
@@ -76,5 +75,3 @@ There are many examples of queries in the examples so use it to see how to form 
  - [Ruby](https://github.com/actionml/PredictionIO-Ruby-SDK)
  - [Java](https://github.com/actionml/PredictionIO-Java-SDK)
  - [PHP](https://github.com/actionml/PredictionIO-PHP-SDK)
-
-{{/template}}

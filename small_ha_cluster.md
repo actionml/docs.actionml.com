@@ -1,4 +1,3 @@
-{{#template name='small_ha_cluster'}}
 # Small High Availability Cluster Setup Guide
 
 This is a guide to setting up PredictionIO in a 3 node cluster with all services running on the 3 cluster machines.
@@ -98,7 +97,7 @@ Don't include the `/bin` folder in the path. This can be problematic so if you g
     export JAVA_HOME=/path/to/open/jdk/jre
     # some would rather add JAVA_HOME to /home/aml/.bashrc
 
-##4. Create Folders:
+## 4. Create Folders:
 
 4.1 Create folders in `/opt`
 
@@ -111,14 +110,14 @@ Don't include the `/bin` folder in the path. This can be problematic so if you g
 	chown aml:aml /opt/elasticsearch
 	chown aml:aml /opt/hbase
 
-##5. Extract Services
+## 5. Extract Services
 
 5.1 Inside the `/tmp/downloads` folder, extract all downloaded services.
 
 {{> setsymlinks}}
 
 
-##6. Setup Clustered services
+## 6. Setup Clustered services
 
 ### 6.1. Setup Hadoop Cluster
 
@@ -298,7 +297,7 @@ At this point you should see several different processes start on the master and
 **Note:** It is strongly recommend to setup these files in the master `/usr/local/hbase` folder and then copy **all** code and sub-folders or the to the slaves. All members of the cluster must have the same code and config
 
 
-##7. Setup PredictionIO
+## 7. Setup PredictionIO
 
 Setup PIO on the master or on all servers (if you plan to use a load balancer). The Setup **must not** use the install.sh since you are using clustered services and that script only supports a standalone machine.
 
@@ -403,12 +402,10 @@ The status of all the stores is checked and will be printed but no check is made
  - HDFS: http://some-master:50070
  - Spark: http://some-master:8080
 
-##8. Setup Your Template
+## 8. Setup Your Template
 
 See the template setup instructions. The Universal Recommender can be installed with its [quickstart](/docs/ur_quickstart).
 
 ## 9. Scaling for Load Balancers
 
 See [**PredictionIO Load Balancing**](pio_load_balancing)
-
-{{/template}}

@@ -1,5 +1,3 @@
-{{#template name='pio_monitoring'}}
-
 # Monitoring PredictionIO
 
 In a running instance of PredictionIO there will be one or more EventServers and PredictionServers. Each will respond through HTTP when sent a GET request.
@@ -46,5 +44,3 @@ PredictionIO uses several component services, which can also be checked, includi
 A quick shortcut method to check the system is to issue a query to the PredictionServer. If you get the expected result this will have executed queries on the EventServer, which in turn uses your DB and, in the case of HBase, HDFS. If you have setup Elasticsearch it will also issue queries to it. The expected result from the PredictionServer will depend on your data and template.
 
 **Note**: since the component services are distributed and may be configured in high-availability mode, this method does not guarantee that all nodes of the services are working correctly&mdash;for this resort to checking each service as recommended in their documentation.
-
-{{/template}}

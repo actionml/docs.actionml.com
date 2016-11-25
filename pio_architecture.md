@@ -1,10 +1,9 @@
-{{#template name='pio_architecture'}}
 # Architecture
 
 PredictionIO is a Framework for Machine Learning. It provides an API for creating "templates", which implement a particular ML algorithm like a recommender or classification. It also provides services that flesh out what is known as a Lambda Architecture. It is primarily build on Spark but not limited to the algorithms that are supplied with Spark.
 
 ## Lambda in PredictionIO
-![image](/docs/images/pio-architecture.png)
+![image](/images/pio-architecture.png)
 
 This translates to realtime input and queries&mdash;with background re-calculation of models. This even allows realtime data to be used in returning queries so templates like the Universal Recommender can use realtime user history to return personalized recommendations.
 
@@ -31,7 +30,7 @@ To Illustrate how this flow changes we'll look at each stage separately, they ar
 - Queries to a PredictionServer
 - Bootstrap importing batch data and exporting backups
 
-###Live Event Input
+### Live Event Input
 
 This is the typical input mode of the system where clients or web app backends are feeding new data to the running system. This data is used by the templates (including The Universal Recommender) in realtime though it requires a `pio train` to reflect new items or property changes. For the case where new users are sending new events, the template will be able to create results in realtime that use the new user data.
 
@@ -45,7 +44,7 @@ For the UR a background batch operation is performed and, when it's done, the ne
 
 ![image](https://docs.google.com/drawings/d/1p5Y_3DiIuoq0OnLFY581yJz5oW006Pw8XwSJSM-k_10/pub?w=960&h=720)
 
-###Queries
+### Queries
 
 Once we have trained the template and stored a model, queries will produce results. Most templates have their own method for generating results with their own requirements. The example below is for the Universal Recommender, which uses Elasticsearch in the query phase.
 
@@ -53,7 +52,7 @@ For the UR each query from the client application results in 2 internal queries 
 
 ![image](https://docs.google.com/drawings/d/1gRCRR7QLunO5EjvJwhSLYuZA0ugyPqHmfACzpgHueCw/pub?w=960&h=720)
 
-###Bootstrapping Batch Import
+### Bootstrapping Batch Import
 
 On-boarding new data can be accomplished by creating json event files. These are a form of json that is directly supported by Spark. Each event is encoded in a json object&mdash;one per line. Normally json would require this to be in an array but Spark requires that each line contain the object so lines can be read in parallel. The json can be created of the same form that is exported from the EventServer as a backup. 
 
@@ -62,6 +61,3 @@ If you have used one of the Universal Recommender integration tests like `exampl
 Alternatively you can use an SDK or the REST API to send events to the running EventServer, just as you would with the live event stream in production. In this case the Events do not come from files.
 
 ![image](https://docs.google.com/drawings/d/1WakBT5yCw_QUtodZJj9Tv04qN6MNe6D4LD1A-AaLDBk/pub?w=960&h=720)
-
-
-{{/template}}

@@ -1,4 +1,3 @@
-{{#template name='install'}}
 # Upgrading or Installing
 
 As of PredictionIO {{> pioversion}} using The Universal Recommender {{> urversion}} as an example template follow these steps to upgrade or do a quick install.
@@ -93,5 +92,3 @@ This will create a `vendors` subdirectory with needed services installed there. 
        git clone https://github-repo.git/path/to/template /path/to/template/directory
        cd /path/to/template/directory
        pio build
-
-{{/template}}

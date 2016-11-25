@@ -1,4 +1,3 @@
-{{#template name='debugging_intellij'}}
 # Debugging with IntelliJ IDEA
 
 It is possible to run your template engine with IntelliJ IDEA. This makes the engine specific commands accessible for debugging, like `pio train`, `pio deploy`, and queries made to a deployed engine.
