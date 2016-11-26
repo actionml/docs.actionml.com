@@ -7,7 +7,7 @@ This machine will run no services itself. It expects to connect to external HDFS
 
 Focus on this part of the standard PIO workflow.
 
-![image](/docs/images/ur-train.svg)
+![image](/images/docs/ur-train.svg)
 
 ## AWS
 
