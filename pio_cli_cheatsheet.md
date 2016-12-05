@@ -1,4 +1,3 @@
-{{#template name='pio_cli_cheatsheet'}}
 # PredictionIO CLI Cheatsheet
 
 PredictionIO can be seen as 2 types of servers, one takes in and stores events&mdash;the EvnetServer&mdash;and the other serves prediction&mdash;the PredictionServer. The general non-template specific commands can be run from anywhere, in any directory but the template specific commands must be run in the directory of the specific engine-instance being used, this is because some commands rely on files (like engine.json) to be available.
@@ -15,10 +14,10 @@ The typical process from install to your first query is:
  8. Deploy the template
  9. You are now ready to query the deployed template
 
-#General Commands
+# General Commands
 At any point you can run `pio help some-command` to get a help screen printed with all supported options for a command.
 
-##Start/stop
+## Start/stop
 
 PredictionIO assumes that HDFS and Spark are running. From a clean start launch them first.
 
@@ -32,7 +31,7 @@ HDFS and Spark may be left running since nothing in this cheatsheet will stop th
  - `pio eventserver` this starts an EventServer on port 7070 of localhost
  - `nohup pio eventserver &` this creates an EventServer as a daemon, other daemon creation commands work too, like `screen`.
  
-##Status and Information
+## Status and Information
 
  - `pio status` this checks the config of PredictionIO and connects to the databased used, it does not connect to Spark or check the status of things like HDFS.
  - `pio app list` list information about apps the systems knows about, this is used primarily to see which collections of data are registered with the EventServer.
@@ -61,11 +60,11 @@ If you want to use the REST method you will use and SDK or make raw REST post ca
 
 Events are defined by the template so check the specific template docs for encoding data in events.
 
-#Workflow Commands
+# Workflow Commands
 
 For some pio commands you must `cd` to an engine-instance directory. This is because the `engine.json` and/or `manifest.json` are either needed or are modified. These commands implement the workflow for creating a "model" from events and launching the PredictionServer to serve queries.
 
-##Standard Workflow
+## Standard Workflow
 
 These commands must be run in this order, but can be repeated once previous commands are run. So many trains are expected after a build and many deploys of the same model are allowed.
 
@@ -79,5 +78,3 @@ Assuming there is data in the EventServer and engine.json is configured correctl
 ##<a id='ur-workflow'></a> Universal Recommender Example
 
 {{> urworkflow}}
- 
-{{/template}}

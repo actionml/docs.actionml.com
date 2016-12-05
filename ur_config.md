@@ -1,4 +1,3 @@
-{{#template name='ur_config'}}
 # Universal Recommender Tuning
 The default settings of the UR are good for many purposes but getting optimum results may require tuning and at very least many users will wish to know the meaning of the various tuning params.
 
@@ -15,11 +14,11 @@ To start using a recommender you must have a primary indicator of user preferenc
  
 Take the item from #1, the indicator-name from #2 and the user-id and you have the data to create a "primary indicator" of the form **(user-id, "indicator-name", item-id)**. 
 
-###Secondary Indicators
+### Secondary Indicators
 
 **There must be a "primary indicator" recorded for some number of users**. This  defines the type of item returned in recommendations and is the thing by which all secondary data is measured. More technically speaking all secondary data is tested for correlation to the primary indicator. Secondary data can be anything that you may think of as giving some insight into the user's taste. If something in the secondary data has no correlation to the primary indicator it will have no effect on recommendations. For instance in an ecom setting you may want "buy" as a primary event. There may be many (but none is also fine) secondary events like (user-id, device-preference, device-id). This can be thought of as a user's device preference and recorded at all logins. If this does not correlate to items bought it will not effect recommendations. 
 
-###Biases
+### Biases
 
 These take the form of boosts and filters where a neutral bias is 1.0. The importance of some part of the query may be boosted by a positive non-zero float. If the bias is < 0 it is considered a filter&mdash;meaning no recommendation is made that lacks the filter value(s). 
 
@@ -167,7 +166,7 @@ A full list of tuning and config parameters is below. See the field description 
       ]
     }
 
-####Datasource Parameters
+#### Datasource Parameters
 
 The `datasource: params:` section controls input data. This section is Algorithm independent and is meant to manage the size of data in the EventServer and do compaction. Is changes the persisted state of data. A fixed `timeWindow: duration:` will have the effect of making the UR calculate a model in a fixed amount of time as long as soon as there are enough events to start dropping old ones.
 
@@ -177,7 +176,7 @@ The `datasource: params:` section controls input data. This section is Algorithm
 	 - **removeDuplicates** a boolean telling the Datasource to de-duplicate non$set type events, defaults to `false`.
 	 - **compressProperties**: a boolean telling the Datasource to compress property change event into one event expressing the current state of all properties, defaults to `false`.
 
-####Algorithm Parameters
+#### Algorithm Parameters
 
 The `Algorithm: params:` section controls most of the features of the UR. Possible values are:
 
@@ -220,5 +219,3 @@ The `Algorithm: params:` section controls most of the features of the UR. Possib
 	* **endDate**  this is allowed only with one of the popularity type and is an ISO8601-date string to use to start the duration&mdash;in other words it defines the first event to count. **This is almost never used a live system** but may be used in tests on batch imported events.
 first event to count. This is almost never used live system but may be used in tests on batch imported events.
 * **seed** Set this if you want repeatable downsampling for some offline tests. This can be ignored and shouldn't be set in production. 
-
-{{/template}}

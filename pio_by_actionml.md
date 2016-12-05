@@ -1,4 +1,3 @@
-{{#template name='pio_by_actionml'}}
 # PredictionIO by ActionML
 
 ActionML maintains an enhanced version of PredictionIO in our own repo. Since our changes are required for our own templates, including The Universal Recommender, we maintain and are committed to supporting our branch in Open Source for the foreseeable future. This means you, the user, will have to choose the branch you want.
@@ -33,5 +32,3 @@ Installation instructions [here](install).
 - you do not need The Universal Recommender v0.3.0+ **and** 
 - you do not need to trim old events or compact duplicates and property change events **and**
 - you do not use an SDK or are willing to modify the SDK code, use the Salesforce sponsored project on [github](https://github.com/PredictionIO/PredictionIO)
-
-{{/template}}

@@ -1,4 +1,3 @@
-{{#template name='ur_input'}}
 # UR Input
 
 The Universal Recommender input is what are called "events" in PredictionIO nomenclature. This can be thought of as two types:
@@ -74,5 +73,3 @@ To attach properties to items use a $set event like this:
 Unless a property has a special meaning specified in the engine.json, like date values, the property is assumed to be an array of strings, which act as categorical tags. You can add things like "premium" to the "tier" property then later if the user is a subscriber you can set a filter that allows recommendations from `"tier": ["free", "premium"]` where a non subscriber might only get recommendations for `"tier": ["free"]`. These are passed in to the query using the `"fields"` parameter (see Contextual queries above).
 
 Using properties is how boosts and filters are applied to recommended items. It may seem odd to treat a category as a filter **and** as a secondary event (category-preference) but the two pieces of data are used in quite different ways. As properties they bias the recommendations, when they are events they add to user data that returns recommendations. In other words as properties they work with boost and filter business rules as secondary usage events they show something about user taste to make recommendations better.
-
-{{/template}}

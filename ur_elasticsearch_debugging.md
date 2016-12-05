@@ -1,5 +1,3 @@
-{{#template name='ur_elasticsearch_debugging'}}
-
 # Debugging Your Model In Elasticsearch
 
 We often get questions about why a query returns no results. The answer is seldom a bug in the code (never say never I guess) but is a bug in the model. In other words the input has caused a mistake in the model so queries don't seem to work as expected.
@@ -106,5 +104,3 @@ If you see no data for the indicators in an ES query like this:
 
     
 It means the EventServer has no data for that user. If this seems like an error, check to see that usage event input is formatted correctly or look at your original source data.
-
-{{/template}}

@@ -1,4 +1,3 @@
-{{#template name='ur'}}
 # The Universal Recommender
 
 The Universal Recommender (UR) is a new type of collaborative filtering recommender based on an algorithm that can use data from a wide variety of user taste indicators&mdash;it is called the Correlated Cross-Occurrence algorithm. Unlike the matrix factorization embodied in things like MLlib's ALS, The UR's CCO algorithm is able to **ingest any number of user actions, events, profile data, and contextual information**. It then serves results in a fast and scalable way. It also supports item properties for filtering and boosting recommendations and can therefor be considered a hybrid collaborative filtering and content-based recommender. 
@@ -24,6 +23,3 @@ There is a reason we call this recommender "universal" and it's because of the n
 For most of the history of recommenders the data science could only find ways to use one type in user-preference indicator. To be sure this was one type per application but there is so much more we know from user behavior that was going unused. Correlated Cross-Occurrence (CCO) was developed to discover what behavior of a give user correlated to the type of action you want to recommend. If you want to recommend ***buy***, ***play***, ***watch***, or ***read***, is it possible that other things known about a user correlates to this recommended action&mdash;things like a ***pageview***, a ***like***, a ***category preference***, the ***location*** logged in from, the ***device*** used, item detail ***views***, or ***anything else*** known about the user. Furthermore how would we test for correlation?
 
 Enter the Log-Likelihood Ratio (LLR)&mdash;a probabilistic test for correlation between 2 events. This is super important because there is no linear relationship between the **event-types**. The correlation is at the indiviual user and event level and this is where LLR excels. To illustrate this ask yourself in an E-commerce situation is a product view 1/2 of a buy? You might think so but if the user viewed 2 things and bought one of them the correlation is 100% for one of the views and 0% for the other. So some view data is useful in predicting purchases and others are useless. LLR is a very well respected test for this type of correlation. 
-
-
-{{/template}}
