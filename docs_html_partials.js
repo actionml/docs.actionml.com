@@ -13,13 +13,13 @@ DocsHtmlPartials = [
   },
   {
     name: "pioversionnum",
-    template: "0.9.7-aml",
+    template: "0.10.0-incubating",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "urversion",
-    template: "v0.3.0",
+    template: "v0.5.0",
     ismd: false,
     shouldLoad: false
   },
@@ -55,7 +55,7 @@ DocsHtmlPartials = [
   },
   {
     name: "sparkversionnum",
-    template: "1.6.2",
+    template: "1.6.3",
     ismd: false,
     shouldLoad: false
   },
@@ -67,7 +67,7 @@ DocsHtmlPartials = [
   },
   {
     name: "hbaseversionnum",
-    template: "1.2.1",
+    template: "1.2.3",
     ismd: false,
     shouldLoad: false
   },
@@ -79,7 +79,7 @@ DocsHtmlPartials = [
   },
   {
     name: "sparkdownload",
-    template: "<a href='http://www.us.apache.org/dist/spark/spark-1.6.2/spark-1.6.2-bin-hadoop2.6.tgz'>Spark 1.6.2</a>",
+    template: "<a href='http://www.us.apache.org/dist/spark/spark-1.6.2/spark-1.6.3-bin-hadoop2.6.tgz'>Spark 1.6.3</a>",
     ismd: false,
     shouldLoad: false
   },
@@ -91,13 +91,13 @@ DocsHtmlPartials = [
   },
   {
     name: "hbasedownload",
-    template: "<a href='http://www-us.apache.org/dist/hbase/1.2.2/hbase-1.2.2-bin.tar.gz'>HBase 1.2.2</a>",
+    template: "<a href='http://www-us.apache.org/dist/hbase/1.2.3/hbase-1.2.3-bin.tar.gz'>HBase 1.2.3</a>",
     ismd: false,
     shouldLoad: false
   },
   {
     name: 'pio_version',
-    template: 'PredictionIO-v0.9.7-aml',
+    template: 'PredictionIO-v0.10.0-incubating',
     ismd: true,
     shouldLoad: false
   },
