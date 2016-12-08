@@ -1,1 +1,1 @@
-- **[Single AWS Machine](/docs/single_machine_aws)**: This sets up a single AWS-Marketplace AMI to run all services and includes the Universal Recommender {{> urversion}}. It maybe be used to process "real data" but is primarily focused on being a deveoplment proof of concept machine.
+- **[Single AWS Machine](/docs/awssetupguide)**: This sets up a single AWS-Marketplace AMI to run all services and includes the Universal Recommender {{> urversion}}. It maybe be used to process "real data" but is primarily focused on being a deveoplment proof of concept machine.
