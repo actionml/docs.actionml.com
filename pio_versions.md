@@ -1,6 +1,10 @@
 # PredictionIO-{{> pioversion}}
 
-ActionML maintains an enhanced version of PredictionIO starting with v0.9.6. The key changes from v0.9.5 are:
+ActionML is a direct contributor to the Apache PredictionIO project. The current stable release is {{> pioversion}} Install from [here](/docs/install)
+
+# PredictionIO-v0.9.7-aml
+
+This is the last version to use the old Java namespace io.prediciton. If your template needs this version install it from [here](/docs/piov097aml).
 
 ## SelfCleaningDataSource
 

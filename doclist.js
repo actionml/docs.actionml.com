@@ -21,7 +21,7 @@ DocList = [
                 template: 'pio_architecture'
             },
             {
-                title: 'AWS AMI  Setup',
+                title: 'AWS All-In-One AMI  Setup',
                 template: 'awssetupguide'
             },
             {

@@ -1,12 +1,14 @@
-# Installing Apache PredictionIO-{{pioversionnum}}
+# Installing PredictionIO-0.9.7-aml
 
-As of the first Apache version of PredictionIO-{{> pioversionnum}} using The Universal Recommender {{> urversion}} as an example template follow these steps.
+PredictionIO-0.9.7-aml is that last stable version that uses the Java namespace io.prediction (look in the templates build.sbt file, it will reference io.prediction instead of org.apache.predictionio), if your template uses this you may want to install this version of PIO. We recommend that everyone move to the newer Apache version [installed here](docs/install). 
+
+If you are using The Universal Recommender v0.4.2, for example and for some reason can't upgrade to the Apache compatible Universal Recommender v0.5.0 follow these steps.
 
 **IMPORTANT NOTES**: 
 
  1. Do not install as the "root" user. All guides assume that you have a **user** account that has sudo permission. You will have trouble if you install as "root". If your machine is clean do the following:
    
-    1.1 Create user for PredictionIO like `aml` on your machine
+    1.1 Create user for PredictionIO `aml` in each server
 
         adduser aml # Give it some password
 
@@ -38,18 +40,17 @@ If you already have some version of PIO you should upgrade.
  1. `mv /path/to/pio pio-old` move the directory containing the old version of PredictionIO, keep it for the configuration.
  2. `rm -r ~/.ivy2` This is required and will remove the old version of the local cache of classes created when building PredictionIO and templates.
  
-### Download The Apache Release of PredictionIO
+### Download ActionML's Release of PredictionIO
 
-PredictionIO moved to Apache in 2016. ActionML was happy to contribute all the enhancements we made to Apache so we are all on the same codebase now.  
+ActionML has enhanced the original version of PredcitionIO v0.9.5 and has been enhancing it through several new versions. Our templates rely on these enhancements so use these installation instructions. to get the right version&mdash;do not rely on docs.prediciton.io
 
- 1. `git clone https://github.com/apache/incubator-predictionio.git pio` clone to some directory. **Make sure you are on the master branch** or use the tag for the desired release version. 
- 2. `git checkout master` is usually what you want.
+ 1.  `git clone https://github.com/actionml/PredictionIO.git pio-aml` clone to some directory. **Make sure you are on the master branch** or use the tag for the desired release version. `git checkout master` is usually what you want.
  
 ### Build PredictionIO
 
 You must build PredictionIO from source to get needed classes installed in your local cache or the Universal Recommender will not build, you will get error in `pio build`. This is pretty easy:
 
- 1. `cd /path/to/pio`
+ 1. `cd /path/to/pio-aml`
  2. `./make-distribution`
  
 ### Configuration
@@ -68,13 +69,13 @@ For a first-time install on a single machine. **NOTE**: do not install as "root"
 
 ### Install From a Script
 
-For a completely fresh new install, use the following:
+For a completely fresh new install, do not use the script on PredictionIO's docs site do the following:
 
- 1. `bash -c "$(curl -s https://raw.githubusercontent.com/apache/incubator-predictionio/master/bin/install.sh)"`
+ 1. `bash -c "$(curl -s https://raw.githubusercontent.com/actionml/PredictionIO/master/bin/install.sh)"`
  
-This will create a `vendors` subdirectory with needed services installed there. It will also trigger a build of PIO so make sure you put it in a place where you have permission to read/write.
+This will create a `vendors` subdirectory with needed services installed there. It will also trigger a build of PIO from source so make sure you put it in a place where you have permission to read/write.
 
-**Note**: this is only for a single machine developer sandbox/playground setup and is not advised for production.
+**Note**: this is only for a single machine developer setup and is not advised for production.
 
 ### Manual Installation Guides
 
@@ -84,11 +85,11 @@ This will create a `vendors` subdirectory with needed services installed there. 
  
  - The Universal Recommender
  
-   UR installation described [here](/docs/ur_quickstart). Make sure to use the Apache compatible version described there. The Universal Recommender v0.5.0+.
+   Use the installation described [here](/docs/ur_quickstart). The primary exception to the quickstart is that you are using a version with the io.prediction namespace, so the UR v0.4.2 or below not the UR v0.5.0 or above, these will have build errors. 
   
  - Build Any Template
 
-   Building a template:
+   Building a template that uses the io.prediction namespace (non-Apache PredictionIO) with the install instructions above is the same as normal:
 
        git clone https://github-repo.git/path/to/template /path/to/template/directory
        cd /path/to/template/directory
