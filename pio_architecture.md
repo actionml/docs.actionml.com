@@ -3,7 +3,7 @@
 PredictionIO is a Framework for Machine Learning. It provides an API for creating "templates", which implement a particular ML algorithm like a recommender or classification. It also provides services that flesh out what is known as a Lambda Architecture. It is primarily build on Spark but not limited to the algorithms that are supplied with Spark.
 
 ## Lambda in PredictionIO
-![image](private/docs/images/pio-architecture.png)
+![image](/docs/images/pio-architecture.png)
 
 This translates to realtime input and queries&mdash;with background re-calculation of models. This even allows realtime data to be used in returning queries so templates like the Universal Recommender can use realtime user history to return personalized recommendations.
 
