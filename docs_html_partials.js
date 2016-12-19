@@ -115,7 +115,7 @@ DocsHtmlPartials = [
   },
   {
     name: "piodistributedguide",
-    template: "- **[Fully Distributed Clusters](/docs/single_driver_machine)**: This creates a 'Driver' machine that can run PIO when all services are in external clusters. This represents the ultimate in scalability since the clusters can be scaled independently.",
+    template: "- **[Fully Distributed Clusters](/docs/single_driver_machine)**: This creates a 'Driver' machine that can run PIO when all services are in external clusters. The driver machine also runs the Spark Driver and so must be as big as any Spark Worker machine, which are in an external stanalone Spark cluster. This allows the service clusters to be scaled independently.",
     ismd: true,
     shouldLoad: false
   },

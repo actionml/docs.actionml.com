@@ -1,82 +1,91 @@
 # Installing Apache PredictionIO-{{pioversionnum}}
 
-As of the first Apache version of PredictionIO-{{> pioversionnum}} using The Universal Recommender {{> urversion}} as an example template follow these steps.
+To install or upgrade Apache PredictionIO-{{> pioversionnum}} using The Universal Recommender {{> urversion}} as an example Template.
 
 **IMPORTANT NOTES**: 
 
- 1. Do not install as the "root" user. All guides assume that you have a **user** account that has sudo permission. You will have trouble if you install as "root". If your machine is clean do the following:
+Do not install as the "root" user. All guides assume that you have a **user** account that has sudo permission. You will have trouble if you install as "root". If your machine is clean do the following:
    
-    1.1 Create user for PredictionIO like `aml` on your machine
+## Create User
 
-        adduser aml # Give it some password
+Create user for PredictionIO like `aml` on your machine (already done on AWS AMI so if you are using the AMI skip to [**Upgrade**](#upgrade))
 
-    1.2 Give the `aml` user sudoers permissions and login to the new user. This setup assumes the `aml` user as the **owner of all services** including Spark and Hadoop (HDFS). Do not install or run as `root`!
+`adduser aml # Give it some password`
 
-        sudo nano /etc/sudoers.d/sudo-group
+Give the `aml` user sudoers permissions and login to the new user. This setup assumes the `aml` user as the **owner of all services** including Spark and HDFS(already done on AWS AMI). Do not install or run as `root`!
+
+`sudo nano /etc/sudoers.d/sudo-group`
     
-    Add this line to the file
+ Add this line to the file
     
-        # Members of the sudo group may gain root privileges
-        # with no password (somewhat controversial)
-        %sudo  ALL=(ALL) NOPASSWD:ALL
-
-    Then save and add aml user to sudoers
+```
+# Members of the sudo group may gain root privileges
+# with no password (somewhat controversial)
+%sudo  ALL=(ALL) NOPASSWD:ALL
+```
     
-        sudo usermod -a -G sudo aml
-        sudo su aml # or exit and login as the aml user
-        cd ~
-        sudo service sudo restart # just to be sure permission are all active 
-   
- 2. You need to build pio on your machine since this sets up class caches in `~/.ivy2/...` and before you build or download you should erase the classes in that cache with `rm -r ~/.ivy2`
+Then save and add aml user to sudoers
+    
+```
+sudo usermod -a -G sudo aml
+sudo su - aml
+```
+     
 
-## Upgrade
+## <a name="upgrade" id="upgrade"></a>Upgrade
 
-If you already have some version of PIO you should upgrade.
+If you already have some older version of PIO and wish to upgrade to the latest stable version.
 
-### Move old PIO
-
- 1. `mv /path/to/pio pio-old` move the directory containing the old version of PredictionIO, keep it for the configuration.
- 2. `rm -r ~/.ivy2` This is required and will remove the old version of the local cache of classes created when building PredictionIO and templates.
+- **Move old PIO**
+    
+    ```
+    mv /path/to/pio pio-old
+    ```
+    
+  move the directory containing the old version of PredictionIO, keep it for the configuration.
  
-### Download The Apache Release of PredictionIO
+- **Download The Apache Release of PredictionIO**
 
-PredictionIO moved to Apache in 2016. ActionML was happy to contribute all the enhancements we made to Apache so we are all on the same codebase now.  
+  PredictionIO moved to Apache in 2016. ActionML was happy to contribute all the enhancements we made to Apache so we are all on the same codebase now.  
 
- 1. `git clone https://github.com/apache/incubator-predictionio.git pio` clone to some directory. **Make sure you are on the master branch** or use the tag for the desired release version. 
- 2. `git checkout master` is usually what you want.
+    ```
+    git clone https://github.com/apache/incubator-predictionio.git /path/to/pio` 
+    ```
  
-### Build PredictionIO
+  clone to some directory, the easiest to put the new pio where you had the old one. **Make sure you are on the master branch** or use the tag for the desired release version. 
 
-You must build PredictionIO from source to get needed classes installed in your local cache or the Universal Recommender will not build, you will get error in `pio build`. This is pretty easy:
+    ```
+    git checkout master
+    ```
+    
+- **Build PredictionIO**
 
- 1. `cd /path/to/pio`
- 2. `./make-distribution`
+  You must build PredictionIO from source to get needed classes installed in your local cache or the Universal Recommender will not build, you will get error in `pio build`. This is pretty easy:
+
+    ```
+    cd /path/to/pio
+    ./make-distribution
+    ```
  
-### Configuration
+- **Configure**
 
-If you have installed a recent version of PIO in the past, copy the configuration for it.
+  If you have installed a recent version of PIO in the past, copy the configuration for it.
 
- 3. `cp old-pio/conf /path/to/pio-aml`
- 
-Make sure to configure all components using one of the setup guides [here](/docs/pio_quickstart).
+    ```
+    cp old-pio/conf /path/to/pio-aml`
+    ```
+    
+  Make sure to configure all components using one of the setup guides [here](/docs/pio_quickstart).
 
-To test your installation run `pio status` to make sure pio is working. Also check to make sure HDFS and and Spark are running correctly since `pio status` does not check the running status of those services.
+ To test your installation run `pio status` to make sure pio is working. Also check to make sure HDFS and and Spark are running correctly since `pio status` does not check the running status of those services.
 
-## Install Fresh
+## <a name="fresh-install" id="fresh-install"></a>Fresh Install
 
 For a first-time install on a single machine. **NOTE**: do not install as "root"! Create a sudoer user as described above.
 
-### Install From a Script
-
-For a completely fresh new install, use the following:
-
- 1. `bash -c "$(curl -s https://raw.githubusercontent.com/apache/incubator-predictionio/master/bin/install.sh)"`
- 
-This will create a `vendors` subdirectory with needed services installed there. It will also trigger a build of PIO so make sure you put it in a place where you have permission to read/write.
-
-**Note**: this is only for a single machine developer sandbox/playground setup and is not advised for production.
-
-### Manual Installation Guides
+For a completely fresh new install of a developer machine (usally not planned for production) follow one of the options on the Apache PredictionIO site <a href="http://predictionio.incubator.apache.org/install/" target="_blank">here</a> or install the AWS AMI:
+  
+Our guide are more for production installations though the AWS AMI can theoretically be used for both dev and production.
 
 {{> piosetupguides}}
 
@@ -84,12 +93,12 @@ This will create a `vendors` subdirectory with needed services installed there. 
  
  - The Universal Recommender
  
-   UR installation described [here](/docs/ur_quickstart). Make sure to use the Apache compatible version described there. The Universal Recommender v0.5.0+.
-  
+   UR installation described [here](/docs/ur_quickstart). Make sure to use the Apache compatible v0.5.0+ described there.
+     
  - Build Any Template
 
-   Building a template:
-
-       git clone https://github-repo.git/path/to/template /path/to/template/directory
-       cd /path/to/template/directory
-       pio build
+   ```
+   git clone https://github-repo.git/path/to/template /path/to/template/directory
+   cd /path/to/template/directory
+   pio build
+   ```

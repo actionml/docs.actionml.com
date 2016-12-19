@@ -6,12 +6,12 @@ Go to the AWS Marketplace [here]() This will step you through creating an instan
 
 ## Requirements
 
- - knowledge of using a Debian derivative Linux distro, particularly Ubuntu.
- - an AWS account allowing EC2 instance creation and EBS block storage volumes with access to the AWS Marketplace. 
+ - Knowledge of using a Debian derivative Linux distro, particularly Ubuntu.
+ - An AWS account allowing EC2 instance creation and EBS block storage volumes. 
 
 ## Create
 
-As you create in instance pick the size of machine and storage you need and choose the option to "create new keys". Download the .pem file to your computer and do the equivalent of the Linux `chmod 600 /path/to/pem-file`
+As you create in instance pick the size of machine and storage you need and choose the option to "create new keys". Download the .pem file to your computer and do the equivalent of the Linux `chmod 600 /path/to/pem-file` so that only the file owner has permission to read and write.
 
 ## Login
 
@@ -19,7 +19,7 @@ You will need an ssh terminal that is compatible with OpenSSH. This is pre-insta
 
  - First login as the "ubuntu" user
    ```
-   ssh -i /path/to/pem-file ubuntu@_public-ip-address-of-ami_
+   ssh -i /path/to/pem-file ubuntu@<public-ip-address-of-instance>
    ```
 
  - Add your ssh pubic key to the "aml" user and logout
@@ -28,14 +28,12 @@ You will need an ssh terminal that is compatible with OpenSSH. This is pre-insta
    sudo su - aml
    ssh-keygen # hit enter for all options
    nano .ssh/autorized_keys # add your ssh public key
-   # save and exit nano
-   exit
    ```
    
    This will give you a passwordless login to the machine that is secure.
    
    ```
-   ssh aml@_public-ip-address-of-ami_
+   ssh aml@<public-ip-address-of-ami>
    pio status
    ```
    
@@ -43,7 +41,7 @@ You will need an ssh terminal that is compatible with OpenSSH. This is pre-insta
 
 ## Start PredictionIO 
 
-To start the PredictionIO EventServer, which is the input gathering part of the system, go to some place you want logs to be stored, like `/usr/local/pio` and start the EventServer as a Daemon.
+All needed services startup on boot and should be running. To start the PredictionIO EventServer, which is the input gathering part of the system, go to some place you want logs to be stored, like `/usr/local/pio` and start the EventServer as a Daemon.
 
     nohup pio eventserver &
 
@@ -66,8 +64,10 @@ Using Git you can download any of the Apache PredictionIO templates. These each 
 
 ## Support
 
-PredictionIO does no Machine Learning itself, it is a high performance scalable framework that does all the work like dataset storage and maintenance, model storage, command line interface and other things that all algorithms need. It provides an API that algorithms use to become a *template*. The *template* is where the Machine Learning happens so if you have questions about PredictionIO's functions look to the Apache [PredictionIO support page](http://predictionio.incubator.apache.org/support/).
+PredictionIO does no Machine Learning itself, it is a high performance scalable framework that does all the work like dataset storage and maintenance, model storage, command line interface and other things that all algorithms need. It provides an API that algorithms use to become a ***template***. The ***template*** is where the Machine Learning happens so support for PIO is separate from the templates.
 
-if you have questions about specific *templates* look to the place the template creator points you. This is usually in the template description in the Template Gallery. For the Universal Recommender is it in this [Google Group](https://groups.google.com/forum/#!forum/actionml-user).
+If you have questions about PredictionIO's functions look to the Apache [PredictionIO support page](http://predictionio.incubator.apache.org/support/).
 
-For **Commercial Support** including customization of existing templates, integration with your apps, creating right-scaled deployments, or even help in maintaining and operating virtual private clouds, we at ActionML are happy to help. [Contact us](http://actionml.com#contact) with your requirements or questions.
+The Universal Recommender and other ActionML templates, including this AWS AMI get free community support in the [ActionML Google Group](https://groups.google.com/forum/#!forum/actionml-user).
+
+**Commercial Support** including Apache PredictionIO, customization of existing templates, integration with your apps, creating right-scaled deployments, or even help in maintaining and operating virtual private clouds, we at ActionML are happy to help. [Contact us](http://actionml.com#contact) with your requirements or questions.
