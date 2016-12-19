@@ -19,7 +19,7 @@ You will need an ssh terminal that is compatible with OpenSSH. This is pre-insta
 
  - First login as the "ubuntu" user
    ```
-   ssh -i /path/to/pem-file ubuntu@<public-ip-address-of-instance>
+   ssh -i /path/to/pem-file ubuntu@public-ip-address-of-instance
    ```
 
  - Add your ssh pubic key to the "aml" user and logout
@@ -33,7 +33,7 @@ You will need an ssh terminal that is compatible with OpenSSH. This is pre-insta
    This will give you a passwordless login to the machine that is secure.
    
    ```
-   ssh aml@<public-ip-address-of-ami>
+   ssh aml@public-ip-address-of-instance
    pio status
    ```
    
