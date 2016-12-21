@@ -21,6 +21,10 @@ DocList = [
                 template: 'pio_architecture'
             },
             {
+                title: 'Introduction to Spark',
+                template: 'intro_to_spark'
+            },
+            {
                 title: 'AWS All-In-One AMI  Setup',
                 template: 'awssetupguide'
             },

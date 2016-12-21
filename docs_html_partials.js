@@ -1,13 +1,13 @@
 DocsHtmlPartials = [
   {
     name: "pioname",
-    template: "PredictionIO-{{ pioversionnum}}",
+    template: "PredictionIO-{{> pioversionnum}}",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "pioversion",
-    template: "v{{ pioversionnum}}",
+    template: "{{> pioversionnum}}",
     ismd: false,
     shouldLoad: false
   },
@@ -25,25 +25,25 @@ DocsHtmlPartials = [
   },
   {
     name: "hdfsversion",
-    template: "v{{hdfsversionnum}}",
+    template: "{{> hdfsversionnum}}",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "sparkversion",
-    template: "v{{ sparkversionnum}}",
+    template: "{{> sparkversionnum}}",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "elasticsearchversion",
-    template: "v{{ elasticsearchversionnum}}",
+    template: "{{> elasticsearchversionnum}}",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "hbaseversion",
-    template: "v{{ hbaseversionnum}}",
+    template: "{{> hbaseversionnum}}",
     ismd: false,
     shouldLoad: false
   },
@@ -138,13 +138,43 @@ DocsHtmlPartials = [
     shouldLoad: true
   },
   {
-    name: "urworkflow",
+    name: "setsymlinks",
     template: "",
     ismd: true,
     shouldLoad: true
   },
   {
-    name: "setsymlinks",
+    name: "piorequiredsw",
+    template: "",
+    ismd: true,
+    shouldLoad: true
+  },
+  {
+    name: "setupjava18",
+    template: "",
+    ismd: true,
+    shouldLoad: true
+  },
+  {
+    name: "installservices",
+    template: "",
+    ismd: true,
+    shouldLoad: true
+  },
+  {
+    name: "setupuser",
+    template: "",
+    ismd: true,
+    shouldLoad: true
+  },
+  {
+    name: "intro_to_spark",
+    template: "",
+    ismd: true,
+    shouldLoad: true
+  },
+  {
+    name: "build_pio",
     template: "",
     ismd: true,
     shouldLoad: true
