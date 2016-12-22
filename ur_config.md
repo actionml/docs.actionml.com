@@ -31,7 +31,7 @@ Think of bias as a multiplier to the score of the items that meet the condition 
 
 One example of a filter is where it may make sense to show only "electronics" recommendations when the user is viewing an electronics product. Biases are often applied to a list of data, for instance the user is looking at a video page with a cast of actors. The "cast" list is metadata attached to items and a query can show "people who liked this, also liked these" type recommendations but also include the current cast boosted by 1.01. This can be seen as showing similar item recommendations but using the cast members to gently boost the similar items (since by default they have a neutral 1.0 boost). The result would be similar items favoring ones with similar cast members.
 
-### Dates
+### <a name="ur_dates" id="ur_dates"></a>Dates
 
 Dates are only used for filters but apply in all recommendation modes including popularity queries. Dates can be used to filter recommendations in one of two ways, which should **never be used together**. Decide if you want the date range attached to queries or to the items themselves (for example available/expire dates) where the date range is attached to items or is specified in the query (for example the publish date between some range in a query). See [Date Range Filters](/docs/ur_advanced_tuning/#date_filters) for details.
 
