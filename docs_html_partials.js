@@ -19,7 +19,13 @@ DocsHtmlPartials = [
   },
   {
     name: "urversion",
-    template: "v0.5.0",
+    template: "v{{> urversionnum}}",
+    ismd: false,
+    shouldLoad: false
+  },
+  {
+    name: "urversionnum",
+    template: "0.5.0",
     ismd: false,
     shouldLoad: false
   },
@@ -67,7 +73,7 @@ DocsHtmlPartials = [
   },
   {
     name: "hbaseversionnum",
-    template: "1.2.3",
+    template: "1.2.4",
     ismd: false,
     shouldLoad: false
   },
@@ -79,7 +85,7 @@ DocsHtmlPartials = [
   },
   {
     name: "sparkdownload",
-    template: "<a href='http://www.us.apache.org/dist/spark/spark-1.6.2/spark-1.6.3-bin-hadoop2.6.tgz'>Spark 1.6.3</a>",
+    template: "<a href='http://www.us.apache.org/dist/spark/spark-1.6.3/spark-1.6.3-bin-hadoop2.6.tgz'>Spark 1.6.3</a>",
     ismd: false,
     shouldLoad: false
   },
@@ -91,7 +97,7 @@ DocsHtmlPartials = [
   },
   {
     name: "hbasedownload",
-    template: "<a href='http://www-us.apache.org/dist/hbase/1.2.3/hbase-1.2.3-bin.tar.gz'>HBase 1.2.3</a>",
+    template: "<a href='http://www-us.apache.org/dist/hbase/1.2.4/hbase-1.2.4-bin.tar.gz'>HBase 1.2.4</a>",
     ismd: false,
     shouldLoad: false
   },
