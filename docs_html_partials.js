@@ -184,5 +184,11 @@ DocsHtmlPartials = [
     template: "",
     ismd: true,
     shouldLoad: true
+  },
+  {
+    name: "urworkflow",
+    template: "",
+    ismd: true,
+    shouldLoad: true
   }
 ]

@@ -33,7 +33,12 @@ One example of a filter is where it may make sense to show only "electronics" re
 
 ### <a name="ur_dates" id="ur_dates"></a>Dates
 
-Dates are only used for filters but apply in all recommendation modes including popularity queries. Dates can be used to filter recommendations in one of two ways, which should **never be used together**. Decide if you want the date range attached to queries or to the items themselves (for example available/expire dates) where the date range is attached to items or is specified in the query (for example the publish date between some range in a query). See [Date Range Filters](/docs/ur_advanced_tuning/#date_filters) for details.
+Dates can be used to specify the recommended items in one of 2 ways that should never be used together:
+
+ - Use `"dataRange"` in the query to match a `"date"` property of a recommended item. This only affect configuration in engine.json by setting the name of the `"date"` property, in other words it can be called something other than `"date"`. Only recommended items with the `"date"` property between the queries `"dataRange"` values will be returned.
+ - Use available and expire dates attached to items as properties to make them eligible for being recommended. In this case set the engine.json config "expireDateName": "expireDateFieldName", and "availableDateName": "availableDateFieldName" to set the names of the properties and activate their use. When in this mode the date can be passed in with the query and defaults to the datetime on the query server, for simplicity. The date is compared to the available and expire dates of every item to be returned and will remove any that do not span the current date.
+
+Dates are only used for filters but apply in all recommendation modes including all of the possible rankings. See [Date Range Filters](/docs/ur_advanced_tuning/#date_filters) for details.
 
 ### Engine.json
 
