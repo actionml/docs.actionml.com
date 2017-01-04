@@ -27,7 +27,7 @@ You will need an ssh terminal that is compatible with OpenSSH. This is pre-insta
    ```
    sudo su - aml
    ssh-keygen # hit enter for all options
-   nano .ssh/autorized_keys # add your ssh public key
+   nano .ssh/authorized_keys # add your ssh public key
    ```
    
    This will give you a passwordless login to the machine that is secure.
