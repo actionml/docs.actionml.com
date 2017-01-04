@@ -136,7 +136,7 @@ A full list of tuning and config parameters is below. See the field description 
             "num": 20,
             "seed": 3,
             "recsModel": "all",
-			"rankings": [
+            "rankings": [
               {
                 "name": "popRank"
                 "type": "popular", // or "trending" or "hot"
