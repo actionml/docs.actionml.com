@@ -1,9 +1,9 @@
 # Universal Recommender Tuning
 The default settings of the UR are good for many purposes but getting optimum results may require tuning and at very least many users will wish to know the meaning of the various tuning params.
 
-## UR Parameters v0.4.0
+## UR Parameters {{> urversion}}
 
-**Notice:** This version requires you to build Mahout v0.13.0-SNAPSHOT from source. If you do not need v0.4.0 features you can stick with v0.3.0 by pulling that tag from the UR repo. See git instructions to pull and checkout a specific tag. To use v0.4.0 You will need to pull the latest master of Mahout v0.13.0 from the [Apache Mahout repo](https://github.com/apache/mahout.git) and build it locally on the machine you expect to build the Universal Recommender. We will update the UR as soon as Mahout v0.13.0 is released to avoid this extra build. Also notice that this version is not compatible with Apache PredcitionIO v0.10.0 since it has not been released yet. Continue to use the ActionML version of PredictionIO-0.9.7-aml.
+These instructions are for the latest Universal Recommender {{> urversion}}, which requires you to build Mahout and have Apache PredictionIO installed (not the ActionML branch). See installation instructions for [PIO](/docs/pio_quickstart) and the [UR](/docs/ur_quickstart).
 
 ### Start Here: Find Your Primary Conversion Indicator
 
@@ -126,7 +126,8 @@ A full list of tuning and config parameters is below. See the field description 
                     "name": "purchase"
                 },{
                     "name": "view",
-                    "maxCorrelatorsPerItem": 50
+                    "maxCorrelatorsPerItem": 50,
+                    "minLLR": 5 // no default
                 }
             ],
             "blacklistEvents": ["buy", "view"],
@@ -194,6 +195,7 @@ The `Algorithm: params:` section controls most of the features of the UR. Possib
 * **indicators**: either this of `eventNames` are required. This method for naming event types also allows for setting downsampling per event type. These are more properly called "indicators" because they may not be triggered by events but always are assumed to be something known about users, which we think "indicates" something about their taste or preferences:
   * **name**: name for the indicator, as in eventNames.
   * **maxCorrelatorsPerItem**: number of correlated items per recommended item. This is set to give best results for the indicator type and is often set to less than 50 (the default value) if the number of different ids for this event type is small. For example if the indicator is "gender" there will only be 2 ids M and F so downsampleing may preform better if set to 1, which would find the gender that best correlates with a primary event on the recommended items like a purchase of a product. Without this setting the default of 50 would apply, meaning to take the top 50 gender ids that correlate with the primary/conversion item. With enough data you may get all genders to correlate, meaning none would be of higher value than another, meaning in turn that gender would not help recommend. Taking 1 correlator would force the UR to choose which is more highly correlated instead of taking up to 50 of the highest.
+  * **minLLR**: LLR score used as the minimum threshold. Since LLR scores will be higher for better correlation this can be set to ensure the highest quality correlators are the only ones used. This will increase precision of recommendations but may decrease recall, meaning you will get better recommendations but less of them. In turns increasing this may affect results negatively so always A/B test any tweaking of this value. There is no default, we keep `maxCorrelatorsPerItem` of the highest scores by defaultf&mdash;no matter the score. A rule of thumb would say to use something like 5 for a typical high quality ecom dataset.
 * **maxQueryEvents**: optional (use with great care), default = 100. An integer specifying the number of most recent user history events used to make recommendations for an individual. More implies some will be less recent actions. Theoretically using the right number will capture the user’s current interests.
 * **num**: optional, default = 20. An integer telling the engine the maximum number of recommendations to return per query but less may be returned if the query produces less results or post recommendations filters like blacklists remove some.
 * **blacklistEvents**: optional, default = the primary action. An array of strings corresponding to the actions taken on items, which will cause them to be removed from recommendations. These will have the same values as some user actions - so “purchase” might be best for an ecom application since there is often little need to recommend something the user has already bought. If this is not specified then the primary event is assumed. To blacklist no event, specify an empty array. Note that not all actions are taken on the same items being recommended. For instance every time a user goes to a category page this could be recorded as a category preference so if this event is used in a blacklist it will have no effect, the category and item ids should never match. If you want to filter certain categories, use a field filter and specify all categories allowed.
