@@ -45,41 +45,44 @@ Dates are only used for filters but apply in all recommendation modes including 
 This file allows the user to describe and set parameters that control the engine operations. Many values have defaults so the following can be seen as the minimum for an ecom app with only one "buy" event. Reasonable defaults are used so try this first and add tunings or new event types and item property fields as you become more familiar.
 
 #### Simple Default Values
+
+```
+{
+  "comment":" This config file uses default settings for all but the required values see README.md for docs",
+  "id": "default",
+  "description": "Default settings",
+  "engineFactory": "org.template.RecommendationEngine",
+  "datasource": {
+    "params" : {
+      "name": "datasource-name",
+      "appName": "handmade",
+      "eventNames": ["purchase", "view"]
+    }
+  },
+  "sparkConf": {
+    "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
+    "spark.kryo.registrator": "org.apache.mahout.sparkbindings.io.MahoutKryoRegistrator",
+    "spark.kryo.referenceTracking": "false",
+    "spark.kryoserializer.buffer.mb": "300",
+    "spark.kryoserializer.buffer": "300m",
+    "spark.executor.memory": "4g",
+    "es.index.auto.create": "true"
+  },
+  "algorithms": [
     {
-	  "comment":" This config file uses default settings for all but the required values see README.md for docs",
-	  "id": "default",
-	  "description": "Default settings",
-	  "engineFactory": "org.template.RecommendationEngine",
-	  "datasource": {
-	    "params" : {
-	      "name": "datasource-name",
-	      "appName": "handmade",
-	      "eventNames": ["purchase", "view"]
-	    }
-	  },
-	  "sparkConf": {
-	    "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
-	    "spark.kryo.registrator": "org.apache.mahout.sparkbindings.io.MahoutKryoRegistrator",
-	    "spark.kryo.referenceTracking": "false",
-	    "spark.kryoserializer.buffer.mb": "300",
-	    "spark.kryoserializer.buffer": "300m",
-	    "spark.executor.memory": "4g",
-	    "es.index.auto.create": "true"
-	  },
-	  "algorithms": [
-	    {
-	      "comment": "simplest setup where all values are default, popularity based backfill, must add eventsNames",
-	      "name": "ur",
-	      "params": {
-	        "appName": "handmade",
-	        "indexName": "urindex",
-	        "typeName": "items",
-	        "comment": "must have data for the first event or the model will not build, other events are optional",
-	        "eventNames": ["purchase", "view"]
-	      }
-	    }
-	  ]
-	}
+      "comment": "simplest setup where all values are default, popularity based backfill, must add eventsNames",
+      "name": "ur",
+      "params": {
+        "appName": "handmade",
+        "indexName": "urindex",
+        "typeName": "items",
+        "comment": "must have data for the first event or the model will not build, other events are optional",
+        "eventNames": ["purchase", "view"]
+      }
+    }
+  ]
+}
+```
 	
 #### Full Prameters
 
@@ -87,90 +90,92 @@ A full list of tuning and config parameters is below. See the field description 
 
 **Note:** It is strongly advised that you try the default/simple settings first before changing them. The exception is that at least one event name must be put in the  `eventNames` array and the path to the Elasticsearch index must be specified in `indexName` and `typeName`. 
 
+```
+{
+  "id": "default",
+  "description": "Default settings",
+  "comment": "replace this with your JVM package prefix, like org.apache",
+  "engineFactory": "org.template.RecommendationEngine",
+  "datasource": {
+    "params" : {
+      "name": "some-data",
+      "appName": "URApp1",
+      "eventNames": ["buy", "view"]
+      "eventWindow": {
+        "duration": "3650 days",
+        "removeDuplicates": false,
+        "compressProperties": false
+      } 
+   }
+ },
+  “comment”: “This is for Mahout and Elasticsearch, the values are minimums and should not be removed”,
+  "sparkConf": {
+    "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
+    "spark.kryo.registrator": "org.apache.mahout.sparkbindings.io.MahoutKryoRegistrator",
+    "spark.kryo.referenceTracking": "false",
+    "spark.kryoserializer.buffer.mb": "200",
+    "spark.executor.memory": "4g",
+    "es.index.auto.create": "true"
+  },
+  "algorithms": [
     {
-      "id": "default",
-      "description": "Default settings",
-      "comment": "replace this with your JVM package prefix, like org.apache",
-      "engineFactory": "org.template.RecommendationEngine",
-      "datasource": {
-        "params" : {
-          "name": "some-data",
-          "appName": "URApp1",
-          "eventNames": ["buy", "view"]
-          "eventWindow": {
-	        "duration": "3650 days",
-            "removeDuplicates": false,
-            "compressProperties": false
-	      } 
-       }
-     },
-      “comment”: “This is for Mahout and Elasticsearch, the values are minimums and should not be removed”,
-      "sparkConf": {
-        "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
-        "spark.kryo.registrator": "org.apache.mahout.sparkbindings.io.MahoutKryoRegistrator",
-        "spark.kryo.referenceTracking": "false",
-        "spark.kryoserializer.buffer.mb": "200",
-        "spark.executor.memory": "4g",
-        "es.index.auto.create": "true"
-      },
-      "algorithms": [
-        {
-          "name": "ur",
-          "params": {
-            "appName": "app1",
-            "indexName": "urindex",
-            "typeName": "items",
-            "eventNames": ["buy", "view"]
-            "indicators": [
-                {
-                    "name": "purchase"
-                },{
-                    "name": "view",
-                    "maxCorrelatorsPerItem": 50,
-                    "minLLR": 5 // no default
-                }
-            ],
-            "blacklistEvents": ["buy", "view"],
-            "maxEventsPerEventType": 500,
-            "maxCorrelatorsPerEventType": 50,
-            "maxQueryEvents": 100,
-            "num": 20,
-            "seed": 3,
-            "recsModel": "all",
-            "rankings": [
-              {
-                "name": "popRank"
-                "type": "popular", // or "trending" or "hot"
-                "eventNames": ["buy", "view"],
-                "duration": "3 days",
-                "endDate": "ISO8601-date" // most recent date to end the duration
-              },
-              {
-                "name": "uniqueRank"
-                "type": "random"
-              },
-              {
-                "name": "weightRank"
-                "type": "userDefined"
-              }
-            ],
-            "expireDateName": "expireDateFieldName",
-            "availableDateName": "availableDateFieldName",
-            "dateName": "dateFieldName",
-            "userbias": -maxFloat..maxFloat,
-            "itembias": -maxFloat..maxFloat,
-            "returnSelf": true | false,
-            “fields”: [
-              {
-                “name”: ”fieldname”,
-                “values”: [“fieldValue1”, ...],
-                “bias”: -maxFloat..maxFloat,
-              },...
-            ]
+      "name": "ur",
+      "params": {
+        "appName": "app1",
+        "indexName": "urindex",
+        "typeName": "items",
+        "eventNames": ["buy", "view"]
+        "indicators": [
+            {
+                "name": "purchase"
+            },{
+                "name": "view",
+                "maxCorrelatorsPerItem": 50,
+                "minLLR": 5 // no default
+            }
+        ],
+        "blacklistEvents": ["buy", "view"],
+        "maxEventsPerEventType": 500,
+        "maxCorrelatorsPerEventType": 50,
+        "maxQueryEvents": 100,
+        "num": 20,
+        "seed": 3,
+        "recsModel": "all",
+        "rankings": [
+          {
+            "name": "popRank"
+            "type": "popular", // or "trending" or "hot"
+            "eventNames": ["buy", "view"],
+            "duration": "3 days",
+            "endDate": "ISO8601-date" // most recent date to end the duration
+          },
+          {
+            "name": "uniqueRank"
+            "type": "random"
+          },
+          {
+            "name": "weightRank"
+            "type": "userDefined"
           }
-        }
-      ]
+        ],
+        "expireDateName": "expireDateFieldName",
+        "availableDateName": "availableDateFieldName",
+        "dateName": "dateFieldName",
+        "userbias": -maxFloat..maxFloat,
+        "itembias": -maxFloat..maxFloat,
+        "returnSelf": true | false,
+        “fields”: [
+          {
+            “name”: ”fieldname”,
+            “values”: [“fieldValue1”, ...],
+            “bias”: -maxFloat..maxFloat,
+          },...
+        ]
+      }
     }
+  ]
+}
+```
 
 #### Datasource Parameters
 

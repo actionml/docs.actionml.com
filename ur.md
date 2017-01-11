@@ -4,7 +4,7 @@ The Universal Recommender (UR) is a new type of collaborative filtering recommen
 
 The use of multiple **types** of data fundamentally changes the way a recommender is used and, when employed correctly, will provide a significant increase in quality of recommendations vs. using only one user event. Most recommenders, for instance, can only use "purchase" events. Using all we know about a user and their context allows us to much better predict their preferences.
 
-##Quick Start
+## Quick Start
 
 For the impatient head to the [quickstart](/docs/ur_quickstart) and be aware that the UR requires the ActionML version of PIO with Elasticsearch. You are free to pick any backing data store.
 
