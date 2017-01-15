@@ -4,13 +4,27 @@ We help people build Machine learning into their Apps. We create, the systems, a
 
 ## Algorithms
 
+Some work we have done is fairly widely applicable and available as Templates:
+
  - [**The Universal Recommender**](/docs/ur): Perhaps the most flexible recommender in open source. Implemented as a complete end-to-end integrated system that you can run on premises or we can run it for you. The Universal Recommender contains a new Correlation Engine approach to ingesting data from many sources to make recommendations better. Recommenders print money, in the sense that with existing traffic to your site or app you can expect lift in sales or engagement that will improve margins in measurable ways. Amazon is widely reported to see 30% sales lift from it's pervasive use of recommenders.
  
  - [**Behavioral Search**](/blog/personalized_search): AKA Personalized Search this algorithm takes in data we know about users, learns what leads to purchases or reads, then hands this data back to you for inclusion in your content index. The augmenting data makes search personalized, which leads to greater user satisfaction as measured by sales (Amazon has claimed 3% sales lift for a similar algorithm).
  
+Some work is more custom and specific to a particular application like:
+
+ - **Ad or Offer Placement** based on user or user group (segments) behavioral data and ad/off to page content similarity.
+
+ - **Content Categorization** advanced content analysis, clustering via Kmeans, Latent Dirichlet Analysis (LDA), word2vec, and other Natural Language (NLP) techniques.
+
+ - **Automated A/B Testing** using Multi-armed Bandits with Bayesian sampling to converge on the best choice more quickly typical A/B split testing and in a way that is statistically valid. 
+ 
 ## PredictionIO
 
 We help maintain Apache PredictionIO. We use it to customize solutions and deliver scalable reliable systems. We often deliver our algorithms as PredictionIO Templates. 
+
+## Operations and DevOps
+
+We can setup clusters where big data is used, operate them through proof of concept and beyond, or hand them off to your in-house operations group. We have a suite of automation tools to bring up VMs install software via containers, and can customize these for your operational needs.
 
 ## Machine Learning Libraries
 

@@ -1,5 +1,5 @@
 # Advanced Tuning
-	
+    
 ## Out of Memory Error
 
 Although it's not really an algorithm tuning issue, it's extremely important&mdash;after all if you can't get `pio train` to run, who cares about algorithm tuning?
@@ -30,14 +30,16 @@ In "newsy" applications where an item has a short lifetime as far as usefulness 
 
  - **Robust model**: It might be tempting to think a model build only on recent events would be the best thing to do here and that is possible but also somewhat wrong. Older items may still be useful in creation of the UR model since they are still related to newer items and since they will still give information about one user's similarity of taste with another's, So create models with an high number or primary events per user, even if you have to use older events. The event age is controlled in `datasource: params: eventWindow:`. Set this to encompass a reasonable number of primary events per user.
  - **Recency of User Intent**: If we have lots of user data, as will be the case with a large `eventWindow`, we can limit the number of events used to calculate recommendations. This is a separate tuning param from the number used to calculate the model. Set `algorithms: params: maxQueryEvents:` to something smaller than the average. This will take the most recent events, indicating the user's most recent interests, to use for returning recommendations. This method may be useful in non-newsy app too.
- - **Return Only New-ish Items**: Now that we have a robust large model, and are using only recent user events for recs we must guarantee that only new items are returned (this is optional because older items may also be of interest to the user). We do this with a date-based filter. In the **engine.json** specify a `"dateName": "publishedDate"` and make sure to set this with a property using the $set event for each item. Then in the **query** specify a date range for acceptable items: 
+- **Return Only New-ish Items**: Now that we have a robust large model, and are using only recent user events for recs we must guarantee that only new items are returned (this is optional because older items may also be of interest to the user). We do this with a date-based filter. In the **engine.json** specify a `"dateName": "publishedDate"` and make sure to set this with a property using the $set event for each item. Then in the **query** specify a date range for acceptable items: 
 
-        "dateRange"": {
-          "name": "publishedDate",
-          "beforeDate": tomorrow-date
-          "afterDate": some-back-date
-        }
-	   
+    ```
+    "dateRange"": {
+      "name": "publishedDate",
+      "beforeDate": tomorrow-date
+      "afterDate": some-back-date
+    }
+    ```
+       
 ## Better Model at the Expense of Training/Query Time
 
 At the core of the Universal Recommender is the "Correlated Cross-Occurrence" algorithm, which creates the model used in making recommendations. The more data you include, the better the model will work but this is true with rapidly diminishing returns. One study of this effect was done by one of the CCO creators [here](https://ssc.io/pdf/rec11-schelter.pdf). This leads us to limit the actual data used to calculate the CCO model by downsampling. This will produce slightly worse results but keep the training time O(n) where n is the number of downsampled interactions used. 
@@ -74,12 +76,12 @@ Choose one and only one of the following methods.
 
 **Note: Both dates must** be attached to items or they will not be recommended. To have one-sided filter make the available date some time far in the past and/or the expire date some time in the far future.
 
-**`engine.json`**
+**engine.json**
 
 ```
-...
-   "expireDateName": "expire",
-   "availableDateName": "available",
+    ...
+    "expireDateName": "expire",
+    "availableDateName": "available",
 
 ```
 
@@ -102,9 +104,9 @@ Substitute your own field names. **Both** dates must be set for **every** item w
 
 ```
 {
-  “user”: “some-user-id”, 
-  "currentDate": "2015-08-15T11:28:45.114-07:00",
-  ...
+    “user”: “some-user-id”, 
+    "currentDate": "2015-08-15T11:28:45.114-07:00",
+    ...
 }
 ```
 
@@ -112,8 +114,8 @@ If the `"currentDate"` is left out of the query the server date is used. **Note:
 
 ```
 {
-  “user”: "some-user-id", 
-  ...
+    “user”: "some-user-id", 
+    ...
 }
 ```
 
@@ -121,15 +123,19 @@ If the `"currentDate"` is left out of the query the server date is used. **Note:
 
 A "dateRange" can be specified in the query and the recommended items must have a date that lies between the range dates. If items do not have a date property attached to them they will never be returned by a dateRange filtered query.
 
-**`engine.json`**
+**Config in engine.json**
 
 ```
-...
-   "dateName": "published",
-...
+    ...
+    "dateName": "published",
+    ...
 ```
 
-Substitute your own field name. Remember that all items must have this field or they will never be recommended if using a `dateRange` in the query. Set the item with a string property encoded as ISO-8601 dates. **Note:** Other properties are set as *arrays of strings* so dates are the only property that is set as a string like this:
+Substitute your own field name. Remember that all items must have this field or they will never be recommended if using a `dateRange` in the query. 
+
+**Set the property**
+
+Set the item with a string property encoded as ISO-8601 dates. **Note:** Other properties are set as *arrays of strings* so dates are the only property that is set as a string like this:
 
 ```
 {
@@ -143,7 +149,7 @@ Substitute your own field name. Remember that all items must have this field or 
 }
 ```
 
-**query**
+**Query**
 
 ```
 {
@@ -173,14 +179,16 @@ The UR allows all items to be ranked by one of several popularity metrics. The n
 
 For the meaning and method for setting these values see the Universal Recommender docs in the [readme.md](https://github.com/actionml/template-scala-parallel-universal-recommendation)
 
-    "recsModel": "all",
-	"backfillField": {
-		"name": "popRank" // name of Elasticsearch index field
-		"backfillType": "popular", // type of calculation
-		"eventNames": ["buy", "view"], // events to use in calculation
-		"duration": "3 days", // A Scala duration, parsed accordingly
-		"endDate": "ISO8601-date" // used in tests, avoid usage otherwise
-	},
+```
+"recsModel": "all",
+"backfillField": {
+    "name": "popRank" // name of Elasticsearch index field
+    "backfillType": "popular", // type of calculation
+    "eventNames": ["buy", "view"], // events to use in calculation
+    "duration": "3 days", // A Scala duration, parsed accordingly
+    "endDate": "ISO8601-date" // used in tests, avoid usage otherwise
+},
+```
     
 ### Long Term Popularity
 
@@ -206,21 +214,25 @@ Taking the trending idea one step further the UR also supports `"backfillType": 
 
 The query of any of the above popModel configurations is the same since they all rank all items. You ask for recommendations but do not specify user or item.
 
-	{
-	}
+```
+{
+}
+```
 
 This query takes all of the same parameters as any other query so you can use boosts and filters. For instance if you wanted to query for popular items of a certain category, and if you have given items a property from the list `"categories": ["electronics", "accessories", "phones"] The following query would return only popular phones:
 
-	{
-	  “fields”: [
-	    {
-	      “name”: “categories”
-	      “values”: [“phones”],
-	      “bias”: -1
-	    }
-      ]
-   	}
-   	
+```
+{
+  “fields”: [
+    {
+      “name”: “categories”
+      “values”: [“phones”],
+      “bias”: -1
+    }
+  ]
+}
+```       
+       
 The `bias: -1` will turn it into a filter, meaning to return nothing that does not contain the `"categories": ["phones"]` so your results will be the most popular items as specified by the popModel tuning params.
 
 ## Setting the eventWindow
@@ -231,8 +243,8 @@ Rules for setting the `eventWindow` params:
 
  - More data is usually better, but with diminishing returns. After users start to have something like 500 primary events, or whatever you set for `maxEventsPerEventType` you will not get much benefit from more data. So set the time window to be no larger than whatever supports this.
  - The `eventWindow` also controls de-duplication, and property change compression, which both will help keep the EventStore well compacted. Even it your `eventWindow: duration` is large, it may be useful to compact the EventStore.
- 	- De-duplication applies to usage events, and for many algorithms only one such event is actually used so if your data gathering happens to create a lot of dups this will be useful to do
- 	-  
+     - De-duplication applies to usage events, and for many algorithms only one such event is actually used so if your data gathering happens to create a lot of dups this will be useful to do
+     -  
 
 # Picking the Best Tuning Parameters
 Several of the methods mentioned above can be tested with cross-validation tests but others cannot. For instance increasing data used in training or queries will almost always increase cross-validation test results but randomizations will almost always decrease scores. tuning for recency will also decrease cross-validation results. Unfortunately some of these results are known to be contrary to real-world results from something that trumps offline cross-validation tests&mdash;A/B tests. 
@@ -244,4 +256,6 @@ A great many different things known about the user may reflect on their taste. W
 There may even be cases where we know things that could be considered candidates for the primary indicator/event&mdash;for instance in video recommenders is it better to use the fact that the user started a video, watched 20% of a video or 90%? In point of fact we have seen cases where for a given dataset each of these was strongest and by a significant margin. This is a great case where we use cross-validation testing.
 
 ## <a id="mapk"></a>MAP@k
-To determine this we start with a tool for measuring the relative predictive strength of a given indicator type. This, relies on cross-validation tests. Some of the tuning examples above can also be tested this way but others cannot. For instance Randomization will always give lower MAP@k results but is also universally good when measuring using with A/B testing. That said MAP@k is a good way to test predictive strength of indicator types. See MAP@k testing for a discussion of this testing technique.
+To determine this we start with a tool for measuring the relative predictive strength of a given indicator type. This, relies on cross-validation tests. Some of the tuning examples above can also be tested this way but others cannot. For instance Randomization will always give lower MAP@k results but also gives lift A/B testing. That said MAP@k is a good way to test predictive strength of indicator types. 
+
+ActionML maintains a repo for MAP@k testing but the tool is meant for data scientists who know Python and Spark so is provided as-is with not direct support from us, read it and use it in this spirit in our [analysis-tools](https://github.com/actionml/analysis-tools) repo.

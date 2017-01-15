@@ -131,7 +131,7 @@ A full list of tuning and config parameters is below. See the field description 
             },{
                 "name": "view",
                 "maxCorrelatorsPerItem": 50,
-                "minLLR": 5 // no default
+                "minLLR": 5
             }
         ],
         "blacklistEvents": ["buy", "view"],
@@ -154,7 +154,7 @@ A full list of tuning and config parameters is below. See the field description 
             "type": "random"
           },
           {
-            "name": "weightRank"
+            "name": "preferredRank"
             "type": "userDefined"
           }
         ],
@@ -200,7 +200,7 @@ The `Algorithm: params:` section controls most of the features of the UR. Possib
 * **indicators**: either this of `eventNames` are required. This method for naming event types also allows for setting downsampling per event type. These are more properly called "indicators" because they may not be triggered by events but always are assumed to be something known about users, which we think "indicates" something about their taste or preferences:
   * **name**: name for the indicator, as in eventNames.
   * **maxCorrelatorsPerItem**: number of correlated items per recommended item. This is set to give best results for the indicator type and is often set to less than 50 (the default value) if the number of different ids for this event type is small. For example if the indicator is "gender" there will only be 2 ids M and F so downsampleing may preform better if set to 1, which would find the gender that best correlates with a primary event on the recommended items like a purchase of a product. Without this setting the default of 50 would apply, meaning to take the top 50 gender ids that correlate with the primary/conversion item. With enough data you may get all genders to correlate, meaning none would be of higher value than another, meaning in turn that gender would not help recommend. Taking 1 correlator would force the UR to choose which is more highly correlated instead of taking up to 50 of the highest.
-  * **minLLR**: LLR score used as the minimum threshold. Since LLR scores will be higher for better correlation this can be set to ensure the highest quality correlators are the only ones used. This will increase precision of recommendations but may decrease recall, meaning you will get better recommendations but less of them. In turns increasing this may affect results negatively so always A/B test any tweaking of this value. There is no default, we keep `maxCorrelatorsPerItem` of the highest scores by defaultf&mdash;no matter the score. A rule of thumb would say to use something like 5 for a typical high quality ecom dataset.
+  * **minLLR**: this is not used by default and is here when an LLR score is desired as the minimum threshold. Since LLR scores will be higher for better correlation this can be set to ensure the highest quality correlators are the only ones used. This will increase precision of recommendations but may decrease recall, meaning you will get better recommendations but less of them. Increasing this may affect results negatively so always A/B test any tweaking of this value. There is no default, we keep `maxCorrelatorsPerItem` of the highest scores by defaultf&mdash;no matter the score. A rule of thumb would say to use something like 5 for a typical high quality ecom dataset.
 * **maxQueryEvents**: optional (use with great care), default = 100. An integer specifying the number of most recent user history events used to make recommendations for an individual. More implies some will be less recent actions. Theoretically using the right number will capture the user’s current interests.
 * **num**: optional, default = 20. An integer telling the engine the maximum number of recommendations to return per query but less may be returned if the query produces less results or post recommendations filters like blacklists remove some.
 * **blacklistEvents**: optional, default = the primary action. An array of strings corresponding to the actions taken on items, which will cause them to be removed from recommendations. These will have the same values as some user actions - so “purchase” might be best for an ecom application since there is often little need to recommend something the user has already bought. If this is not specified then the primary event is assumed. To blacklist no event, specify an empty array. Note that not all actions are taken on the same items being recommended. For instance every time a user goes to a category page this could be recorded as a category preference so if this event is used in a blacklist it will have no effect, the category and item ids should never match. If you want to filter certain categories, use a field filter and specify all categories allowed.
@@ -222,12 +222,14 @@ The `Algorithm: params:` section controls most of the features of the UR. Possib
   
   When the `"type"` is **"userDefined"** the property defined in `"name"` is expected to rank any items that you wish to use as backfill. This may be useful, for instance, if you wish to show promoted items when no other method to recommend is possible. 
   
-  In all cases the property value defined by `"name"` must be given a unique float value. For `"popular"`, `"trending"`, `"hot"`, and `"random"` the value is calculated by the UR. For `"userDefined"` the value is set using a `$set` event like any other property, only the value must be a float. See "Property Change Events" [here](http://actionml.com/docs/ur_input).
+  In all cases the property value defined by `"name"` must be given a unique float value. For `"popular"`, `"trending"`, `"hot"`, and `"random"` the value is calculated by the UR. For `"userDefined"` the value is set using a `$set` event like any other property. See "Property Change Events" [here](http://actionml.com/docs/ur_input).
   
 	* **name** give the field a name in the model and defaults to those mentioned above in the JSON.
-	* **type**  `"popular"`, `"trending"`, `"hot"`, `"userDefined"`,and `"random"`. `"popular"`, `"trending"`, `"hot"` use event counts that are just count, velocity of change in event counts, or the acceleration of event counts respectively. **Note**: when using "hot" the algorithm divides the events into three periods and since events tend to be cyclical by day, 3 days will produce results mostly free of daily effects for all types. Making this time period smaller may cause odd effects from time of day the algorithm is executed. Popular is not split and trending splits the events in two. So choose the duration accordingly.
+	* **type**  `"popular"`, `"trending"`, `"hot"` can be defined and use event counts per item one of these can be used with `"userDefined"` and/or `"random"`. `"popular"`, `"trending"`, `"hot"` use event counts that are just count, change in event counts, or change in "trending" values. 
+	
+	 **Note**: when using "hot" the algorithm divides the events into three periods and since events tend to be cyclical by day, 3 days will produce results mostly free of daily effects. Making this time period smaller may cause odd effects. Popular is not split and trending splits the events in two. So choose the duration accordingly. 
+	
+	 These each add a rank value to items in the model that is used if collaborative filtering recommendations cannot be made. Since they rank all items they also obey filters, boosts, and business rules as any CF recommendation would. For example setting rankings allows CF to be preferred, then "popular" then "random" falling back to the ranking in the order they are defined.
 	* **eventNames** this is allowed only with one of the popularity types and is  array of eventNames to use in calculating the popularity model, this defaults to the primary/conversion event&mdash;the first in the `algorithm: eventNames:` list. 
-	* **duration**  this is allowed only with one of the popularity type and is a duration like "3 days" (which is the default), which defines the time from now back to the last event to count in the popularity calculation.
-	* **endDate**  this is allowed only with one of the popularity type and is an ISO8601-date string to use to start the duration&mdash;in other words it defines the first event to count. **This is almost never used a live system** but may be used in tests on batch imported events.
-first event to count. This is almost never used live system but may be used in tests on batch imported events.
+	* **duration**  this is allowed only with one of the popularity types and is a duration like "3 days" (which is the default), which defines the time from now back to the last event to count in the popularity calculation.
 * **seed** Set this if you want repeatable downsampling for some offline tests. This can be ignored and shouldn't be set in production. 

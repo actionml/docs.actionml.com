@@ -18,7 +18,7 @@ The Universal Recommender has an integration test written in Python. If you want
 
     python --version
 
-You should have 2.7.9 or above. Check to see that `pip` is installed 
+You should have 2.7.9+ ( do not use Python 3+ since is not source compatible with scripts written in Python 2). Check to see that `pip` is installed 
 
     pip --version
 
@@ -81,11 +81,11 @@ curl -H "Content-Type: application/json" -d '
 }' http://localhost:8000/queries.json
 ```
 
-There are many examples of queries in the examples so use it to see how to form them in JSON. You can also query using one of the [PredictionIO SDKs]() for several different languages.
+There are many examples of queries in the examples directory so use them to see how to form the JSON and query parameters. You can also query using one of the PredictionIO SDKs for several different languages, go to [Apache PIO](http://predictionio.incubator.apache.org/datacollection/eventapi/) click "Integrating with your App" and "List of SDKs".
 
 ## Don't want to build Mahout?
 
-To get a version of the UR that does not require the latest Mahout get the UR v0.3.0 tagged version like this, but be aware that it is incompatible with Apache PredictionIO-{{> pioversionnum}}:
+To get a version of the UR that does not require the latest Mahout get the UR v0.3.0 tagged version like this, but be aware that it is incompatible with Apache PredictionIO-{{> pioversionnum}} and requires the ActionML fork [PredictionIO-0.9.7-aml](https://github.com/actionml/PredictionIO). Once this is insatlled get the older version of the UR:
 
 ```
 git clone https://github.com/actionml/template-scala-parallel-universal-recommendation.git ~/universal

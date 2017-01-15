@@ -25,7 +25,7 @@ DocList = [
                 template: 'intro_to_spark'
             },
             {
-                title: 'AWS All-In-One AMI  Setup',
+                title: 'PIO + UR AWS AMI',
                 template: 'awssetupguide'
             },
             {
