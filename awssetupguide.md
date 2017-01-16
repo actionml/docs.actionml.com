@@ -1,6 +1,6 @@
 # AWS AMI Setup Guide: Dev Machine
 
-Get the [AWS AMI](https://aws.amazon.com/marketplace/pp/B01N310FF0). This will step you through creating an instance. This guide helps you use the AWS instance.
+PredictionIO is now available on AWS Marketplace(https://aws.amazon.com/marketplace/pp/B01N310FF0). This guide will step through how to create an instance and use it.
 
 Features: 
 
