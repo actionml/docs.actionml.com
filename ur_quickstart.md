@@ -45,7 +45,7 @@ mvn clean install -DskipTests
 
 This will populate the local cache with updated Mahout classes that are needed by the latest Universal Recommender Template. 
 
-##Build The Universal Recommender
+## Build The Universal Recommender
 
 ```
 git clone https://github.com/actionml/universal-recommender.git ~/ur
