@@ -1,6 +1,6 @@
 # AWS AMI Setup Guide: Dev Machine
 
-PredictionIO is now available on AWS Marketplace(https://aws.amazon.com/marketplace/pp/B01N310FF0). This guide will step through how to create an instance and use it.
+PredictionIO is now available to launch pre-installed on Amazon Web Services [here](https://aws.amazon.com/marketplace/pp/B01N310FF0). This guide will step through how to create an instance and use it.
 
 Features: 
 
