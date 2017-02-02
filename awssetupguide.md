@@ -34,19 +34,20 @@ Using your terminal where OpenSSH has been installed:
    ssh -i /path/to/pem-file ubuntu@public-ip-address-of-instance
    ```
 
- - Add your ssh pubic key to the "aml" user and logout
+ - Add your ssh pubic key to the "aml" user and logout. This will require that the machine you will use as a terminal/ssh connection has a public key installed. For the Mac or Linux look in `~/.ssh/id_rsa.pub`. copy it's contents to add to the AWS machine's `~/.ssh/authorized_keys` with these commands:
 
    ```
    sudo su - aml
    ssh-keygen # hit enter for all options
-   nano .ssh/authorized_keys # add your ssh public key
+   nano .ssh/authorized_keys # add/paste your ssh public key
+   #save and logout
+   exit
    ```
    
-   This will give you a passwordless login to the machine that is secure.
+   This will give you a passwordless login to the machine that is secure. On your terminal of you login machine:
    
    ```
    ssh aml@public-ip-address-of-instance
-   pio status
    ```
    
    You should get a status check that is clean, pio is ready to start but not yet running. You can now create pio "apps", which are actually datasets, and check status. All required services like Elasticsearch, HBase, Hadoop's Distributed File System (HDFS) are running and will restart when the instance is restarted.
@@ -58,18 +59,24 @@ All needed services startup on boot and should be running. To start the Predicti
  - Go to some place you want logs to be stored, like `/usr/local/pio` and start the EventServer as a Daemon.
 
     ```
+    cd /usr/local/pio # this is where logs will be stored
     nohup pio eventserver &
+    cd ~
+    pio status
+    pio app list # there should be none yet
     ```
 
-You can now look are the most recent output of the EventServer logs by looking at the end of the file `nohup.out`. This will continue to accumulate logs so it will grow as long as the EventServer is running.
+You can now look are the most recent output of the EventServer logs by looking at the end of the file `nohup.out` and `pio.log`. These will continue to accumulate logs so they will grow as long as the EventServer is running.
 
-## Try Out The Universal Recommender
+## Run the System Test
 
-The Universal Recommender is supplied as an example of an Apache PredictionIO template. It is one of the more popular ones but any template may be installed and run on this machine.
+The Universal Recommender is supplied as an example of an Apache PredictionIO template. It is one of the more popular ones but any template may be installed and run on this machine. 
+
+ - Use the UR to run a system test.
 
     ```
-    cd ur
-    ./examples/integration-test
+    cd ~/ur
+    ./examples/integration-test # assumes you have started the EventServer as shown above
     ```
     
 The test will run several stages that create an empty app/dataset, fill it with sample data, build the Universal Recommender, use it to create a model from the dataset, deploy a PredictionServer for UR queries, make a bunch of sample queries to test features, compare them to the expected results and print the differences, then shutdown the PredictionServer. No differences means the test passes.
@@ -78,7 +85,15 @@ The script `examples/integration-test` shows how to run all stages of Prediction
 
 ## What Now?
 
-To configure and use the Universal Recommender see the docs [here](/docs/ur)
+### Apache PredictionIO
+
+You instance is supplied with Apache PredictionIO {{> piovesion}} so you can read instructions at the [PIO site](http://predictionio.incubator.apache.org/) or, if you know PIO already, use commands from our [PIO Cheatsheet](/docs/pio_cli_cheatsheet). **Warning**: never us `pio-start-all` script since it will damage the already running setup, likewise never use `pio-stop-all`. These are never needed on this AWS AMI.
+
+### The Universal Recommender
+
+To configure and use the Universal Recommender see the docs [here](/docs/ur). You have already run it in the integration test so it is all set up.
+
+### Other PIO Templates
 
 Using Git you can download any of the Apache PredictionIO templates. These each contain a type of Machine Learning algorithm to accomplish some task. See the [PIO Tempalate Gallery](http://predictionio.incubator.apache.org/gallery/template-gallery/) for some choices.
 
