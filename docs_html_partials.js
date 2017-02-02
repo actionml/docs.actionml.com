@@ -13,7 +13,7 @@ DocsHtmlPartials = [
   },
   {
     name: "pioversionnum",
-    template: "0.10.0-incubating",
+    template: "0.10.0",
     ismd: false,
     shouldLoad: false
   },

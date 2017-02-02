@@ -5,7 +5,7 @@ PredictionIO can be seen as 2 types of servers, one takes in and stores events&m
 The typical process from install to your first query is:
 
  1. Install {{> pioname}} using instructions [here](/docs/install)
- 2. Start pio with one of the methods listed below, perhaps just `pio-start-all` if you are using a single machine and check it with `pio status`
+ 2. Start pio with one of the methods listed below, perhaps just `pio-start-all` if you are using a single machine (do not use these on the AWS AMI!) and check it with `pio status`
  3. Create an app in the EventServer to store data to
  4. import data into the EventServer
  5. Download a template
@@ -17,17 +17,17 @@ The typical process from install to your first query is:
 # General Commands
 At any point you can run `pio help some-command` to get a help screen printed with all supported options for a command.
 
-## Start/stop
+## Start/stop Services
 
-PredictionIO assumes that HDFS and Spark are running. From a clean start launch them first.
+PredictionIO assumes that HDFS and Spark are running. From a clean start launch them first. **Warning**: do not start services on the AWS AMI, they are alrready started at boot.
 
- - `/path/to/hadoop/sbin/start-dfs.sh` this assumes you have formatted the namenode&mdash;see hadoop docs if this sounds unfamiliar to you.
- - `/path/to/spark/sbin/start-all.sh`
- 
-HDFS and Spark may be left running since nothing in this cheatsheet will stop them.
+ - `/path/to/hadoop/sbin/start-dfs.sh` this assumes you have formatted the namenode&mdash;see hadoop docs if this sounds unfamiliar to you. **Warning**: do not use this on the AWS AMI!
+ - `/path/to/spark/sbin/start-all.sh` **Warning**: do not use this on the AWS AMI! 
 
- - `pio-start-all` this can only be used reliably on a single server setup with all services on a single machine.
- - `pio-stop-all` likewise this is only for a single machine setup.
+HDFS and Spark may be left running since nothing in this cheatsheet will stop them and they are started at boot on the AWS AMI.
+
+ - `pio-start-all` this can only be used reliably on a single server setup with all services on a single machine. **Warning**: do not use this on the AWS AMI!
+ - `pio-stop-all` likewise this is only for a single machine setup. **Warning**: do not use this on the AWS AMI! 
  - `pio eventserver` this starts an EventServer on port 7070 of localhost
  - `nohup pio eventserver &` this creates an EventServer as a daemon, other daemon creation commands work too, like `screen`.
  

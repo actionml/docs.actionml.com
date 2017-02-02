@@ -15,7 +15,7 @@ Create an instance on AWS or other cloud PaaS provider, and make sure the machin
 
 ## Prep the Machine
 
-Read and follow the [Small HA Cluster instructions](/docs/small-ha-cluster) but note that we need instalation jars only for getting configuration information, scripts, or client launcher code (in the case of Spark). **Do not start any service on this machine** except the EventServer and PredictionServer! This is very important. All services are expected to be already running on other machines. 
+Read and follow the [Small HA Cluster instructions](/docs/small_ha_cluster) but note that we need instalation jars only for getting configuration information, scripts, or client launcher code (in the case of Spark). **Do not start any service on this machine** except the EventServer and PredictionServer! This is very important. All services are expected to be already running on other machines. 
 
 ## Configure PIO
 
