@@ -27,8 +27,17 @@ Events in PredicitonIO are sent to the EventSever in the following form:
    "eventTime" : "2015-10-05T21:02:49.228Z"
 }
 ```
+Rules for usage events (non-PIO-reserved events like $set) are:
 
-This is what a "purchase" event looks like. Note that a usage event **always** is from a user and has a user id. Also the "targetEntityType" is always "item". The actual target entity is implied by the event name. So to create a "category-preference" event you would send something like this:
+ - **event**: the value must be one the the `"eventName"` array in engine.json
+ - **entityType**: This is **always** "user", do not use any other type for usage events. 
+ - **entityId**: This is whatever string you use to identify a user.
+ - **targetEntityType**: This is **always** "item", do not use any other type for usage events.
+ - **targetEntityId**: The id for items that correspond to the `"eventName"`. May be a product-id, category-id, a tag-id, anything that the event was connected with.
+ - **properties**: always empty and can be omitted for input but if you export the EventServer it will be output as blank.
+ - **eventTime**: the ISO8601 formatted string for the time the event occurred
+
+This is what a "purchase" event looks like. Note that a usage event **always** is from a user and has a user id. Also the "targetEntityType" is **always** "item". The actual target entity is implied by the event's `"name"`. So to create a `"category-preference"` event you would send something like this:
 
 ```
 {
@@ -42,9 +51,9 @@ This is what a "purchase" event looks like. Note that a usage event **always** i
 }
 ```
    
-This event would be sent when the user clicked on the "electonics" category or perhaps purchased an item that was in the "electronics" category. Note that the "targetEntityType" is always "item".
+This event would be sent when the user clicked on the "electronics" category or perhaps purchased an item that was in the "electronics" category. Note again that the "targetEntityType" is always "item".
 
-## Property Change Events
+## <a id="property-event" name="property-event"></a> Property Change Events
 
 To attach properties to items use a $set event like this:
 
