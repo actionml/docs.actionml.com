@@ -12,7 +12,7 @@ The Universal Recommender input is what are called "events" in PredictionIO nome
  
 The UR takes in potentially many events. These should be seen as a primary event, which is a very clear indication of a user preference and secondary events that we think may tell us something about user "taste" in some way. The Universal Recommender is built on a distributed Correlated Cross-Occurrence (CCO) Engine, which basically means that it will test every secondary event to make sure that it actually correlates to the primary one and those that do not correlate will have little or no effect on recommendations (though they will make it longer to train and get query results). See ActionML's [Analysis Tools](/docs/ur_advanced_tuning/#mapk) for methods to test event predictiveness.
 
-## Preference Indicators aka Usage Events
+## <a id="events" name="events"></a>Preference Indicators aka Usage Events
 
 Events in PredicitonIO are sent to the EventSever in the following form:
 
