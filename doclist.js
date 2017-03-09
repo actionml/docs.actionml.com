@@ -85,3 +85,10 @@ DocList = [
         ]
     }
 ];
+
+DocListIndex = _(DocList).chain()
+                         .zip(_(DocList).pluck('sections'))
+                         .flatten()
+                         .compact()
+                         .pluck('template')
+                         .value()
