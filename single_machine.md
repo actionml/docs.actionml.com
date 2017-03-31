@@ -218,7 +218,7 @@ Configure with these changes to `/usr/local/hbase/conf`:
 
  - **Setup PredictionIO** to connect to the services
 
-   You have PredictionIO in `~/pio-aml` so edit ~/pio-aml/conf/pio-env.sh to have these settings:
+   You have PredictionIO in `~/pio` so edit ~/pio/conf/pio-env.sh to have these settings:
 
     ```
     #!/usr/bin/env bash
