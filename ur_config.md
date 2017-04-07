@@ -188,7 +188,7 @@ The `datasource: params:` section controls input data. This section is Algorithm
 	 - **removeDuplicates** a boolean telling the Datasource to de-duplicate non$set type events, defaults to `false`.
 	 - **compressProperties**: a boolean telling the Datasource to compress property change event into one event expressing the current state of all properties, defaults to `false`.
 
-#### Spark Parameters <a name="ur-spark-conf" id="ur-spark-conf"></a>
+#### <a name="ur-spark-conf" id="ur-spark-conf">Spark Parameters</a>
 
 For the most part these are fixed. The exceptions are the Elasticsearch params that start with "es." These are documented on the Elasticsearch site. The common ones you might need are:
 
