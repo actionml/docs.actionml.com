@@ -115,7 +115,8 @@ A full list of tuning and config parameters is below. See the field description 
     "spark.kryo.referenceTracking": "false",
     "spark.kryoserializer.buffer.mb": "200",
     "spark.executor.memory": "4g",
-    "es.index.auto.create": "true"
+    "es.index.auto.create": "true",
+    "es.nodes": "node1,node2"
   },
   "algorithms": [
     {
@@ -186,6 +187,15 @@ The `datasource: params:` section controls input data. This section is Algorithm
 	 - **duration**: This is parsed for "days", "hours", "minutes", or smaller periods and becomes a Scala `Duration` object defining the time from now backward to the point where older events will be dropped. $set property change event are never dropped.
 	 - **removeDuplicates** a boolean telling the Datasource to de-duplicate non$set type events, defaults to `false`.
 	 - **compressProperties**: a boolean telling the Datasource to compress property change event into one event expressing the current state of all properties, defaults to `false`.
+
+#### Spark Parameters <a name="ur-spark-conf" id="ur-spark-conf"></a>
+
+For the most part these are fixed. The exceptions are the Elasticsearch params that start with "es." These are documented on the Elasticsearch site. The common ones you might need are:
+
+ * **es.nodes**: a comma separated list of node names or ip addresses like "host1,host2" or "1.2.3.4,1.2.3.5,1.2.3.6". The default port for ES REST is 9200 so if you are using that there is no need to specify it. 
+ * **es.port**: defaults to 9200 but can be changed with this config if needed.
+ * **es.net.http.auth.user** and **es.net.http.auth.pass** allow you to set username and password if you need to use Elasticsearch with authentication.
+
 
 #### Algorithm Parameters
 
