@@ -5,7 +5,7 @@ PredictionIO is a Framework for Machine Learning. It provides an API for creatin
 ## Lambda in PredictionIO
 ![image](/docs/images/pio-architecture.png)
 
-This translates to realtime input and queries&mdash;with background re-calculation of models. This even allows realtime data to be used in returning queries so templates just as the Universal Recommender uses realtime user history to return personalized recommendations.
+This translates to realtime input and queries&mdash;with background re-calculation of models but it also allows realtime data to be used in responding to queries. For example the Universal Recommender uses realtime user behavior to return personalized recommendations. 
 
 ## PredictionIO Processes
 
