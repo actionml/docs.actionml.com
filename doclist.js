@@ -81,6 +81,19 @@ DocList = [
             {
                 title: 'Model Debugging',
                 template: 'ur_elasticsearch_debugging'
+            },
+            {
+                title: 'UR Versions',
+                template: 'ur_version_log'
+            }
+        ]
+    },{
+        title: 'Other Tools',
+        template: 'actionml_tools',
+        sections: [
+            {
+                title: 'Data Trim and Compress',
+                template: 'db_cleaner_template'
             }
         ]
     }

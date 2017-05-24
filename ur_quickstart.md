@@ -26,25 +26,6 @@ If you don't have it see these [installation instructions](http://pip.readthedoc
 
     sudo pip install predictionio datetime
     
-## <a name="build_mahout" id="build_mahout"></a>Build Mahout (Temporary but Necessary) 
-
-If you want to use the latest Universal Recommender {{> urversion}}, it will require a local build of Mahout 0.13.0-SNAPSHOT, until Mahout 0.13.0 is released.  Pull the repo from Github and build it locally on the machine you expect to build the Universal Recommender. We will update the UR as soon as Mahout 0.13.0 is released to avoid this extra step. 
-
-**Prerequisites:**
-
- - Maven 3.x
- - Java 1.8 (OpenJDK or Oracle)
- - Git
-
-```
-git clone https://github.com/apache/mahout.git mahout
-cd mahout
-git checkout 00a2883ec69b0807a5486c61dfcc7ef27f35ddc6
-mvn clean install -DskipTests
-```
-
-This will populate the local cache with updated Mahout classes that are needed by the latest Universal Recommender Template. 
-
 ## Build The Universal Recommender
 
 ```
@@ -82,13 +63,3 @@ curl -H "Content-Type: application/json" -d '
 ```
 
 There are many examples of queries in the examples directory so use them to see how to form the JSON and query parameters. You can also query using one of the PredictionIO SDKs for several different languages, go to [Apache PIO](http://predictionio.incubator.apache.org/datacollection/eventapi/) click "Integrating with your App" and "List of SDKs".
-
-## Don't want to build Mahout?
-
-To get a version of the UR that does not require the latest Mahout get the UR v0.3.0 tagged version like this, but be aware that it is incompatible with Apache PredictionIO-{{> pioversionnum}} and requires the ActionML fork [PredictionIO-0.9.7-aml](https://github.com/actionml/PredictionIO). Once this is insatlled get the older version of the UR:
-
-```
-git clone https://github.com/actionml/template-scala-parallel-universal-recommendation.git ~/universal
-cd ~/universal
-git checkout v0.3.0
-```

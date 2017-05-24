@@ -13,7 +13,7 @@ DocsHtmlPartials = [
   },
   {
     name: "pioversionnum",
-    template: "0.10.0",
+    template: "0.11.0",
     ismd: false,
     shouldLoad: false
   },
@@ -25,7 +25,7 @@ DocsHtmlPartials = [
   },
   {
     name: "urversionnum",
-    template: "0.5.0",
+    template: "0.6.0",
     ismd: false,
     shouldLoad: false
   },
@@ -67,13 +67,13 @@ DocsHtmlPartials = [
   },
   {
     name: "elasticsearchversionnum",
-    template: "1.7.5",
+    template: "1.7.6",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "hbaseversionnum",
-    template: "1.2.4",
+    template: "1.2.5",
     ismd: false,
     shouldLoad: false
   },
@@ -91,19 +91,19 @@ DocsHtmlPartials = [
   },
   {
     name: "esdownload",
-    template: "<a href='https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.5.tar.gz'>Elasticsearch 1.7.5</a>",
+    template: "<a href='https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.6.tar.gz'>Elasticsearch 1.7.6</a>",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "hbasedownload",
-    template: "<a href='http://www-us.apache.org/dist/hbase/1.2.4/hbase-1.2.4-bin.tar.gz'>HBase 1.2.4</a>",
+    template: "<a href='http://www-us.apache.org/dist/hbase/1.2.5/hbase-1.2.5-bin.tar.gz'>HBase 1.2.5</a>",
     ismd: false,
     shouldLoad: false
   },
   {
     name: 'pio_version',
-    template: 'PredictionIO-v0.10.0-incubating',
+    template: 'PredictionIO-v0.11.0-incubating',
     ismd: true,
     shouldLoad: false
   },

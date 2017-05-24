@@ -1,5 +1,7 @@
 # AWS AMI Setup Guide: Dev Machine
 
+**Note**: after release of Apache PredictionIO {{> pioversion}} and The Universal Recommender {{> urversion}} AWS will take some days to approve the new AMI. Until then the older version works but with none of the new features. Please bear with us as page reflects the previous version of the AMI until AWS updates it.
+
 PredictionIO is now available to launch pre-installed on Amazon Web Services [here](https://aws.amazon.com/marketplace/pp/B01N310FF0). This guide will step through how to create an instance and use it.
 
 Features: 
