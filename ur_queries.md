@@ -12,15 +12,19 @@ The Universal Recommender has a reasonable set of defaults so queries can be ver
 	    	
 This gets all default values from the engine.json and uses only action correlators for the types specified there.
 
-## Simple Similar Items Query
+## Simple Item Set / Shopping Cart Query
+
+Technically this is to find the things missing in the itemSet. Another term for this is "Complimentary Purchase" but the idea applies to a wide variety  of lists, like watchlists, favorites, shopping carts, wishlists, etc. To get the missing items you will need to train a model with itemSets. For instance items purchased at one time or the contents of a wishlist whenever it changes. See the Item Set use cases for more description.
 
 ```
 {
-  "item": "53454543513"   
+  "itemSet": ["cd53454543513", "lg1", "vf23423432", "af87634"]   
 }
 ```
 	
-This returns items that are similar to the query item, and blacklist and backfill are defaulted to what is in the engine.json
+When using a model trained on itemSets this returns the "missing items" or things that go with the items in the list. The list is the current contents of the shopping cart, wishlist, etc.
+
+The query can also be used with typical user indicators, in which case the results are more like, "what items are similar to the ones in the query" and so do not give the missing items.
 
 ## Popular Items
 
@@ -40,7 +44,9 @@ Query fields determine what data is used to match when returning recommendations
   "user": "xyz", 
   "userBias": -maxFloat..maxFloat,
   "item": "53454543513", 
-  "itemBias": -maxFloat..maxFloat,  
+  "itemBias": -maxFloat..maxFloat,    
+  "itemSet": ["cd53454543513", "lg1", "vf23423432", "af87634"], 
+  "itemSetBias": -maxFloat..maxFloat,  
   "num": 4,
   "fields": [
     {
@@ -64,6 +70,8 @@ Query fields determine what data is used to match when returning recommendations
 * **userBias**: optional (use with great care), the amount to favor the user's history in making recommendations. The user may be anonymous as long as the id is unique from any authenticated user. This tells the recommender to return recommendations based on the user's event history. Used for personalized recommendations. Overrides and bias in engine.json.
 * **item**: optional, contains the unique item identifier
 * **itemBias**: optional (use with great care), the amount to favor similar items in making recommendations. This tells the recommender to return items similar to this the item specified. Use for "people who liked this also liked these". Overrides any bias in engine.json
+* **itemSet**: optional, contains a list of unique item identifiers
+* **itemBias**: optional (use with great care), the amount to favor itemSets in making recommendations. Mixing itemSet queries with user and item queries is not recommended and it is difficult to predict what it will return in the final mixed results.
 * **fields**: optional, array of fields values and biases to use in this query. 
 	* **name** field name for metadata stored in the EventStore with $set and $unset events.
 	* **values** an array on one or more values to use in this query. The values will be looked for in the field name. 

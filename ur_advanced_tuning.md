@@ -259,3 +259,17 @@ There may even be cases where we know things that could be considered candidates
 To determine this we start with a tool for measuring the relative predictive strength of a given indicator type. This, relies on cross-validation tests. Some of the tuning examples above can also be tested this way but others cannot. For instance Randomization will always give lower MAP@k results but also gives lift A/B testing. That said MAP@k is a good way to test predictive strength of indicator types. 
 
 ActionML maintains a repo for MAP@k testing but the tool is meant for data scientists who know Python and Spark so is provided as-is with not direct support from us, read it and use it in this spirit in our [analysis-tools](https://github.com/actionml/analysis-tools) repo.
+
+
+# <a name="rules" id="rules"></a>Business Rules
+
+It is possible to create flexible business rules with item attributes and query structure. Remembering the UR query [formulation](/docs/ur_queries) with fields that have property names, attribute values, and biases we can build complex business rules.
+
+ * **Bias**: The bias tells the UR to include and boost (bias > 0), include only (bias < 0) or exclude all (bias = 0). Think of a boost as disfavoring (0 > bias < 1) or favoring (bias > 1) items with certain attributes. For boosts the bias value is multiplied times the internal score and items are re-ranked.
+ * **ORing Attributes**: In the field description if the values are in a list they are ORed, meaning a hit is any of the attributes and the best hit is all of them.
+ * **ANDing Attributes**: If there are multiple fields clauses with the same property name but an array of a single attribute per field the attributes are said to be ANDed. For instance if the bias is -1 and 2 attribute values in 2 fields are specified them no recommendation will be returned that does not both attributes. 
+
+ANDing and ORing is best used when filtering for inclusion or exclusion with a bias <= 0 since the meaning is moot when boosting because this only modifies the score and re-ranks, which makes ANDed and ORed attributes work the same except for the edge case where separate boosts should be applied to different attributes under the same property name.
+
+**Warning**: it is easily possible with business rules to create queries that return no results. Remember that the restrictions are on the query results not all items so if there are only 4 possible recommendations and you filter 5 ways, the likelihood of getting meaningful results may be small. A good rule of thumb is to use boosts where possible since they do not cause exclusion. If it's ok to return nothing, for instance when none of the recommendations are "in-stock": ["true"], then inclusion or exclusion filters are appropriate. Also if you want all items to be recommendable even if there are no events for some then add a default ranking to all items. This will guarantee the maximum recommendations possible are returned.
+

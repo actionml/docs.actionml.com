@@ -20,14 +20,17 @@ Take the item from #1, the indicator-name from #2 and the user-id and you have t
 
 ### Biases
 
-These take the form of boosts and filters where a neutral bias is 1.0. The importance of some part of the query may be boosted by a positive non-zero float. If the bias is < 0 it is considered a filter&mdash;meaning no recommendation is made that lacks the filter value(s). 
+Biases in query fields can be used to do blend content-based results with collaborative filtering results. They can also be used to implement [business rules](/docs/ur_advanced_tuning#rules).
+
+These take the form of boosts and inclusion and exclusion filters where a neutral bias is 1.0. The importance of some part of the query may be boosted by a positive non-zero float. If the bias is < 0 it is considered a filter&mdash;meaning no recommendation is made that lacks the filter value(s). 
 
 Think of bias as a multiplier to the score of the items that meet the condition so if bias = 2, and item-1 meets the condition, then multiply item-1's score times the bias. After all biases are applied the recommendations are returned ranked by score. The effect of bias is to:
 
- - Bias from 0 to < 1 : lower ranking for items that match the condition
+ - Bias > 0 to < 1 : lower ranking for items that match the condition
  - Bias = 1: no effect
  - Bias > 1: raise the ranking for items that match the condition.
- - Bias < 0: A negative bias will **only** return items that meet the condition, so in other words it filters out any that do not meet all the conditions
+ - Bias = 0: exclude all items that match the condition
+ - Bias < 0: A negative bias will **only** return items that meet the condition, so in other words it filters out any that do not meet the conditions. For ORing and ANDing conditions see [Advanced Tuning Rules](/docs/ur_advanced_tuning#rules).
 
 One example of a filter is where it may make sense to show only "electronics" recommendations when the user is viewing an electronics product. Biases are often applied to a list of data, for instance the user is looking at a video page with a cast of actors. The "cast" list is metadata attached to items and a query can show "people who liked this, also liked these" type recommendations but also include the current cast boosted by 1.01. This can be seen as showing similar item recommendations but using the cast members to gently boost the similar items (since by default they have a neutral 1.0 boost). The result would be similar items favoring ones with similar cast members.
 
@@ -232,7 +235,7 @@ The `Algorithm: params:` section controls most of the features of the UR. Possib
   
   When the `"type"` is **"userDefined"** the property defined in `"name"` is expected to rank any items that you wish to use as backfill. This may be useful, for instance, if you wish to show promoted items when no other method to recommend is possible. 
   
-  In all cases the property value defined by `"name"` must be given a unique float value. For `"popular"`, `"trending"`, `"hot"`, and `"random"` the value is calculated by the UR. For `"userDefined"` the value is set using a `$set` event like any other property. See "Property Change Events" [here](http://actionml.com/docs/ur_input).
+  In all cases the property value defined by `"name"` must be given a unique float value. For `"popular"`, `"trending"`, `"hot"`, and `"random"` the value is calculated by the UR. For `"userDefined"` the value is set using a `$set` event like any other property. See "Property Change Events" [here](/docs/ur_input).
   
 	* **name** give the field a name in the model and defaults to those mentioned above in the JSON.
 	* **type**  `"popular"`, `"trending"`, `"hot"` can be defined and use event counts per item one of these can be used with `"userDefined"` and/or `"random"`. `"popular"`, `"trending"`, `"hot"` use event counts that are just count, change in event counts, or change in "trending" values. 
