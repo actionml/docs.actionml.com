@@ -10,7 +10,7 @@ This is a guide to setting up Apache PredictionIO {{> pioversionnum}} on a singl
 
 ## Requirements
 
-In this guide, all servers share all services, except PredictionIO, which runs only on the master server. Setup of multiple EventServers and PredictionServers is done with load-balancers and is out of the scope of this guide.
+In this guide, all services run on a single machine and so share cores and memory. This will limit how much data can be processed and how much load can be handled and so is advised for use as an experiment or development machine.
 
 Here we'll install and setup:
 

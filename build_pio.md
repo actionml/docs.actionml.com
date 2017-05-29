@@ -2,13 +2,27 @@ PredictionIO is a source only release so you will need to build it.
 
  - **Build PredictionIO**
 
-     ```
-     git clone https://github.com/apache/incubator-predictionio.git ~/pio
-     cd ~/pio
-     git checkout master # usually the version you want
-     ./make-distribution
-     ```
- 
+    ```
+    $ tar zxvf apache-predictionio-0.11.0-incubating.tar.gz
+    $ cd apache-predictionio-0.11.0-incubating
+    $ ./make-distribution.sh
+    ```
+    
+    This will create a tarball inside `apache-predictionio-0.11.0-incubating` extract it with 
+    
+    ```
+    tar zxvf PredictionIO-0.11.0-incubating.tar.gz
+    ```
+    
+    We suggest you move the resulting `PredictionIO-0.11.0-incubating` directory
+    
+    ```
+    mv PredictionIO-0.11.0-incubating /opt/pio
+    sudo ln -s /opt/PredictionIO-0.11.0-incubating /usr/local/pio
+    ```
+    
+    PredictionIO will not run yet so read on.
+    
  - **Setup Path** for PIO commands. Add PIO to the path by editing your `~/.profile` on the master. Here is an example of the important values I have in the file.
 
     ```
@@ -28,4 +42,10 @@ PredictionIO is a source only release so you will need to build it.
     export PATH=$PATH:/usr/local/pio/bin:/usr/local/pio
     ```
 
-   Run `. ~/.profile` to get changes applied.
+   Source these with 
+   
+   ```
+   . ~/.profile 
+   ```
+   
+   to get changes applied.
