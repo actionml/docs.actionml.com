@@ -1,6 +1,8 @@
 PredictionIO is a source only release so you will need to build it.
 
- - **Build PredictionIO**
+ - **Build PredictionIO** 
+
+    Dowload the latest PredictionIO source tarball from an Apache mirror [here](https://www.apache.org/dyn/closer.cgi/incubator/predictionio/0.11.0-incubating/apache-predictionio-0.11.0-incubating.tar.gz) 
 
     ```
     $ tar zxvf apache-predictionio-0.11.0-incubating.tar.gz
