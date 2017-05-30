@@ -18,7 +18,7 @@ Take the item from #1, the indicator-name from #2 and the user-id and you have t
 
 **There must be a "primary indicator" recorded for some number of users**. This  defines the type of item returned in recommendations and is the thing by which all secondary data is measured. More technically speaking all secondary data is tested for correlation to the primary indicator. Secondary data can be anything that you may think of as giving some insight into the user's taste. If something in the secondary data has no correlation to the primary indicator it will have no effect on recommendations. For instance in an ecom setting you may want "buy" as a primary event. There may be many (but none is also fine) secondary events like (user-id, device-preference, device-id). This can be thought of as a user's device preference and recorded at all logins. If this does not correlate to items bought it will not effect recommendations. 
 
-### Biases
+### <a id= "bias" name="bias">Biases</a>
 
 Biases in query fields can be used to do blend content-based results with collaborative filtering results. They can also be used to implement [business rules](/docs/ur_advanced_tuning#rules).
 
