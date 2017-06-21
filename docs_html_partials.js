@@ -73,7 +73,7 @@ DocsHtmlPartials = [
   },
   {
     name: "hbaseversionnum",
-    template: "1.2.5",
+    template: "1.2.6",
     ismd: false,
     shouldLoad: false
   },

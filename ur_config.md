@@ -66,7 +66,6 @@ This file allows the user to describe and set parameters that control the engine
     "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
     "spark.kryo.registrator": "org.apache.mahout.sparkbindings.io.MahoutKryoRegistrator",
     "spark.kryo.referenceTracking": "false",
-    "spark.kryoserializer.buffer.mb": "300",
     "spark.kryoserializer.buffer": "300m",
     "spark.executor.memory": "4g",
     "es.index.auto.create": "true"
@@ -116,7 +115,7 @@ A full list of tuning and config parameters is below. See the field description 
     "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
     "spark.kryo.registrator": "org.apache.mahout.sparkbindings.io.MahoutKryoRegistrator",
     "spark.kryo.referenceTracking": "false",
-    "spark.kryoserializer.buffer.mb": "200",
+    "spark.kryoserializer.buffer": "300m",
     "spark.executor.memory": "4g",
     "es.index.auto.create": "true",
     "es.nodes": "node1,node2"
@@ -128,7 +127,8 @@ A full list of tuning and config parameters is below. See the field description 
         "appName": "app1",
         "indexName": "urindex",
         "typeName": "items",
-        "eventNames": ["buy", "view"]
+        "numESWriteConnections": 100, // how many simultaneous connection in writing to ES
+        "eventNames": ["buy", "view"],
         "indicators": [
             {
                 "name": "purchase"
@@ -207,6 +207,8 @@ The `Algorithm: params:` section controls most of the features of the UR. Possib
 * **appName**: required string describing the app using the engine. Must be the same as is seen with `pio app list`
 * **indexName**: required string describing the index for all correlators, something like "urindex". The Elasticsearch URI for its REST interface is `http:/**elasticsearch-machine**/indexName/typeName/...` You can access ES through its REST interface here.
 * **typeName**: required string describing the type in Elasticsearch terminology, something like "items". This has no important meaning but must be part of the Elasticsearch URI for queries.
+* **numESWriteConnections**: optional, default = number of threads in entire Spark Cluster, which may overload ES. If you see task failures but, due to retries, there may not be a job failure this will help remove the errors. The other option is to add to / scale out your ES cluster because this will slow the Spark cluster down by reducing the number of tasks used to write to ES and so remove the errors. The rule of thumb for this is (numberOfNodesHostingPrimaries * bulkRequestQueueLength) * 0.75. In general this is (numberOfESCores * 50) * 0.75.
+  // for ES 1.7 bulk queue is defaulted to 50
 * **eventNames**: this OR the `indicators` array is required. An array of string identifiers describing action events recorded for users, things like “purchase”, “watch”, “add-to-cart”, even “location”, or “device” can be considered actions and used in recommendations. The first action is to be considered the primary action because it **must** exist in the data and is considered the strongest indication of user preference for items, the others are secondary for cooccurrence and cross-cooccurrence calculations. The secondary actions/events may or may not have target entity ids that correspond to the items to be recommended, so they are allowed to be things like category-ids, device-ids, location-ids... For example: a category-pref event would have a category-id as the target entity id but a view would have an item-id as the target entity id (see Events below). Both work fine as long as all usage events are tied to users. 
 * **maxEventsPerEventType**: optional (use with great care), default = 500. Amount of usage history to keep use in model calculation.
 * **maxCorrelatorsPerEventType**: optional, default = 50. this applies to all event types, use `indicators` to apply to specific event types&mdash;called indicators. An integer that controls how many of the strongest correlators are created for every event type named in `eventNames`.
