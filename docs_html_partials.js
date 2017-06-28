@@ -97,7 +97,7 @@ DocsHtmlPartials = [
   },
   {
     name: "hbasedownload",
-    template: "<a href='http://www-us.apache.org/dist/hbase/1.2.5/hbase-1.2.5-bin.tar.gz'>HBase 1.2.5</a>",
+    template: "<a href='http://www-us.apache.org/dist/hbase/1.2.6/hbase-1.2.6-bin.tar.gz'>HBase 1.2.6</a>",
     ismd: false,
     shouldLoad: false
   },

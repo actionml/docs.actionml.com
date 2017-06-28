@@ -56,7 +56,7 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_enviornment_set
     </configuration>
     ```
 
-- **`etc/hadoop/hadoop/hdfs-site.xml`** This sets the actual filesystem location that hadoop will use to save data and how many copies of the data to be kept. In case of storage corruption, hadoop will restore from a replica and eventually restore replicas. If a server goes down, all data on that server will be re-created if you have at a `dfs.replication` of at least 2 to avoid one disk's failure loosing data.
+- **`etc/hadoop/hdfs-site.xml`** This sets the actual filesystem location that hadoop will use to save data and how many copies of the data to be kept. In case of storage corruption, hadoop will restore from a replica and eventually restore replicas. If a server goes down, all data on that server will be re-created if you have at a `dfs.replication` of at least 2 to avoid one disk's failure loosing data.
 
     ```
     <configuration>
@@ -90,6 +90,7 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_enviornment_set
     ```
     some-master
     ```
+
 - **`etc/hadoop/hadoop-env.sh`** make sure the following values are set
 
     ```
