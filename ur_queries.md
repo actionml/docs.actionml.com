@@ -18,13 +18,15 @@ Technically this is to find the things missing in the itemSet. Another term for 
 
 ```
 {
-  "itemSet": ["cd53454543513", "lg1", "vf23423432", "af87634"]   
+  "itemSet": ["item-1", "item-5", "item-300", "item-2", ...]   
 }
 ```
 	
-When using a model trained on itemSets this returns the "missing items" or things that go with the items in the list. The list is the current contents of the shopping cart, wishlist, etc.
+When using a model trained on itemSets this returns the "missing items" or things that go with the items in the list. This type of model and query combination returns "complimentary items". The list in the query is the current contents of the shopping cart, wishlist, etc.
 
-The query can also be used with typical user indicators, in which case the results are more like, "what items are similar to the ones in the query" and so do not give the missing items.
+The query can also be used with the typical model of indicators, in which case the results are more like, "what items are similar to the ones in the query". This may be useful since it is easy to get from an existing model but will not return items missing from the set /complimentary items.
+
+See [Use Cases](ur_use_cases.md)
 
 ## Popular Items
 
@@ -47,6 +49,7 @@ Query fields determine what data is used to match when returning recommendations
   "itemBias": -maxFloat..maxFloat,    
   "itemSet": ["cd53454543513", "lg1", "vf23423432", "af87634"], 
   "itemSetBias": -maxFloat..maxFloat,  
+  "from": 0,
   "num": 4,
   "fields": [
     {
@@ -76,6 +79,7 @@ Query fields determine what data is used to match when returning recommendations
 	* **name** field name for metadata stored in the EventStore with $set and $unset events.
 	* **values** an array on one or more values to use in this query. The values will be looked for in the field name. 
 	* **bias** will either boost the importance of this part of the query or use it as a filter. Positive biases are boosts any negative number will filter out any results that do not contain the values in the field name. See **Biases** above.
+* **from**: optional rank/position to start returning recommendations from. Used in pagination. The rank/position is 0 based, 0 being the highest rank/position. Default: 0, since 0 is the first or top recommendation. Unless you are paginating skip this param.
 * **num**: optional max number of recommendations to return. There is no guarantee that this number will be returned for every query. Adding backfill in the engine.json will make it much more likely to return this number of recommendations.
 * **blacklistItems**: optional. Unlike the engine.json, which specifies event types this part of the query specifies individual items to remove from returned recommendations. It can be used to remove duplicates when items are already shown in a specific context. This is called anti-flood in recommender use.
 * **dateRange** optional, default is not range filter. One of the bound can be omitted but not both. Values for the `before` and `after` are strings in ISO 8601 format. Overrides the **currentDate** if both are in the query.

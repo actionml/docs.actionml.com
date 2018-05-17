@@ -13,7 +13,7 @@ DocsHtmlPartials = [
   },
   {
     name: "pioversionnum",
-    template: "0.11.0",
+    template: "0.12.1",
     ismd: false,
     shouldLoad: false
   },
@@ -25,7 +25,7 @@ DocsHtmlPartials = [
   },
   {
     name: "urversionnum",
-    template: "0.6.0",
+    template: "0.7.2",
     ismd: false,
     shouldLoad: false
   },
@@ -55,55 +55,61 @@ DocsHtmlPartials = [
   },
   {
     name: "hdfsversionnum",
-    template: "2.7.2",
+    template: "2.8.2",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "sparkversionnum",
-    template: "1.6.3",
+    template: "2.x",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "elasticsearchversionnum",
-    template: "1.7.6",
+    template: "5.x",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "hbaseversionnum",
-    template: "1.2.6",
+    template: "1.3.2",
+    ismd: false,
+    shouldLoad: false
+  },
+  {
+    name: "scalaversionnum",
+    template: "2.11.x",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "hdfsdownload",
-    template: "<a href='http://www.eu.apache.org/dist/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz'>Hadoop 2.7.2</a>",
+    template: "<a href='http://www.eu.apache.org/dist/hadoop/common/hadoop-2.8.2/hadoop-2.8.2.tar.gz'>Hadoop 2.8.2</a>",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "sparkdownload",
-    template: "<a href='http://www.us.apache.org/dist/spark/spark-1.6.3/spark-1.6.3-bin-hadoop2.6.tgz'>Spark 1.6.3</a>",
+    template: "<a href='http://www.us.apache.org/dist/spark/spark-2.1.2/spark-2.1.2-bin-hadoop2.7.tgz'>Spark 2.1.2</a>",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "esdownload",
-    template: "<a href='https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.6.tar.gz'>Elasticsearch 1.7.6</a>",
+    template: "<a href='https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-5.6.4.tar.gz'>Elasticsearch 5.6.4</a>",
     ismd: false,
     shouldLoad: false
   },
   {
     name: "hbasedownload",
-    template: "<a href='http://www-us.apache.org/dist/hbase/1.2.6/hbase-1.2.6-bin.tar.gz'>HBase 1.2.6</a>",
+    template: "<a href='http://www-us.apache.org/dist/hbase/1.3.2/hbase-1.3.2-bin.tar.gz'>HBase 1.3.2</a>",
     ismd: false,
     shouldLoad: false
   },
   {
     name: 'pio_version',
-    template: 'PredictionIO-v0.11.0-incubating',
+    template: 'PredictionIO-v0.12.1',
     ismd: true,
     shouldLoad: false
   },

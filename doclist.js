@@ -79,6 +79,14 @@ DocList = [
                 template: 'ur_advanced_tuning'
             },
             {
+                title: 'Use Cases',
+                template: 'ur_use_cases'
+            },
+            {
+                title: 'Business Rules',
+                template: 'ur_biz_rules'
+            },
+            {
                 title: 'Model Debugging',
                 template: 'ur_elasticsearch_debugging'
             },

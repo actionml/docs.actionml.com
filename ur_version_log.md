@@ -2,10 +2,11 @@
 
 ## Roadmap
 
-PIO-0.11.0 supports use of Elasticsearch 5.x, Spark 2.x, and Scala 2.11. The UR can be compiled for all these except ES 5.x by changing the `build.sbt` file. In a minor release we will provide alternative `build.sbt` files as examples of how to do this. ES 5 support is nearly ready in a PR and will be incorporated as soon as it is ready. ES 5 uses the REST API exclusively and so will support authentication and certain ES as a service hosts. It also has some significant performance improvements.
+PIO-0.12.0 supports use of Elasticsearch 5.x, Spark 2.x, and Scala 2.11. The UR can be compiled for all these except ES 5.x by changing the `build.sbt` file. In a minor release we will provide alternative `build.sbt` files as examples of how to do this. ES 5 support is nearly ready in a PR and will be incorporated as soon as it is ready. ES 5 uses the REST API exclusively and so will support authentication and certain ES as a service hosts. It also has some significant performance improvements.
 
 ## v0.6.0
 
+This is the last version that will support PredictionIO 0.11.0, Elasticsearch 1.7.6, and Scala 2.10. Bug fixes may be added to this branch where needed but it will be left in the "UR v0.6.0"
 This is a major upgrade release with several new features. Backward compatibility with 0.5.0 is maintained. **Note**: We no longer have a default `engine.json` file so you will need to copy `engine.json.template` to `engine.json` and edit it to fit your data. See the [Universal Recommender Configuration](http://actionml.com/docs/ur_config) docs.
 
  - **Performance**: Nearly a 40% speedup for most model calculation, and a new tuning parameter that can yield further speed improvements by filtering out unused or less useful data from model building. See `minEventsPerUser` in the UR configuration docs.

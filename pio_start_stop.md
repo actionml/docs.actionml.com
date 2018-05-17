@@ -108,6 +108,10 @@ Shutdown is in the opposite order of startup but if the startup is automated the
     /usr/local/hadoop/sbin/stop-dfs.sh
     ```
 
+## PIO Events Accumulate Forever
+
+PIO by default will continue to accumulate events forever, which will eventually make even Big Data fans balk at storage costs and will cause model training to take longer and longer. The answer to this is to trim and/or compress the PIO EventStore for a specific dataset. This can be done by using a template made for this purpose called the [DB Cleaner](/docs/db_cleaner_template).
+
 ## Monitoring
 
-See [**Monitoring PredictionIO**](pio_monitoring)
+See [**Monitoring PredictionIO**](/docs/pio_monitoring)

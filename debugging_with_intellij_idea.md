@@ -1,5 +1,9 @@
 # Debugging with IntelliJ IDEA
 
+Unfortunately as of PredictionIO it is not longer possible to debug your template with IntelliJ. The flowing instructions will work for older PredictionIO and IntelliJ. Please complain to the Aoache PredictionIO mailing list if this causes you as much of a pain as it does us.
+
+# Deprecated Debugging Insructions
+
 It is possible to run your template engine with IntelliJ IDEA. This makes the engine specific commands accessible for debugging, like `pio train`, `pio deploy`, and queries made to a deployed engine.
 
 ## Prerequisites
