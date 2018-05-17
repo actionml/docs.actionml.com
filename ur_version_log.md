@@ -13,21 +13,21 @@ This tag take precedence over 0.7.0, which should not be used. Changes:
  - Removes the need to build Mahout from the ActionML's fork and so is much easier to install.
  - Fixes a bug in the integration test which made it fail for macOS High Sierra in East Asian time zones.
 
-## Git Tag: 0.7.0 
+## 0.7.0 
 
 **This README Has Special Build Instructions! These are obsolete now but you can see them in the GitHub [README.md](https://github.com/actionml/universal-recommender/blob/master/README.md)**
 
 This tag is for the UR integrated with PredictionIO 0.12.0 using Scala 2.11, Spark 2.1.x, and most importantly Elasticsearch 5.x. Primary differences from 0.6.0:
 
  - Faster indexing, and queries due to the use of Elasticsearch 5.x
- - Faster model building due to speedups in the ActionML fork of Mahout, which requires the user to build Mahout locally. This step will be removed in a later version of the UR.
+ - Faster model building due to speedups in the ActionML fork of Mahout, which requires the user to build Mahout locally. This step will be removed in a later version of the UR. **UPDATE: See v0.7.1**
  - Several upgrades such as Scala 2.10 --> Scala 2.11, Python 2.7 --> Python 3
  - Spark 2.1.x support, PIO has a minor incompatibility with Spark 2.2.x 
- - Prediction 0.12.0 support
+ - Prediction 0.12.1 support
  - Requires Elasticsearch 5.x. using the ES REST APIs exclusively now, enabling ES authentication use optionally. ES 5.x also improves indexing and query performance over previous versions.
  - Fixed a bug in exclusion rules based on item properties
 
- **WARNING**: Upgrading Elasticsearch or HBase will wipe existing data if any, so follow the special instructions below before installing any service upgrades.
+ **WARNING**: Upgrading Elasticsearch or HBase will wipe existing data if any, so follow the special instructions below before installing any service upgrades and making backups.
 
 ### Special Instructions (not reflected on ActionML.com yet)
 
