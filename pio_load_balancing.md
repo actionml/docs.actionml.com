@@ -1,10 +1,12 @@
 # PredictionIO Load Balancing
 
-PredictionIO itself stores no state, it uses distributed services to store all state. That means that so scale most work is to scale the component services like HBase or Elasticsearch. Various setup guides describe how to do this.
+PredictionIO itself stores no state, it uses distributed services to store all state. That means that to scale most work you will scale the component services like HBase or Elasticsearch. Various setup guides describe how to do this.
 
 {{>piosetupguides}}
 
-PredictionIO itself can be deployed with multiple EventServers and PredictionServers. When put behind a load balancer this allows scaling horizontally.
+PredictionIO itself can be deployed with multiple EventServers and PredictionServers. When put behind a load balancer this allows scaling horizontally. 
+
+**Note**: this is very seldom needed unless PredictionIO is business critical and in need of High Availability because when running PIO in production it is only a thin layer which has been able to handle very high demand deployments with one machine for both Event and Prediction Server. 
 
 ## Multiple EventServers
 

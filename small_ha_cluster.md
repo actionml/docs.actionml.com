@@ -2,7 +2,9 @@
 
 This is a guide to setting up Apache PredictionIO {{> pioversionnum}} in a 3 node cluster with all services running on the 3 cluster machines.
 
-In this guide all services are setup with multiple or standby masters in true clustered mode. To make  High Availability complete, a secondary master would need to be setup for HDFS (not described here). Elasticsearch and HBase are setup in High Availability mode (HA) using this guide.
+In this guide all services are setup with multiple or standby masters in true clustered mode. We generally recommend that you have 5 machines to fully decouple services and allow for shutting down Spark when it is not in use (during `pio train` for the UR). But the setup will be the same with different server addresses for each machine.
+
+Therefore think of this as a template for cluster setup.
 
 **Other Guides**:
 
@@ -11,10 +13,6 @@ In this guide all services are setup with multiple or standby masters in true cl
 {{> piodistributedguide}}
 
 ## Requirements
-
-In this guide, all servers share all services, except PredictionIO, which runs only on the master. Setup of multiple EventServers and PredictionServers is done with load-balancers and is out of the scope of this guide.
-
-Here we'll install and setup:
 
 {{> piorequiredsw}}
 
@@ -133,7 +131,7 @@ Hadoop's Distributed File System is core to Spark, HBase, and for staging of dat
 
 ## Setup Spark Cluster
 
- - Spark is used extensively by PredictionIO os it is well to understand how it works. Read and follow [this tutorial](http://spark.apache.org/docs/latest/spark-standalone.html) Also checkout the brief introcution [here](/docs/intro_to_spark) The primary thing that must be setup is the masters and slaves, which for our purposes will be the same as for hadoop
+ - Spark is used extensively by PredictionIO so it is well to understand how it works. Read and follow [this tutorial](http://spark.apache.org/docs/latest/spark-standalone.html) Also checkout the brief introduction [here](/docs/intro_to_spark) The primary thing that must be setup is the master and slaves, which for our purposes will be the same as for Hadoop.
 
  - `conf/masters` One master for this config.
 
@@ -261,14 +259,6 @@ Setup PIO on the master or on all servers (if you plan to use a load balancer). 
     PIO_FS_TMPDIR=$PIO_FS_BASEDIR/tmp
         
     # PredictionIO Storage Configuration
-    #
-    # This section controls programs that make use of PredictionIO's built-in
-    # storage facilities. Default values are shown below.
-        
-    # Storage Repositories
-        
-    # Default is to use PostgreSQL but for clustered scalable setup we'll use
-    # Elasticsearch
     PIO_STORAGE_REPOSITORIES_METADATA_NAME=pio_meta
     PIO_STORAGE_REPOSITORIES_METADATA_SOURCE=ELASTICSEARCH
         
@@ -280,9 +270,7 @@ Setup PIO on the master or on all servers (if you plan to use a load balancer). 
     PIO_STORAGE_REPOSITORIES_MODELDATA_NAME=pio_model
     PIO_STORAGE_REPOSITORIES_MODELDATA_SOURCE=HDFS
         
-    # Storage Data Sources, lower level that repos above, just a simple storage API
-    # to use
-        
+    # What store to use for what data     
     # Elasticsearch Example
     PIO_STORAGE_SOURCES_ELASTICSEARCH_TYPE=elasticsearch
     PIO_STORAGE_SOURCES_ELASTICSEARCH_HOME=/usr/local/elasticsearch
@@ -291,7 +279,9 @@ Setup PIO on the master or on all servers (if you plan to use a load balancer). 
         
     # For clustered Elasticsearch (use one host/port if not clustered)
     PIO_STORAGE_SOURCES_ELASTICSEARCH_HOSTS=some-master,some-slave-1,some-slave-2
-    PIO_STORAGE_SOURCES_ELASTICSEARCH_PORTS=9300,9300,9300
+    # PIO 0.12.0+ uses the REST client for ES 5+ and this defaults to 
+    # port 9200, change if appropriate but do not use the Transport Client port
+    # PIO_STORAGE_SOURCES_ELASTICSEARCH_PORTS=9200,9200,9200
         
     PIO_STORAGE_SOURCES_HDFS_TYPE=hdfs
     PIO_STORAGE_SOURCES_HDFS_PATH=hdfs://some-master:9000/models
@@ -302,7 +292,6 @@ Setup PIO on the master or on all servers (if you plan to use a load balancer). 
         
     # Hbase clustered config (use one host/port if not clustered)
     PIO_STORAGE_SOURCES_HBASE_HOSTS=some-master,some-slave-1,some-slave-2
-    PIO_STORAGE_SOURCES_HBASE_PORTS=0,0,0
     ```
 
 - **Start PIO**: The helper command should run on the master to start Elasticsearch, HBase, and PIO

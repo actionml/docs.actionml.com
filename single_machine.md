@@ -1,6 +1,6 @@
 # All-In-One PIO Setup Guide
 
-This is a guide to setting up Apache PredictionIO {{> pioversionnum}} on a single large memory (16g-32g) machine. This will allow "real data" to be processed but will not usually be appropriate focus on horizontal scaling.
+This is a guide to setting up Apache PredictionIO {{> pioversionnum}} on a single large memory (16g-32g) machine. This will allow "real data" to be processed but will not usually be appropriate for production deployment. However we follow the clustered "style" for setup so the extension to multiple machines will be easier.
 
 **Other Guides**:
 
@@ -39,9 +39,9 @@ Here we'll install and setup:
 
  {{> setsymlinks}}
 
-## Setup Hadoop Pseudo-Distributed Mode
+## Setup Hadoop Pseudo-Cluster Mode
 
-Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_enviornment_setup.htm) especially the Pseudo-Distributed Mode. 
+Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_enviornment_setup.htm) especially the Pseudo-Cluster Mode. 
 
  - **File paths**: this  defines the defines where the root of HDFS will be. To write to HDFS you can reference this locations, for instance in place of a local path like `file:///home/aml/file` you could read or write `hdfs://some-master:9000/user/aml/file` Once you have HDFS set up you can often omit the `hdfs://some-master:9000/user/aml/` since it is the default prefix to a file or directory name when you are logged in to the same `aml` user. We have the sofware installed, now let's setup the services
 
@@ -126,7 +126,7 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_enviornment_set
     hdfs dfs -mkdir /user/aml # will be like ~ for user "aml"
     ```
 
-## Setup Spark Cluster.
+## Setup Spark Pseudo-Cluster.
 
 - Read and follow [this tutorial](http://spark.apache.org/docs/latest/spark-standalone.html) The primary thing that must be setup is the masters and slaves, which for our purposes will be the same as for hadoop
 
@@ -150,7 +150,7 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_enviornment_set
 
    This starts Spark in pseudo-clustered "stand-alone" mode, meaning the driver and one executor will run on `some-master`, which is the current host. It also means the jobs are managed by Spark rather than Yarn or Mesos. This mode most closely resemble how you would set up Spark in a real cluster.
 
-## Setup Elasticsearch Cluster
+## Setup Elasticsearch Pseudo-Cluster
 
 - Change the `/usr/local/elasticsearch/config/elasticsearch.yml` file as shown below. This is minimal and allows all hosts to act as backup masters in case the acting master goes down. Also all hosts are data/index nodes so can respond to queries and host shards of the index. So even though we are using one machine it most closely resembles a clustered setup.
 
@@ -221,68 +221,55 @@ Configure with these changes to `/usr/local/hbase/conf`:
 
    You have PredictionIO in `~/pio` so edit ~/pio/conf/pio-env.sh to have these settings:
 
-    ```
-    #!/usr/bin/env bash
-    
-    # PredictionIO Main Configuration
-    #
-    # This section controls core behavior of PredictionIO. It is very likely that
-    # you need to change these to fit your site.
-    
+       ```
     # Safe config that will work if you expand your cluster later
     SPARK_HOME=/usr/local/spark
     ES_CONF_DIR=/usr/local/elasticsearch
     HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
     HBASE_CONF_DIR=/usr/local/hbase/conf
-    
+        
+        
     # Filesystem paths where PredictionIO uses as block storage.
     PIO_FS_BASEDIR=$HOME/.pio_store
     PIO_FS_ENGINESDIR=$PIO_FS_BASEDIR/engines
     PIO_FS_TMPDIR=$PIO_FS_BASEDIR/tmp
-    
+        
     # PredictionIO Storage Configuration
-    #
-    # This section controls programs that make use of PredictionIO's built-in
-    # storage facilities.
-    	
-    # Storage Repositories
-    
     PIO_STORAGE_REPOSITORIES_METADATA_NAME=pio_meta
     PIO_STORAGE_REPOSITORIES_METADATA_SOURCE=ELASTICSEARCH
-    
+        
     PIO_STORAGE_REPOSITORIES_EVENTDATA_NAME=pio_event
     PIO_STORAGE_REPOSITORIES_EVENTDATA_SOURCE=HBASE
-    
-    # Need to use HDFS here instead of LOCALFS to account for future expansion
+        
+    # Need to use HDFS here instead of LOCALFS to enable deploying to 
+    # machines without the local model
     PIO_STORAGE_REPOSITORIES_MODELDATA_NAME=pio_model
     PIO_STORAGE_REPOSITORIES_MODELDATA_SOURCE=HDFS
-    
-    # Storage Data Sources, lower level that repos above, just a simple storage API
-    # to use
-    
+        
+    # What store to use for what data     
     # Elasticsearch Example
     PIO_STORAGE_SOURCES_ELASTICSEARCH_TYPE=elasticsearch
     PIO_STORAGE_SOURCES_ELASTICSEARCH_HOME=/usr/local/elasticsearch
-    # the next line should match the cluster.name in elasticsearch.yml
+    # The next line should match the ES cluster.name in ES config
     PIO_STORAGE_SOURCES_ELASTICSEARCH_CLUSTERNAME=some-cluster-name
-    
-    # For single host Elasticsearch, may add hosts and ports later
-    PIO_STORAGE_SOURCES_ELASTICSEARCH_HOSTS=some-master
-    PIO_STORAGE_SOURCES_ELASTICSEARCH_PORTS=9300
-    
-    # dummy models are stored here so use HDFS in case you later want to
-    # expand the Event and PredictionServers
+        
+    # For clustered Elasticsearch (use one host/port if not clustered)
+    PIO_STORAGE_SOURCES_ELASTICSEARCH_HOSTS=some-master,some-slave-1,some-slave-2
+    # PIO 0.12.0+ uses the REST client for ES 5+ and this defaults to 
+    # port 9200, change if appropriate but do not use the Transport Client port
+    # PIO_STORAGE_SOURCES_ELASTICSEARCH_PORTS=9200,9200,9200
+        
     PIO_STORAGE_SOURCES_HDFS_TYPE=hdfs
     PIO_STORAGE_SOURCES_HDFS_PATH=hdfs://some-master:9000/models
-    
+        
     # HBase Source config
     PIO_STORAGE_SOURCES_HBASE_TYPE=hbase
     PIO_STORAGE_SOURCES_HBASE_HOME=/usr/local/hbase
-    # Hbase single master config
-    PIO_STORAGE_SOURCES_HBASE_HOSTS=some-master
-    PIO_STORAGE_SOURCES_HBASE_PORTS=0
+        
+    # Hbase clustered config (use one host/port if not clustered)
+    PIO_STORAGE_SOURCES_HBASE_HOSTS=some-master,some-slave-1,some-slave-2
     ```
-
+    
 - **Start PIO**: The helper command should run on the master to start Elasticsearch, HBase, and PIO
 
     ```
@@ -298,3 +285,4 @@ Configure with these changes to `/usr/local/hbase/conf`:
 ## 8. Setup Your Template
 
 See the template setup instructions. The Universal Recommender can be installed with its [quickstart](/docs/ur_quickstart). 
+

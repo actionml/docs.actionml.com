@@ -2,25 +2,25 @@ PredictionIO is a source only release so you will need to build it.
 
  - **Build PredictionIO** 
 
-    Dowload the latest PredictionIO source tarball from an Apache mirror [here](https://www.apache.org/dyn/closer.cgi/incubator/predictionio/0.11.0-incubating/apache-predictionio-0.11.0-incubating.tar.gz) 
+    Dowload the latest PredictionIO source Apache's Github [here](https://www.apache.org/dyn/closer.cgi/predictionio/0.12.1/apache-predictionio-0.12.1.tar.gz).
 
     ```
-    $ tar zxvf apache-predictionio-0.11.0-incubating.tar.gz
+    $ tar zxvf apache-predictionio-0.12.1.tar.gz
     $ cd apache-predictionio-0.11.0-incubating
     $ ./make-distribution.sh
     ```
     
-    This will create a tarball inside `apache-predictionio-0.11.0-incubating` extract it with 
+    This will create a tarball inside `apache-predictionio-0.12.1` extract it with 
     
     ```
-    tar zxvf PredictionIO-0.11.0-incubating.tar.gz
+    tar zxvf PredictionIO-0.12.1.tar.gz
     ```
     
     We suggest you move the resulting `PredictionIO-0.11.0-incubating` directory
     
     ```
     mv PredictionIO-0.11.0-incubating /opt/pio
-    sudo ln -s /opt/PredictionIO-0.11.0-incubating /usr/local/pio
+    sudo ln -s /opt/PredictionIO-0.12.1 /usr/local/pio
     ```
     
     PredictionIO will not run yet so read on.

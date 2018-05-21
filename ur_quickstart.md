@@ -6,19 +6,23 @@ Check that pio is running
 
     pio status
     
-If all is well proceed with the Universal Recommender
+If there is a problem make sure the PIO EventServer has been started with 
+
+    nohup pio eventserver & # starts in the background   
+    
+If all is well proceed with the Universal Recommender. 
 
 ## Prerequisites
 
- - python 2.7.9+
- - pip, the package installer for python
+ - python 3.5+
+ - pip, the package installer for python 3
  - git, for version control and installing templates like the UR
 
 The Universal Recommender has an integration test written in Python. If you want to run the test make sure you have it installed
 
     python --version
 
-You should have 2.7.9+ ( do not use Python 3+ since is not source compatible with scripts written in Python 2). Check to see that `pip` is installed 
+You should have 3.5+. Check to see that `pip` is installed 
 
     pip --version
 
@@ -31,7 +35,7 @@ If you don't have it see these [installation instructions](http://pip.readthedoc
 ```
 git clone https://github.com/actionml/universal-recommender.git ~/ur
 cd ~/ur
-git checkout master # or whatever tagged release you want, read below
+git checkout master # or tag 0.7.2+
 ```
 
 It's recommended that you run the UR integration test
