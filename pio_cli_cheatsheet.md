@@ -75,6 +75,6 @@ Assuming there is data in the EventServer and engine.json is configured correctl
  - `pio deploy` creates a PredictionServer to answer queries
  - `nohup pio deploy &` creates a daemon of the PredictionServer
   
-##<a id='ur-workflow'></a> Universal Recommender Example
+## <a id='ur-workflow'></a> Universal Recommender Example
 
 {{> urworkflow}}

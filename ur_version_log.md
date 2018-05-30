@@ -1,5 +1,12 @@
 # The Universal Recommender Version Log
 
+## Git Tag: v0.7.3
+
+Adds:
+
+ - Switched to using `python3` wherever python is invoked. Before this release it was assumed that the environment mapped `python` to `python3` which is required for PIO 0.12+ and the UR 0.7+. Since many distros have `python` invoke python 2.7 and `python3` is needed to invoke python 3.6 we now do also.
+ - Support for cross recommendations like "people who have viewed similar pages have bought these items". Used to help find things in a browsing/searching scenario.
+
 ## 0.7.2
 
 Adds:

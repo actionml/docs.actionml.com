@@ -14,21 +14,21 @@ If all is well proceed with the Universal Recommender.
 
 ## Prerequisites
 
- - python 3.5+
- - pip, the package installer for python 3
+ - python3 for version 3.5+
+ - pip3, the package installer for python3
  - git, for version control and installing templates like the UR
 
 The Universal Recommender has an integration test written in Python. If you want to run the test make sure you have it installed
 
-    python --version
+    python3 --version
 
 You should have 3.5+. Check to see that `pip` is installed 
 
-    pip --version
+    pip3 --version
 
 If you don't have it see these [installation instructions](http://pip.readthedocs.io/en/latest/installing/#install-pip). Once pip is available install the python packages needed for the integration test  
 
-    sudo pip install predictionio datetime
+    sudo pip3 install predictionio datetime
     
 ## Build The Universal Recommender
 
