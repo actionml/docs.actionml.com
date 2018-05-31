@@ -25,7 +25,7 @@ DocsHtmlPartials = [
   },
   {
     name: "urversionnum",
-    template: "0.7.2",
+    template: "0.7.3",
     ismd: false,
     shouldLoad: false
   },

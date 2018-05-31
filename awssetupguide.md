@@ -11,11 +11,11 @@ Features:
  -  Can run any Apache PIO Template from [these choices](http://predictionio.incubator.apache.org/gallery/template-gallery/)
  -  All-in-one setup running on a single instance
  -  Launches and runs HBase, Elasticsearch, HDFS, and Spark on boot automatically
- -  Ubuntu 16.04 LTS
+ -  Ubuntu 18.04 LTS
 
 ## Requirements
 
- - Basic understanding of Linux
+ - Basic understanding of 'nix.
  - An AWS account allowing EC2 instance creation and EBS block storage volumes. 
 
 ## Create
