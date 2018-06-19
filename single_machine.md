@@ -221,7 +221,7 @@ Configure with these changes to `/usr/local/hbase/conf`:
 
    You have PredictionIO in `~/pio` so edit ~/pio/conf/pio-env.sh to have these settings:
 
-       ```
+    ```
     # Safe config that will work if you expand your cluster later
     SPARK_HOME=/usr/local/spark
     ES_CONF_DIR=/usr/local/elasticsearch
@@ -269,6 +269,7 @@ Configure with these changes to `/usr/local/hbase/conf`:
     # Hbase clustered config (use one host/port if not clustered)
     PIO_STORAGE_SOURCES_HBASE_HOSTS=some-master,some-slave-1,some-slave-2
     ```
+
     
 - **Start PIO**: The helper command should run on the master to start Elasticsearch, HBase, and PIO
 
