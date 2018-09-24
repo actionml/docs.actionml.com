@@ -81,9 +81,9 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_enviornment_set
 
  - **`etc/hadoop/masters`** One master for this config. **Note**: for All-in-one installation `some-master` will be `localhost`
 
-	```
-	some-master
-	```
+    ```
+    some-master
+    ```
 
 - **`etc/hadoop/slaves`** Slaves for HDFS means they have datanodes so the master may also host data with this config.  **Note**: for All-in-one installation `some-master` will be `localhost`
 
