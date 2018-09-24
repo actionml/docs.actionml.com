@@ -1,6 +1,6 @@
 # All-In-One PIO Setup Guide
 
-This is a guide to setting up Apache PredictionIO {{> pioversionnum}} on a single large memory (16g-32g) machine. This will allow "real data" to be processed but will not usually be appropriate for production deployment. However we follow the clustered "style" for setup so the extension to multiple machines will be easier.
+This is a guide to set up Apache PredictionIO {{> pioversionnum}} on a single large memory (16g-32g) machine. This will allow "real data" to be processed but will not usually be appropriate for production deployment. However we follow the clustered "style" for setup so the extension to multiple machines will be easier.
 
 **Other Guides**:
 
@@ -79,13 +79,13 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_enviornment_set
     </configuration>
     ```
 
- - **`etc/hadoop/masters`** One master for this config.
+ - **`etc/hadoop/masters`** One master for this config. **Note**: for All-in-one installation `some-master` will be `localhost`
 
 	```
 	some-master
 	```
 
-- **`etc/hadoop/slaves`** Slaves for HDFS means they have datanodes so the master may also host data with this config
+- **`etc/hadoop/slaves`** Slaves for HDFS means they have datanodes so the master may also host data with this config.  **Note**: for All-in-one installation `some-master` will be `localhost`
 
     ```
     some-master
@@ -130,13 +130,13 @@ Read [this tutorial](http://www.tutorialspoint.com/hadoop/hadoop_enviornment_set
 
 - Read and follow [this tutorial](http://spark.apache.org/docs/latest/spark-standalone.html) The primary thing that must be setup is the masters and slaves, which for our purposes will be the same as for hadoop
 
--  **`conf/masters`** One master for this config.
+-  **`conf/masters`** One master for this config. **Note**: for All-in-one installation `some-master` will be `localhost`
 
     ```
    some-master
     ```
 
-  - **`conf/slaves`** Slaves for Spark means they are workers so the master be included
+  - **`conf/slaves`** Slaves for Spark means they are workers so the master be included.  **Note**: for All-in-one installation `some-master` will be `localhost`
 
     ```
     some-master
