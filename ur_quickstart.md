@@ -32,6 +32,8 @@ If you don't have it see these [installation instructions](http://pip.readthedoc
     
 ## Build The Universal Recommender
 
+If you have already clone the universal-recommender in the installation process, you don't need to clone it again. 
+
 ```
 git clone https://github.com/actionml/universal-recommender.git ~/ur
 cd ~/ur

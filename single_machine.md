@@ -213,7 +213,7 @@ Configure with these changes to `/usr/local/hbase/conf`:
    At this point you should see several different processes start on the master including zookeeper. If there is an error check the log files referenced in the error message.
 
 ## Setup PredictionIO
-
+   If you have already clone the actionml version of the PredictionIo from "Download Services On All Hosts: Step 2", you don't need to clone it again, you can proceed to build PredictionIO.
   {{> build_pio}}
 
 
