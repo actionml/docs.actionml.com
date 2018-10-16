@@ -1,4 +1,3 @@
-# !!!
 # UR Quickstart
 
 We assume you have already installed Apache PredictionIO {{> pioversionnum}}, by following one the the [guides](/docs/install). 
