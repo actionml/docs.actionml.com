@@ -2,9 +2,74 @@ DocList = [
     {
         title: 'Welcome to ActionML',
         template: 'welcome_to_actionml',
-        sections: []
-    },
-    {
+        sections: []       
+    },{
+        title: 'Harness ML/AI Server',
+        template: 'harness_intro',
+        sections: [
+            {
+                title: 'Install',
+                template: 'harness_install'
+            },
+            {
+                title: 'Debugging with IntelliJ',
+                template: 'debugging_with_intellij'
+            },
+            {
+                title: 'Security',
+                template: 'harness_security'
+            },
+            {
+                title: 'Users and Roles',
+                template: 'users_and_roles'
+            },
+            {
+                title: 'Upgrade',
+                template: 'upgrading_from_pio_to_harness'
+            },
+         ]
+    },{
+        title: 'The Universal Recommender',
+        template: 'ur',
+        sections: [
+            {
+                title: 'Quickstart',
+                template: 'ur_quickstart'
+            },
+            {
+                title: 'Configuration',
+                template: 'ur_config'
+            },
+            {
+                title: 'Input',
+                template: 'ur_input'
+            },
+            {
+                title: 'Queries',
+                template: 'ur_queries'
+            },
+            {
+                title: 'Advanced Tuning',
+                template: 'ur_advanced_tuning'
+            },
+            {
+                title: 'Use Cases',
+                template: 'ur_use_cases'
+            },
+            {
+                title: 'Business Rules',
+                template: 'ur_biz_rules'
+            },
+            {
+                title: 'Model Debugging',
+                template: 'ur_elasticsearch_debugging'
+            },
+            {
+                title: 'UR Versions',
+                template: 'ur_version_log'
+            }
+        ]
+    },{
         title: 'PredictionIO',
         template: 'pio_by_actionml',
         sections: [
@@ -51,48 +116,6 @@ DocList = [
             {
                 title: 'Version History',
                 template: 'pio_versions'
-            }
-        ]
-    },
-    {
-        title: 'The Universal Recommender',
-        template: 'ur',
-        sections: [
-            {
-                title: 'Quickstart',
-                template: 'ur_quickstart'
-            },
-            {
-                title: 'Configuration',
-                template: 'ur_config'
-            },
-            {
-                title: 'Input',
-                template: 'ur_input'
-            },
-            {
-                title: 'Queries',
-                template: 'ur_queries'
-            },
-            {
-                title: 'Advanced Tuning',
-                template: 'ur_advanced_tuning'
-            },
-            {
-                title: 'Use Cases',
-                template: 'ur_use_cases'
-            },
-            {
-                title: 'Business Rules',
-                template: 'ur_biz_rules'
-            },
-            {
-                title: 'Model Debugging',
-                template: 'ur_elasticsearch_debugging'
-            },
-            {
-                title: 'UR Versions',
-                template: 'ur_version_log'
             }
         ]
     },{

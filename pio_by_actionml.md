@@ -1,7 +1,9 @@
 # PredictionIO and ActionML
 
-ActionML supports and directly commits code to Apache PredictionIO beginning with Apache PredictionIO-0.10.0 and continuing to the pressent release PredictionIO-{{> pioversionnum}}. We may have some extra howtos, documents, and certainly templates but check the [Apache site](http://predictionio.incubator.apache.org/) for more information.
+ActionML is moving development to the next-gen [Harness ML/AI Server](/docs/harness_intro). If you are currently using PredictionIO you may be interested in our [Upgrade Guide](/docs/upgrading_from_pio_to_harness).
 
-For help installing Apache PredictionIO-{{> pioversionnum}} please follow [these instructions](/docs/install) to install or upgrade. Bw aware that upgrading can **erase your data** so please backup before any upgrade.
+In the past we have supported Apache PredictionIO 0.10.0 to 0.12.1. We continue to make our extra howtos, documents, and templates available but check the [Apache site](http://predictionio.incubator.apache.org/) for more information.
+
+For help installing Apache PredictionIO-{{> pioversionnum}} please follow [these instructions](/docs/install) to install.
 
 For a description of past versions see the [history](/docs/pio_versions)
