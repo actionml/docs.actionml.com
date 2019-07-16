@@ -1,14 +1,10 @@
-# Debugging with IntelliJ
+# Debugging with IntelliJ IDEA
 
-To debug we will run inside of IntelliJ. This makes `harness start` impossible to use but other commands can be run by executing the CLI inside of `bin/`. First create 2 IntelliJ projects. 
+[Install Harness](/docs/harness_install) using the instructions for building from source. This will pull the source code into a directory for access by IDEA.
 
-```
-git clone https://github.com/actionml/harness.git harness
-```
+## Debugging Harness Server
 
-## Debugging the Harness Server
-
-The Harness Server can be debugged with the Harness CLI or by sending event and/or queries from something like the Java SDK all from with the Server setup.
+Harness Server can be debugged with the Harness CLI or by sending event and/or queries from something like the Java SDK all from with the Server setup.
 
  1. Launch IntelliJ and pick File -> New -> Project from existing sources. Navigate to `harness/rest-server`, pick import using SBT and finish. You will now be able to run the server, trigger CLI, and the simple examples in the Java SDK project.
  2. Setup CLI debugging:

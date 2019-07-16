@@ -1,32 +1,42 @@
 # Harness Installation
 
-This guide shows how to build and install the Harness server and examples. The project targets automated container builds as the primary release mechanism but some may prefer an OS level installation or wish to use a debugger when modifying code [Debugging with IntelliJ](debugging_with_intellij).
+This guide shows how to build and install Harness Server, Harness-CLI, and examples. The project targets automated container builds as the primary release mechanism. As an alternative some may prefer an OS level installation or wish to use a debugger when modifying code [Debugging with IntelliJ](debugging_with_intellij).
 
 # Related Projects
 
 These projects are related and can be used together:
 
- 1. The [Harness Rest-Server](https://github.com/actionml/harness)
- 2. Engines' dependencies (external tarball, apt-get, yum, or brew installs). These are described below.
- 3. Harness [CLI and SDK](https://github.com/actionml/harness-cli)
- 4. Harness [Java/Scala Client SDK](https://github.com/actionml/harness-java-sdk) **Optional: no need for this if you are using raw HTTP REST or the CLI to communicate with Harness**
- 5. The [Harness Auth-Server](https://github.com/actionml/harness-auth-server) **This is not required and is not described here, see this [README](https://github.com/actionml/harness-auth-server) if you want the harness-auth-server**
+ 1. [Harness Server Docker Image](https://cloud.docker.com/u/actionml/repository/docker/actionml/harness) Use tag `latest` for the current latest stable release. Use `develop` for the current work-in-progress of the next release.
+ 2. [Harness-CLI Docker Image](https://cloud.docker.com/u/actionml/repository/docker/actionml/harness-cli) The client command line interface for Harness. 
+ 3. [Harness Server](https://github.com/actionml/harness)
+ 4. Engines' dependencies (external tarball, apt-get, yum, or brew installs). These are described below.
+ 5. Harness [CLI and SDK](https://github.com/actionml/harness-cli) Used to execute `harness-cli` or create Python clients.
+ 6. Harness [Java/Scala Client SDK](https://github.com/actionml/harness-java-sdk) Useful for Java and Scala clients.
+ 7. The [Harness Auth-Server](https://github.com/actionml/harness-auth-server) **Not required and not described here, see this [README](https://github.com/actionml/harness-auth-server) if you want to use the harness-auth-server**
 
 
 For a guide to using IntelliJ for debugging see [Debugging with IntelliJ](debugging_with_intellij.md).
+
+# Container Deployments
+
+The Docker Images for Harness and Harness-CLI can be used together or installed on separate hosts. See the env setup for both projects to configure containers for your environment.
+
+# Source Build and Install
+
+To get and build Harness from source follow these instructions.
 
 ## General Requirements
 
  - **Java 8+:** this should be installed as a dependency of Scala 2.11 but install it if needed, make sure to get the "JDK" version not just the "JRE". Also add your JAVA_HOME to the environment
  - **Git**
  - **MongoDB 3.6 to 4+:** this may require a newer version than in the distro package repos, so check MongoDB docs for installation. These, for example, [install Mongo 4.0 on Ubuntu 14.04 thru 18.04](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
- - **Spark 2.3.3++**: Used by all pre-packaged Engines except the Contextual Bandit. Can be run locally in the Harness process via linked in code or setup on a remote cluster.
- - **Elasticsearch 5.x**: Used by Engines. Harness 0.5.0+ will support ES 6 & 7, but use 5.x currently.
+ - **Spark 2.3.3**: Used by all pre-packaged Engines except the Contextual Bandit. Can be run locally in the Harness process via linked in code or setup on a remote cluster.
+ - **Elasticsearch 5.x**: Used by Engines. Harness 0.4.1 uses Elasticsearch 5.6. Harness 0.5.0+ will support ES 6 & 7 also and is a WIP.
  - **Other:** Each Engine or component may have its own requirements, see each below.
 
 ## Install Requirements on Ubuntu 18.04
 
- - Create regular user with home and shell. On AWS and other cloud providers this means to login with ("ubuntu" or "ec2-user" user). The default user for AWS is all that is required, skip to **Install Prerequisites**.
+ - Create a regular user with home and shell. On AWS and other cloud providers this means to login with ("ubuntu" or "ec2-user" user). The default user for AWS is all that is required, skip to **Install Prerequisites**.
 
     To set up a user with passwordless sudo permissions follow these instructions
 
@@ -59,7 +69,7 @@ For a guide to using IntelliJ for debugging see [Debugging with IntelliJ](debugg
     sudo apt install openjdk-8-jdk git python3
     ```
     
- - Mongo needs a newer version than in is the default 18.04 repos so add the correct repo and install from there.
+ - Harness requires a newer version of Mongo than in is the default on Ubuntu 18.04 package repos so add the correct repo and install from there.
 
     ```
     # your installation will look SOMETHING like this
@@ -85,10 +95,12 @@ For a guide to using IntelliJ for debugging see [Debugging with IntelliJ](debugg
     sudo apt-get install sbt
     ```
       
-# Harness Build from Source (develop branch)
+# Harness Build from Source
 
-Get and build source:
- 
+Get and build source from the branch you want. Master always has the latest stable release. Develop will have the latest SNAPSHOT work-in-progress. 
+
+Below we show an example using the `develop` branch. Only use this if you are sure you need some feature since there is no guarantee it is stable.
+
 ```
 git clone -b develop https://github.com/actionml/harness.git harness
 cd harness/rest-server
@@ -151,7 +163,7 @@ sudo systemctl start elasticsearch.service
 
 # Spark 2.3.3
 
-To run Harness on localhost, there is not need to install Spark. It may be run on a cluster to by changing the `harness-env` described below.
+By default Spark will run inside the Harness process, there is no need to install it. If you wish to use a Spark cluster, change the appropriate config in Engines that use it.
 
 # MongoDB 4.x+
 
