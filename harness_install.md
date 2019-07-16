@@ -129,7 +129,7 @@ Then source the `.profile` with
 
 ## Harness CLI
 
-The Python SDK is needed for virtually all Harness CLI since Harness only responds to the REST API and therefore the CLI does this through the Python SDK.
+Harness-CLI uses the Harness Python client to communicate with Harness. These are packaged in the same repo. See the [README](https://github.com/actionml/harness-cli/tree/master) for installation instructions.
 
 **Requirements**
 
@@ -171,20 +171,20 @@ Harness requires a MongoDB server, which may be installed on localhost. It may b
 
 # Launching Harness  
 
- - **Setup Harness config:** for localhost connections you should not need to change the default configuration in `harness/Harness-0.5.0-SNAPSHOT/bin/harness-env`. If MongoDB, Spark, or Elasticsearch are not on localhost, change this in `harness-env`
+ - **Setup Harness config:** for localhost connections you should not need to change the default configuration if MongoDB, Spark, or Elasticsearch are not on localhost, change this in `Harness-0.5.0/bin/harness-env`
 
  - **Set the `path`** in your `env` to include the `bin` directory of both Harness and optionally the Harness Auth server: 
 
     ```
     export PATH=/path/to/harness/bin:$PATH`
     ```
- - **Start Other Services:** Harness and its Engines should have any services they depend on started on boot or start them before Harness. For instance if you are using the Contextual Bandit, start its Vowpal Wabbit dependency first. All other services are covered above.
+    
+ - **Start Other Services:** Start all services that Harness and its Engines depend upon. For instance if you are using the Contextual Bandit, start its Vowpal Wabbit dependency first. All other services are covered above.
 
  - **Start Harness:**
 
     ```
     harness start # you will get a status message printed
-    harness status engines # will list all active engines
     ```
 
     See [Commands](commands.md) for a description of the Harness CLI.
