@@ -1,6 +1,25 @@
 # The Universal Recommender Version Log
 
-The latest version has several ease of installation improvements, for instance it is no longer required to build a special version of Apache Mahout.
+The UR 0.8+ requires Harness and does not work with PIO. To upgrade from PIO to Harness see [Upgrade Notes here](upgrading_from_pio_to_harness).
+
+## 0.9.0-SHAPSHOT
+
+The UR 0.9.0 is a work in progress and integrated with Harness-0.5.0-SNAPSHOT. It will be released with Harness-0.5.0.
+
+ - Support for ES 7, 6, 5. Though we recommend ES 7 older versions are supported.
+ - Support for Mongo authentication and SSL, which enables the use of Mongo Atlas managed DB.
+ - Runs training completely inside the Spark process by running the Spark UR training "Driver" inside a Spark Worker Node.
+ - First class container support. Harness and Harness-CLI now are integrated with automated CI/CD for use by container orchestration tools including Kubernetes and Docker-compose.
+
+## 0.8.0 The UR-0.8.0 on Harness-0.4.0
+
+As of 0.8.0 the Universal Recommender works on the [Harness ML server](harness_intro) and deprecates PIO support. This provides many benefits and is easy to upgrade from PIO&mdash;see [Upgrade Notes here](upgrading_from_pio_to_harness).
+
+ - Integrates with the new Harness ML server.
+ - Supports realtime model changes where training is not required for item properties. This enables realtime changes like `"instock": "true"`.
+ - New time-to-live (TTL) support for aging old data out of a model. This makes discarding old data easy, which limits training time once models have reached optimum size.
+ - Event aliases for grouping input events
+ - 
 
 ## 0.7.3
 
@@ -36,7 +55,7 @@ This tag is for the UR integrated with PredictionIO 0.12.0 using Scala 2.11, Spa
 
  **WARNING**: Upgrading Elasticsearch or HBase will wipe existing data if any, so follow the special instructions below before installing any service upgrades and making backups.
 
-### Special Instructions (not reflected on ActionML.com yet)
+### Special Instructions
 
 You must build PredictionIO with the default parameters so just run `./make-distribution` this will require you to install Scala 2.11 and Python 3 (as the default Scala and Python). You can also run up to Spark 2.1.x (but not 2.2.x), ES 5.5.2 or greater (but 6.x has not been tested), Hadoop 2.6 or greater, you can get away with using older versions of services except ES must be 5.x. If you have issues getting pio to build and run send questions to the [PIO mailing list](http://predictionio.apache.org/support/). 
 

@@ -1,5 +1,22 @@
 DocsHtmlPartials = [
   {
+    name: "harnessname",
+    template: "Harness-{{> harnessversionnum}}",
+    ismd: false,
+    shouldLoad: false
+  },
+  {
+    name: "harnessversion",
+    template: "{{> harnessversionnum}}",
+    ismd: false,
+    shouldLoad: false
+  },
+  {
+    name: "harnessversionnum",
+    template: "0.4.1",
+    ismd: false,
+    shouldLoad: false
+  },{
     name: "pioname",
     template: "PredictionIO-{{> pioversionnum}}",
     ismd: false,
@@ -25,7 +42,7 @@ DocsHtmlPartials = [
   },
   {
     name: "urversionnum",
-    template: "0.7.3",
+    template: "0.8.0",
     ismd: false,
     shouldLoad: false
   },

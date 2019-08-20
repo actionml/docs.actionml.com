@@ -10,6 +10,12 @@ DocList = [
             {
                 title: 'Install',
                 template: 'harness_install'
+            },{
+                title: 'Container Quickstart',
+                template: 'harness_container_guide'
+            },,{
+                title: 'Native Installation',
+                template: 'harness_native_guide'
             },
             {
                 title: 'Debugging with IntelliJ',
@@ -24,7 +30,7 @@ DocList = [
                 template: 'users_and_roles'
             },
             {
-                title: 'Upgrade',
+                title: 'Upgrade from PIO',
                 template: 'upgrading_from_pio_to_harness'
             },
          ]
