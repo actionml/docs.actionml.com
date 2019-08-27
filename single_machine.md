@@ -1,5 +1,7 @@
 # All-In-One PIO Setup Guide
 
+{{> deprecationblurb}}
+
 This is a guide to set up Apache PredictionIO {{> pioversionnum}} on a single large memory (16g-32g) machine. This will allow "real data" to be processed but will not usually be appropriate for production deployment. However we follow the clustered "style" for setup so the extension to multiple machines will be easier.
 
 **Other Guides**:

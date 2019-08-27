@@ -1,5 +1,7 @@
 # PredictionIO CLI Cheatsheet
 
+{{> deprecationblurb}}
+
 PredictionIO can be seen as 2 types of servers, one takes in and stores events&mdash;the EvnetServer&mdash;and the other serves prediction&mdash;the PredictionServer. The general non-template specific commands can be run from anywhere, in any directory but the template specific commands must be run in the directory of the specific engine-instance being used, this is because some commands rely on files (like engine.json) to be available.
 
 The typical process from install to your first query is:

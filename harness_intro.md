@@ -2,7 +2,9 @@
 
 Harness is a Modern Server for ML and AI Algorithms. It hosts important ML/AI Engines like the Universal Recommender, Behavioral Search, and others. It has built-in Engines but is also designed to host custom algorithms based on a flexible plugin architecture.
 
-Harness implements a framework of microservices that supply REST API, routing, storage, compute, and query functions in a scalable way allowing the Engine to focus on algorithms.
+Harness implements a framework of microservices for routing, storage, compute, and query functions in a scalable way allowing the Engine to focus on algorithms.
+
+Harness presents all ML/AI input, query, and admin functions through a single REST API and has a client CLI for admin.
 
 ![image](/docs/images/harness-plugin-engines.svg)
 

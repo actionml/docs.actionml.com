@@ -1,6 +1,8 @@
 # UR Quickstart
 
-We assume you have already installed ActionML Harness-{{> harnessversionnum}}, by following one the [guides](harness_install). 
+{{> deprecationblurb}}
+
+We assume you have already installed Apache PredictionIO {{> pioversionnum}}, by following one the the [guides](/docs/install). 
 
 Check that pio is running
 

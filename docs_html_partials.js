@@ -149,6 +149,12 @@ DocsHtmlPartials = [
     shouldLoad: false
   },
   {
+    name: "deprecationblurb",
+    template: "",
+    ismd: true,
+    shouldLoad: true
+  },
+  {
     name: "awssetupguide",
     template: "",
     ismd: true,

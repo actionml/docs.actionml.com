@@ -1,5 +1,7 @@
 # Small High Availability Cluster Setup Guide
 
+{{> deprecationblurb}}
+
 This is a guide to setting up Apache PredictionIO {{> pioversionnum}} in a 3 node cluster with all services running on the 3 cluster machines.
 
 In this guide all services are setup with multiple or standby masters in true clustered mode. We generally recommend that you have 5 machines to fully decouple services and allow for shutting down Spark when it is not in use (during `pio train` for the UR). But the setup will be the same with different server addresses for each machine.

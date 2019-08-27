@@ -1,5 +1,7 @@
 # PredictionIO Standalone Server Guide: The Driver Machine
 
+{{> deprecationblurb}}
+
 This is a guide to setting up the PredictionIO model training machine for templates like the Universal Recommender, which only use Spark for `pio train`. The UR has no need to run of Spark for input or queries, it is only used too create models. Unfortunately the machine that launches a Spark Job must runs a Spark Driver, which may need as many resources as a Spark Executor. This means the Spark Driver (`pio train` machine) can be run on a temporary machine that is created, trained on, then stopped along with a temporary Spark cluster. This will have no effect on the other parts of the systems that ingest data and return query results.
 
 At the end of this guide we will spin up a Spark cluster and offload the majority of training work to the cluster, then take it offline so it costs nothing while idle. In real terms this means that even if the Spark machines (driver and executors) are expensive, you will only pay the fraction of the cost associated with training and this is done weekly or less and takes hours at worst.

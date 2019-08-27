@@ -1,5 +1,7 @@
 # Quickstart
 
+{{> deprecationblurb}}
+
 Requirements:
 
  - A 'nix distribution like Redhat, Centos, Debian, Ubuntu, or Mac OS X. If you are running Windows we recommend a VM with `nix.

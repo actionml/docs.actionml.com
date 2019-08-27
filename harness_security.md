@@ -8,11 +8,11 @@ Uses http-akka [server](http://doc.akka.io/docs/akka-http/current/scala/http/ser
 
 ## Authentication
 
-We use "secrets" to authenticate and authorize users. This requires offline exchange of credentials but is secure when combined with TLS/SSL. The user is granted a token that gives them access to an Engine or Engines on the Harness Server. These tokens are used to initialize the SDK clients, which then use them for Auth. 
+We use "secrets" to authenticate and authorize users. This requires offline exchange of credentials but is secure when combined with TLS/SSL. The User is issued a generated token that grants them access to one or more Engine Instances managed by a Harness Server. Presenting a valid token Authenticates the User.
 
 ## Authorization
 
-If an authenticated user has been granted access permission for resource, then the request will be processed, otherwise it will be refused with an error code.
+If an authenticated User has been granted access Permission for resource, then the request will be processed, otherwise it will be refused with an error code. A single token acts as a key for any number of resources. For example an Admin token grants world access to all Harness resources and is used by the Harness CLI when optional Auth is enabled.
 
 # OAuth2
 

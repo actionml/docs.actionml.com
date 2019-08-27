@@ -1,5 +1,8 @@
 # Installing Apache PredictionIO-{{> pioversionnum}}
 
+
+{{> deprecationblurb}}
+
 To install or upgrade Apache PredictionIO-{{> pioversionnum}} using The Universal Recommender {{> urversion}} as an example Template.
 
 **IMPORTANT NOTES**: 

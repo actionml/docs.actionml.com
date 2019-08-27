@@ -1,5 +1,7 @@
 # The Universal Recommender
 
+{{> deprecationblurb}}
+
 The Universal Recommender (UR) is a new type of collaborative filtering recommender based on the Correlated Cross-Occurrence algorithm (CCO), which can use data from a wide variety of user taste indicators. Unlike the matrix factorization embodied in things like MLlib's ALS, The UR's CCO algorithm is able to **ingest any number of user actions, events, profile data, and contextual information**. It then serves results in realtime using realtime user data in a scalable way. It also supports business rules based on filtering and boosting matches in item properties. The UR can therefor be considered a hybrid collaborative filtering and content-based recommender. 
 
 The use of multiple **types** of data fundamentally changes the way a recommender this used and, when employed correctly, will provide a significant increase in quality of recommendations vs. using only one "conversion event". Most recommenders, for instance, can only use one indicator of user taste like a "purchase" event. Using all we know about a user and their context allows us to much better predict their preferences.

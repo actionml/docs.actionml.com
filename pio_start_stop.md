@@ -1,5 +1,7 @@
 # Start and Stop a PredictionIO Cluster
 
+{{> deprecationblurb}}
+
 There are several Services that together are needed to run PredictionIO and the Universal Recommender. It is important that these be started and stopped in the right order. If you used the ActionML cluster setup guide then the instructions below will apply, if you setup your own clustered environment you may need to substitute the right paths but the order of commands will be the same.
 
 ## Startup

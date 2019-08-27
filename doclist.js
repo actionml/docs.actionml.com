@@ -4,26 +4,52 @@ DocList = [
         template: 'welcome_to_actionml',
         sections: []       
     },{
-        title: 'Harness ML/AI Server',
+        title: 'Harness',
         template: 'harness_intro',
         sections: [
             {
+                title: 'Overview',
+                template: 'harness_overview'
+            },
+            {
+                title: 'Architecture',
+                template: 'harness_architecture'
+            },
+            {
+                title: 'Commands',
+                template: 'h_commands'
+            },
+            {
+                title: 'REST Specification',
+                template: 'h_rest_spec'
+            },
+            {
                 title: 'Install',
                 template: 'harness_install'
-            },{
-                title: 'Container Quickstart',
+            },
+            {
+                title: 'Container Installation Quickstart',
                 template: 'harness_container_guide'
-            },,{
+            },
+            {
+                title: 'Kubernetes Installation',
+                template: 'harness_kubernetes'
+            },
+            {
                 title: 'Native Installation',
                 template: 'harness_native_guide'
             },
             {
-                title: 'Debugging with IntelliJ',
-                template: 'debugging_with_intellij'
+                title: 'Mirroring',
+                template: 'h_mirroring'
             },
             {
                 title: 'Security',
                 template: 'harness_security'
+            },
+            {
+                title: 'Introduction to Spark',
+                template: 'intor_to_spark'
             },
             {
                 title: 'Users and Roles',
@@ -33,50 +59,58 @@ DocList = [
                 title: 'Upgrade from PIO',
                 template: 'upgrading_from_pio_to_harness'
             },
+            {
+                title: 'Debugging with IntelliJ',
+                template: 'debugging_with_intellij'
+            }
          ]
     },{
         title: 'The Universal Recommender',
-        template: 'ur',
+        template: 'h_ur',
         sections: [
             {
                 title: 'Quickstart',
-                template: 'ur_quickstart'
+                template: 'h_ur_quickstart'
             },
             {
                 title: 'Configuration',
-                template: 'ur_config'
+                template: 'h_ur_config'
             },
             {
                 title: 'Input',
-                template: 'ur_input'
+                template: 'h_ur_input'
             },
             {
                 title: 'Queries',
-                template: 'ur_queries'
+                template: 'h_ur_queries'
+            },
+            {
+                title: 'Workflow',
+                template: 'h_workflow'
             },
             {
                 title: 'Advanced Tuning',
-                template: 'ur_advanced_tuning'
+                template: 'h_ur_advanced_tuning'
             },
             {
                 title: 'Use Cases',
-                template: 'ur_use_cases'
+                template: 'h_ur_use_cases'
             },
             {
                 title: 'Business Rules',
-                template: 'ur_biz_rules'
+                template: 'h_ur_biz_rules'
             },
             {
                 title: 'Model Debugging',
-                template: 'ur_elasticsearch_debugging'
+                template: 'h_ur_elasticsearch_debugging'
             },
             {
                 title: 'UR Versions',
-                template: 'ur_version_log'
+                template: 'h_ur_version_log'
             }
         ]
     },{
-        title: 'PredictionIO',
+        title: 'PredictionIO (legacy)',
         template: 'pio_by_actionml',
         sections: [
             {
@@ -122,6 +156,47 @@ DocList = [
             {
                 title: 'Version History',
                 template: 'pio_versions'
+            }
+        ]
+    },{
+        title: 'The PredictionIO Universal Recommender (legacy)',
+        template: 'ur',
+        sections: [
+            {
+                title: 'Quickstart',
+                template: 'ur_quickstart'
+            },
+            {
+                title: 'Configuration',
+                template: 'ur_config'
+            },
+            {
+                title: 'Input',
+                template: 'ur_input'
+            },
+            {
+                title: 'Queries',
+                template: 'ur_queries'
+            },
+            {
+                title: 'Advanced Tuning',
+                template: 'ur_advanced_tuning'
+            },
+            {
+                title: 'Use Cases',
+                template: 'ur_use_cases'
+            },
+            {
+                title: 'Business Rules',
+                template: 'ur_biz_rules'
+            },
+            {
+                title: 'Model Debugging',
+                template: 'ur_elasticsearch_debugging'
+            },
+            {
+                title: 'UR Versions',
+                template: 'ur_version_log'
             }
         ]
     },{
