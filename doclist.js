@@ -49,7 +49,7 @@ DocList = [
             },
             {
                 title: 'Introduction to Spark',
-                template: 'intor_to_spark'
+                template: 'intro_to_spark'
             },
             {
                 title: 'Users and Roles',
@@ -99,10 +99,6 @@ DocList = [
             {
                 title: 'Business Rules',
                 template: 'h_ur_biz_rules'
-            },
-            {
-                title: 'Model Debugging',
-                template: 'h_ur_elasticsearch_debugging'
             },
             {
                 title: 'UR Versions',
