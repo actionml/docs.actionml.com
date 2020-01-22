@@ -89,6 +89,10 @@ DocList = [
                 template: 'h_workflow'
             },
             {
+                title: 'Shopping Cart',
+                template: 'h_ur_complementary_items'
+            },
+            {
                 title: 'Advanced Tuning',
                 template: 'h_ur_advanced_tuning'
             },
@@ -99,6 +103,10 @@ DocList = [
             {
                 title: 'Business Rules',
                 template: 'h_ur_biz_rules'
+            },
+            {
+                title: 'Debugging with Elasticsearch',
+                template: 'h_ur_debugging_with_elasticsearch'
             },
             {
                 title: 'UR Versions',
