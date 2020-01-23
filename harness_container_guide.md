@@ -62,7 +62,7 @@ With the docker tools installed:
 Once deployed one or more containers in the collection can be updated. It is best to explore the docker-compose cli and options as well as docker commands. Some useful commands for updates are:
  
  - `docker-compose down` stops all container in the local yaml file. Do this before any other docker-compose updates.
- - `git pull origin <branch>` for this repo the lastest vesion under test is in branch `develop`, the last stable release is in `master`. The `git` repo contains the latest project structure and `coker-compose.yml`.
+ - `git pull origin <branch>` for this repo the lastest vesion under test is in branch `develop`, the last stable release is in `master`. The `git` repo contains the latest project structure and `docker-compose.yml`.
  - `docker-compose pull` this will get all updated containers that are available.
  - `docker-compose up -d --build --force-recreate` to bring up all updated containers by recreating all images.
 

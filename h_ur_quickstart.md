@@ -1,6 +1,6 @@
 # UR Quickstart
 
-If you have installed Harness (for a fast installation try the [one-liner here](harness_continer_guide)), you already have the UR. 
+If you have installed Harness (for a fast installation try the ["one-liner" here](harness_container_guide)), you already have the UR. 
 
 # Creating an Engine Instance for the UR
 
