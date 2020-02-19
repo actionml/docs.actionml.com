@@ -62,6 +62,10 @@ DocList = [
             {
                 title: 'Debugging with IntelliJ',
                 template: 'debugging_with_intellij'
+            },
+            {
+                title: 'Release Notes',
+                template: 'release_notes'
             }
          ]
     },{
