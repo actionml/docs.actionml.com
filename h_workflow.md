@@ -40,6 +40,6 @@ The format for input Events and queries is Engine dependent so see the Engine do
         
 # Overview
 
-<img src="https://docs.google.com/drawings/d/e/2PACX-1vQg6P3yWo5I4T5iz8pDvMb8tCC9uwDZZpEDyzo4NPjy__zvipELBXNzX9lCREY9846-B-Vs0YctzRFY/pub?w=1436&amp;h=548">
+<img src="https://docs.google.com/drawings/d/e/2PACX-1vQg6P3yWo5I4T5iz8pDvMb8tCC9uwDZZpEDyzo4NPjy__zvipELBXNzX9lCREY9846-B-Vs0YctzRFY/pub?w=479&amp;h=183">
 
 Queries require a model, this means at least one training session, from then on the model may be updated at any time and on any schedule.
