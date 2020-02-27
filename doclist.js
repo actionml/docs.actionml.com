@@ -20,6 +20,10 @@ DocList = [
                 template: 'h_commands'
             },
             {
+                title: 'Workflow',
+                template: 'h_workflow'
+            },
+            {
                 title: 'REST Specification',
                 template: 'h_rest_spec'
             },
