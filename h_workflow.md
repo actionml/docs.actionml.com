@@ -1,6 +1,13 @@
-# Workflow
 
-To Use an Engine Instance create one, use it then delete it when it is not needed. Harness workflow for any Engine Instance proceeds from input to query/prediction.
+# Workflow Overview
+
+<img src="https://docs.google.com/drawings/d/e/2PACX-1vQg6P3yWo5I4T5iz8pDvMb8tCC9uwDZZpEDyzo4NPjy__zvipELBXNzX9lCREY9846-B-Vs0YctzRFY/pub?w=479&amp;h=183">
+
+For Kappa Engines no `harness-cli train` needs to be done. The model is updated with each input. For Lambda Engines, like the Universal Recommender, at least one training session must be executed to create the model, from then on training can be done at any time without interrupting input and queries, only to update the model based on new data that has accumulated.
+
+# Workflow Details
+
+Queries require a model, this means at least one training session, from then on the model may be updated at any time and on any schedule.To Use an Engine Instance create one, use it then delete it when it is not needed. Harness workflow for any Engine Instance proceeds from input to query/prediction.
 
 The format for input Events and queries is Engine dependent so see the Engine documentation. See the Universal Recommender docs [here](h_ur) 
 
@@ -38,8 +45,3 @@ The format for input Events and queries is Engine dependent so see the Engine do
 
  - To bring the server down stop the container or use `harness stop`
         
-# Overview
-
-<img src="https://docs.google.com/drawings/d/e/2PACX-1vQg6P3yWo5I4T5iz8pDvMb8tCC9uwDZZpEDyzo4NPjy__zvipELBXNzX9lCREY9846-B-Vs0YctzRFY/pub?w=479&amp;h=183">
-
-Queries require a model, this means at least one training session, from then on the model may be updated at any time and on any schedule.
