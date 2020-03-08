@@ -36,12 +36,12 @@ DocList = [
                 template: 'harness_config'
             },
             {
-                title: 'Container Installation Quickstart',
-                template: 'harness_container_guide'
+                title: 'Install',
+                template: 'harness_install'
             },
             {
-                title: 'Source Install',
-                template: 'harness_install'
+                title: 'Container Installation Quickstart',
+                template: 'harness_container_guide'
             },
             {
                 title: 'Kubernetes Installation',
