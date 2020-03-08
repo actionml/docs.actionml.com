@@ -56,7 +56,7 @@ The Docker host tools for use with `docker-compose` or run it in a single contai
  - Docker
  - Docker-compose
 
-See the `harness-docker-compose` [project](docs/harness_container_guide) for further information.
+See the `harness-docker-compose` [project](harness_container_guide) for further information.
 
 ## Source Build
 
@@ -128,7 +128,7 @@ Integral to REST is the notion of a "resource", which is an item that can be add
      - **queries**: queries are created so engines can return information based on their models. See the Engine documentation for their formats.
      - **jobs**: creates a long lived task such as a training task for a Lambda Engine.
 
-For the full Harness REST API and response codes, see the [Harness REST Specification](docs/h_rest_spec)
+For the full Harness REST API and response codes, see the [Harness REST Specification](h_rest_spec)
 
 ## Input and Query
 
@@ -171,17 +171,17 @@ The result of the query will be in the response body and looks something like th
     }
 
 
-For specifics of the format and use of events and queries see the Engine specific documentation&mdash;for example [The Universal Recommender](docs/h_ur). 
+For specifics of the format and use of events and queries see the Engine specific documentation&mdash;for example [The Universal Recommender](h_ur). 
 
 # Controlling and Communicating with Harness
 
- - [The Harness CLI](docs/h_commands)
+ - [The Harness CLI](h_commands)
 
     The Harness server has admin type commands which are used to create and control the workflow of Engines and perform other Admin tasks. This CLI acts as a client to the REST API and so may be run remotely. The project lives in its own [repo here](https://github.com/actionml/harness-cli)
     
- - [The Admin REST API](docs/h_rest_spec) A subset of the complete REST API implements all of the functionality of the Harness-CLI and so can be flexibly triggered remotely even without the CLI.
+ - [The Admin REST API](h_rest_spec) A subset of the complete REST API implements all of the functionality of the Harness-CLI and so can be flexibly triggered remotely even without the CLI.
      
- - [Security](docs/harness_security)  
+ - [Security](harness_security)  
 
     Harness optionally supports SSL and token based Authentication with Authorization.
     
@@ -193,13 +193,13 @@ For specifics of the format and use of events and queries see the Engine specifi
 
     The CLI is implemented using the Python SDK so they are packaged together [here](https://github.com/actionml/harness-cli) 
   
-- [Config](docs/harness_config.md)
+- [Config](harness_config.md)
 
-    To change this and other global behavior (not engine specific) read the [Config Page](docs/harness_config.md)
+    To change this and other global behavior (not engine specific) read the [Config Page](harness_config.md)
     
 # Installation
 
 There are several ways to install and run Harness. The primary method we release is through container images but a source project is also maintained for thos who wish to use it.
 
- - [**Docker-Compose Installation**](docs/harness_container_guide) to install an entire system using containers for all services on a single machine,
- - [**Source Build**](docs/harness_install)
+ - [**Docker-Compose Installation**](harness_container_guide) to install an entire system using containers for all services on a single machine,
+ - [**Source Build**](harness_install)
