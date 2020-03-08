@@ -114,7 +114,7 @@ DocsHtmlPartials = [
   },
   {
     name: "esdownload",
-    template: "<a href='https://www.elastic.co/downloads/elasticsearch</a>",
+    template: "<a href=' (current stable non-containerized)'>Elasticsearch 7.x</a>",
     ismd: false,
     shouldLoad: false
   },
