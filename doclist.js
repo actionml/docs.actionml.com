@@ -20,6 +20,10 @@ DocList = [
                 template: 'h_commands'
             },
             {
+                title: 'Learning Styles',
+                template: 'learning_styles'
+            },
+            {
                 title: 'Workflow',
                 template: 'h_workflow'
             },

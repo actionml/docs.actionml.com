@@ -13,7 +13,7 @@ DocsHtmlPartials = [
   },
   {
     name: "harnessversionnum",
-    template: "0.4.1",
+    template: "0.5.1",
     ismd: false,
     shouldLoad: false
   },{
@@ -42,7 +42,7 @@ DocsHtmlPartials = [
   },
   {
     name: "urversionnum",
-    template: "0.8.0",
+    template: "0.9.0",
     ismd: false,
     shouldLoad: false
   },
@@ -84,7 +84,7 @@ DocsHtmlPartials = [
   },
   {
     name: "elasticsearchversionnum",
-    template: "5.x",
+    template: "7.x",
     ismd: false,
     shouldLoad: false
   },
@@ -114,7 +114,7 @@ DocsHtmlPartials = [
   },
   {
     name: "esdownload",
-    template: "<a href='https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-5.6.4.tar.gz'>Elasticsearch 5.6.4</a>",
+    template: "<a href='https://www.elastic.co/downloads/elasticsearch</a>",
     ismd: false,
     shouldLoad: false
   },
