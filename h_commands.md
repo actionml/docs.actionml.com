@@ -12,7 +12,7 @@ Internal to Harness are ***Engines Instances*** that implement some algorithm an
  4. train (for Lambda, Kappa will auto train with each new input)
  5. query 
 
-See the [Workflow](workflow.md) section for more detail.
+See the [Workflow](h_workflow.md) section for more detail.
 
 Harness uses resource-ids to identify all objects in the system. The Engine Instance must have a JSON file, which contains all parameters for Harness engine management including its Engine Instance resource-id as well as algorithm parameters that are specific to the Engine type. All Harness global configuration is stored in `harness-env` see [Harness Config](harness_config.md) for details.
 
