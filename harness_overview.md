@@ -33,12 +33,12 @@ Harness features include:
  - **Mutable and Immutable Data Streams**: can coexist in Harness allowing the store to meet the needs of the algorithm.
     - **Realtime Model Updates** if the algorithm allows (as with the Universal Recommender) model updates can be made in realtime. This is accomplished by allowing some or all of the data to affect the model as it it received.
  - **Immutable Data Stream TTLs** even for immutable data streams the 
- - **Data Set Compatibility** with Apache PredictionIO is supported where there is a matching Engine in both systems. For instance `pio export <some-ur-app-id>` produces JSON that can be directly read by the Harness UR via `harness import <some-ur-engine-id> <path-to-pio-export>`. This is gives an easy way to upgrade from PredictionIO to Harness.
+ - **Data Set Compatibility** with Apache PredictionIO is supported where there is a matching Engine in both systems. For instance `pio export <some-ur-app-id>` produces JSON that can be directly read by the Harness UR via `harness-cli import <some-ur-engine-id> <path-to-pio-export>`. This is gives an easy way to upgrade from PredictionIO to Harness.
 
 ## Security
 
  - **Authentication** support using server to server bearer tokens, similar to basic auth but from the OAuth 2.0 spec. Again on both Server and Client SDKs.
- - **Authorization for Secure Multi-tenancy**: runs multiple Engines with separate Permissions, assign "client" roles for multiple engines, or root control through the "Admin" role.
+ - **Authorization for Secure Multi-tenancy**: runs multiple Engines with separate Permissions, assign "Client" roles for multiple engines, or root control through the "Admin" role.
      - **Multiple Engine Instances for any Engine Type**: allow any number of variations on one Engine type or multiple Engine types.
      - **Multiple Tenants/Multiple Permissions**: allow user+secret level access control to protect one "tenant" from another. Or Auth can be disabled to allow all Engines access without a user+secret for simple deployments.
  - **TLS/SSL** support from akka-http on the Server as well as in the Java and Python Client SDKs.
