@@ -28,12 +28,16 @@ DocList = [
                 template: 'h_rest_spec'
             },
             {
-                title: 'Install',
-                template: 'harness_install'
+                title: 'Configuration',
+                template: 'harness_config'
             },
             {
                 title: 'Container Installation Quickstart',
                 template: 'harness_container_guide'
+            },
+            {
+                title: 'Source Install',
+                template: 'harness_install'
             },
             {
                 title: 'Kubernetes Installation',
