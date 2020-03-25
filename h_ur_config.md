@@ -95,7 +95,7 @@ How to read config settings:
             },
             ...
         ],
-        "blacklistEvents": ["<list>", "<of>", "<indicator>", "<names>"],
+        "blacklistIndicators": ["<list>", "<of>", "<indicator>", "<names>"],
         "maxEventsPerEventType": <some-int>,
         "maxCorrelatorsPerEventType": "<some-int>",
         "maxQueryEvents": <some-int>,
@@ -167,7 +167,7 @@ How to read config settings:
             },
             ...
         ],
-        "blacklistEvents": ["primary-indicator-name"], // OPTIONAL
+        "blacklistIndicators": ["primary-indicator-name"], // OPTIONAL
         "maxEventsPerEventType": 500, // OPTIONAL
         "maxCorrelatorsPerEventType": 50, // OPTIONAL
         "maxQueryEvents": 100, // OPTIONAL
