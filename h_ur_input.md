@@ -60,9 +60,9 @@ This is what a "purchase" event looks like. Note that a usage event **always** i
    
 This event might be sent when the user clicked on the "electronics" category or perhaps purchased an item that was in the "electronics" category. Note again that the "targetEntityType" is always "item".
 
-## Property Change Events
+## Set or Change Item Properties
 
-Certain Event Names are reserved for special purposes that apply to any Engine attached to Harness. Theses apply to the UR to create, update, or delete Item Properties. They will always be targeted at item-ids.
+Certain Event Names are reserved for special purposes that apply to any Engine attached to Harness. Theses are used by the UR to create, update, or delete Item Properties. They will always be targeted at item-ids and have the side-effect of creating an item object in the store.
 
 To attach properties to items use a `"$set"` event like this:
 
@@ -95,7 +95,20 @@ To attach properties to items use a `"$set"` event like this:
 }
 ```
 
-Unless a property has a special meaning specified in engine instances JSON conifg, like date values, the property is assumed to be an array of strings, which act like categorical tags. 
+Unless a property has a special meaning specified in engine instances JSON conifg, like date values, the property is assumed to be an array of strings, which act like categorical tags.
+
+## Delete Items
+
+The UR keeps a collection of item objects in its store. These are created when properties are first `$set` for an item-id. These will grow without limit for each new item-id unless they are removed using the item `$delete` event. This does not remove any indicator events, which are only accessible using a TTL (see [UR Config](h_ur_config))
+
+```
+{
+   "event":"$delete",
+   "entityType":"item",
+   "entityId":"Mr Robot",
+   "eventTime" : "2016-10-05T21:02:49.228Z"
+}
+```
 
 ## Brief Intro to "Rules"
 
