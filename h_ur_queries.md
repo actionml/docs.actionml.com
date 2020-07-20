@@ -46,9 +46,9 @@ This query applies to a wide variety of lists, like watchlists, favorites, shopp
 
 To get the missing items you will need to train a separate model on item-sets (not individual user behavior). However even if your model is made from user behavior this query has a place for lists that do not naturally have missing pieces.
 
-## Complimentary Items (Shopping-cart)
+## Complementary Items (Shopping-cart)
 
-The query will be exactly the same as an item-set but to get "Complimentary Items" based on things that go together, you need to create a model from some grouping of items like things bought together in a shopping cart or items viewed in a session, etc. Doing this will turn the query from "find items similar to all these" into "find the missing items from this list" this is an important distinction. For example similar items may all look the same, complimentary items may look quite different. If John has a Galaxy S10 and  Galaxy Case in this shopping cart, would it be better to recommend "USB-C cord" or "Galaxy S9"? Past experience and research shows that Complimentary Items get better results than Similar Items in many cases. 
+The query will be exactly the same as an item-set but to get "Complementary Items" based on things that go together, you need to create a model from some grouping of items like things bought together in a shopping cart or items viewed in a session, etc. Doing this will turn the query from "find items similar to all these" into "find the missing items from this list" this is an important distinction. For example similar items may all look the same, complementary items may look quite different. If John has a Galaxy S10 and  Galaxy Case in this shopping cart, would it be better to recommend "USB-C cord" or "Galaxy S9"? Past experience and research shows that Complementary Items get better results than Similar Items in many cases. 
 
 This topic is more advanced and takes us into methods for generating different model types so see [Use Cases](ur_use_cases.md)
 

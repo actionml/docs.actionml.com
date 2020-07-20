@@ -20,7 +20,7 @@ There is a reason we call this recommender "universal" and it's because of the n
 
 * **Personalized Recommendations**: "just for you", when you have user history
 * **Similar Item Recommendations**: "people who liked this also like these"
-* **Shopping Cart Recommendations**:  more generally item-set recommendations. This can be applied to wishlists, watchlists, likes, any set of items that may go together. Some also call this "complimentary purchase" recommendations.
+* **Shopping Cart Recommendations**:  more generally item-set recommendations. This can be applied to wishlists, watchlists, likes, any set of items that may go together. Some also call this "complementary purchase" recommendations.
 * **Popular Items**: These can even be the primary form of recommendation if desired for some applications since several forms are supported. By default if a user has no recommendations popular items will backfill to achieve the number required.
 * **Hybrid Collaborative Filtering and Content-based Recommendations**: since item properties can boost or filter recommendations a smooth blend of usage and content can be achieved.
 * **Recommendations with Business Rules**: The UR allows filters and boosts based user-defined properties that can be attached to items. So things like availability, categories, tags, location, or other user-defined properties can be used to rule in or out items to be recommended.
