@@ -2,7 +2,14 @@
 
 This project implements a microservice based Machine Learning Server. It provides an API for plug-in Engines and implements all services needed for input and query. It is also the platform for the Universal Recommender, which is a Harness Engine.
 
-Harness features include:
+Harness has a REST API and command line interface. It is run as a service. To use Harness or one of the Engines:
+
+ 1. Create an Engine Instance with the Harness CLI. This configures the instance and allows it to hold data for an Engine. 
+ 2. The Harness REST API is then used to input data to the Engine Instance. Optionally batch data can be imported.
+ 3. Once there is data in an Engine Instance it can be trained to produce a queryable "model".
+ 4. Once the Engine Instance has a valid model the REST API will respond to queries.
+
+See [Workflow](h_workflow) and [Commands](h_commands) for more details.
 
 ## Architecture
  - **Microservice Architecture** Harness uses best-in-class services to achieve scalable performant operation and packages internal systems, where possible as lightweight microservices. 
@@ -32,8 +39,8 @@ Harness features include:
     - **Hybrids**: The Universal Recommender (UR) is an example of a mostly Lambda Engine that will modify some parts of the model in realtime and will use realtime input to make recommendations but the heavy lifting (big data) part of model building is done in the background.
  - **Mutable and Immutable Data Streams**: can coexist in Harness allowing the store to meet the needs of the algorithm.
     - **Realtime Model Updates** if the algorithm allows (as with the Universal Recommender) model updates can be made in realtime. This is accomplished by allowing some or all of the data to affect the model as it it received.
- - **Immutable Data Stream TTLs** even for immutable data streams the 
- - **Data Set Compatibility** with Apache PredictionIO is supported where there is a matching Engine in both systems. For instance `pio export <some-ur-app-id>` produces JSON that can be directly read by the Harness UR via `harness-cli import <some-ur-engine-id> <path-to-pio-export>`. This is gives an easy way to upgrade from PredictionIO to Harness.
+ - **Immutable Data Stream TTLs** allows data to gracefully age out of the dataset. 
+ - **Data Set Compatibility** with Apache PredictionIO is supported where there is a matching Engine in both systems. For instance `pio export <some-ur-app-id>` produces JSON that can be directly read by the Harness UR via `hctl import <some-ur-engine-id> <path-to-pio-export>`. This is gives an easy way to upgrade from PredictionIO to Harness.
 
 ## Security
 
@@ -179,7 +186,7 @@ For specifics of the format and use of events and queries see the Engine specifi
 
     The Harness server has admin type commands which are used to create and control the workflow of Engines and perform other Admin tasks. This CLI acts as a client to the REST API and so may be run remotely. The project lives in its own [repo here](https://github.com/actionml/harness-cli)
     
- - [The Admin REST API](h_rest_spec) A subset of the complete REST API implements all of the functionality of the Harness-CLI and so can be flexibly triggered remotely even without the CLI.
+ - [The Admin REST API](h_rest_spec) A subset of the complete REST API implements all of the functionality of the Harness CLI and so can be flexibly triggered remotely even without the CLI.
      
  - [Security](harness_security)  
 

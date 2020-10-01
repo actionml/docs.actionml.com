@@ -108,13 +108,15 @@ How to read config settings:
         "userbias": <-maxFloat..maxFloat>,
         "itembias": <-maxFloat..maxFloat>,
         "returnSelf": true | false,
-        "rankings": {
+        "rankings": [
+          {
             "name": <some-field-name>,
             "type": "popular" | "trending" | "hot",
             "indicatorNames": 
                 ["<some-indicator-1", "some-indicator-2", ...],
             "duration": <"365 days">
-        }
+          } // ONLY ONE SUPPORTED
+        ],
         “rules”: [
           {
             “name”: ”<some-property-name>”,
@@ -174,12 +176,14 @@ How to read config settings:
         "num": 20, // OPTIONAL
         "seed": RANDOM,
         "recsModel": "all", // OPTIONAL
-        "rankings": { 
-            "name": "popRank",
-            "type": "popular",
-            "indicatorNames": ["primary-indicator"],
-            "duration": "xxx days" // USES ALL DATA BY DEFAULT
-        },
+        "rankings": [
+          { // OPTIONAL
+            "name": "popRank",// OPTIONAL
+            "type": "popular",// OPTIONAL
+            "indicatorNames": ["primary-indicator"],// OPTIONAL
+            "duration": "xxx days" // OPTIONAL
+          } // ONLY ONE SUPPORTED
+        ],
         "expireDateName": NONE,
         "availableDateName": NONE,
         "dateName": NONE,
@@ -208,7 +212,7 @@ These setting are in addition to Harness's setting in `harness-env` and may dupl
  - **`spark.executor.memory`**: This is the amount of memory allocated to the Spark Executor, set it to the available memory on Spark Workers. The total memory will be number-of-workers * `spark.executor.memory` and this is directly dependent on the size of data and its "density". The value should be found by experimentation since "density" is a complex calculation that can only be done by running Spark.
  - **`spark.driver.memroy`**: This is set in a similar way to `spark.executor.memory` It too is related to data size but is usually set to less than for Executors. This memory is allocated in the Harness 
  - **`spark.es.index.auto.create`**: "true", leave this unchanged
- - **`spark.es.nodes`**: this should be set to an Elasticsearch host or list of hosts. Separate multiple ES host with commas.
+ - **`spark.es.nodes`**: this should be set to an Elasticsearch host or list of hosts. Separate multiple ES host with commas. This should be a full URI (or list of URIs) in the form `protocol://address:port` For the default ES setup on the same machine as Harness this might be `http://localhost:9200` or for a managed ES service it might be `https://<address>:443` Check with the service provider.
  - **`spark.es.nodes.wan.only`**: "true" leave this unchanged
 
 The meaning of these params can be found in Spark docs or the docs of the various libraries used by the UR. You may need to consult those docs if the above explanation is not sufficient. Spark has other parameters that may aid in running the UR training task but these are best left for expert usage, the above will be sufficient most of the time. See also the [ActionML Spark Intro](intro_to_spark).
@@ -247,26 +251,25 @@ The `"algorithm"` section controls most of the tuning and config of the UR. Poss
 * **dateName** optional, default: NONE. The name of the item property field that contains a date or timestamp to be used in a `dateRange` query clause.
 * **returnSelf**: optional, default: false. Boolean flagging the fact that the item example in the query is a valid result. The default is to never return the example item or one of an item-set in a query result, which is by far the typical case. Where items make be periodically recommended as with consumables (food?) is it usually better to mix these into recommendations based on an application algorithm rather than use the recommender to return them. For instance food items that are popular for a specific user might be added to recommendations or put in some special placement outside of recommender results.
 * **recsModel** optional, default: "all", which means  collaborative filtering with popular items or other ranking method returned IF no other recommendations can be made. If only "backfill" is specified then only some backfill or ranking type like "popular" will be returned. If only "collabFiltering" then no backfill will be included when there are not enough recommended items.
-* **rankings** optional, the default is to create item rankings for "popular" using all primary events, so items with the most events will be the most popular. The default time is for all data.
+* **rankings** optional, the default is to create item rankings for "popular" using all primary events, so items with the most events will be the most popular. The default duration is set to use all data.
     
-    This parameter, when specified, is a JSON array of ranking methods used to rank items as fill-in when not enough recommendations can be returned. Popular items usually get the best results and so are the default. It is sometimes useful to be able to return any item, even if it does not have events (popular would not return these) so we allow random ranking as a method to return items. There may also be a user defined way to rank items so this is also supported.
-  
+    This parameter, when specified, is a JSON array of ranking methods used to rank items as fill-in when not enough recommendations can be returned. Popular items usually get the best results and so are the default. **Note: Only one popularity specification is supported currently.**
+      
   When the `"type"` is **"popular", "trending", or "hot"** this set of parameters defines the calculation of the popularity model that ranks all items by their events in one of three different ways corresponding to: event counts (popular), change in event counts over time (trending), and change in trending over time (hot).
   
   When the `"type"` is **"random"** all items are ranked randomly regardless of any usage events. This is useful if some items have no events but you want to present them to users given no other method to recommend.
   
   When the `"type"` is **"userDefined"** the property defined in `"name"` is expected to rank any items that you wish to use as backfill. This may be useful, for instance, if you wish to show promoted items when no other method to recommend is possible. 
   
- - **name** optional, default = "popRank". Gives the field a a unique name in the model.
+ - **name** optional, default = "popRank". Gives the field a unique name in the model.
  - **type** optional, default = "popular" `"popular"`, `"trending"`, `"hot"` can be defined and use event counts per item one of these can be used with `"userDefined"` and/or `"random"`. `"popular"`, `"trending"`, `"hot"` use event counts that are just count, change in event counts, or change in "trending" values.
- - **indicatorNames** required when rankings are specified. This only applies to the popularity types but must be defined for them. For instance to change from using conversions only to conversions plus item views you can specify a "popular" ranking type with `"indicatorNames": ["buy", "view"]`. The indicators/events that contribute to "popular" must have the same item ids as the primary indicator/event.
+ - **indicatorNames** This only applies to the popularity types. For instance to change from using conversions only to conversions plus item views you can specify a "popular" ranking type with `"indicatorNames": ["buy", "view"]`. The indicators/events that contribute to "popular" must have the same item ids as the primary indicator/event so using something like "search-terms" or "category-preference" would not be appropriate since the `targetEntityId` for those events is not the same as the primary event (buy, watch, listen, or other primary event).
+		
+	 These each add a rank value to items in the model that is used if collaborative filtering recommendations cannot be made. Since they rank all items they also obey filters, boosts, and business rules as any CF recommendation would. Using a ranking (even if only the default one) allows CF to be preferred, then "popular" if there are no CF recommendations.
+ - **duration**  this is allowed only with one of the popularity types and is a duration like "30 days", which defines the time from now back to the last event to count in the popularity calculation.
 	
-	 **Note**: when using "hot" the algorithm divides the events into three periods and since events tend to be cyclical by day, 3 days will produce results mostly free of daily effects. Making this time period smaller may cause odd effects. Popular is not split and trending splits the events in two. So choose the duration accordingly. 
-	
-	 These each add a rank value to items in the model that is used if collaborative filtering recommendations cannot be made. Since they rank all items they also obey filters, boosts, and business rules as any CF recommendation would. For example setting rankings allows CF to be preferred, then "popular" then "random" falling back to the ranking in the order they are defined.
-	- **indicatorNames** this is allowed only with one of the popularity types and is an array of indicator/Event names to use in calculating the popularity model, this defaults to the primary/conversion Event&mdash;the first in the `algorithm.indicators` list. 
-	- **duration**  this is allowed only with one of the popularity types and is a duration like "3 days" (which is the default), which defines the time from now back to the last event to count in the popularity calculation.
+	   **Note:** Choose the duration to be divisible by 1 for `"popular"` (so any period will work), 2 for `"trending"`, or 3 for `"hot"`. This is to remove cyclical effects from data. Since `"trending"` divides events in 2 you should choose some number of days, weeks, or months that is evenly divisible by 2. Likewise for hot the period should be divisible by 3 since events are broken into 3 buckets.
 * **numESWriteConnections**: optional, default = number of threads in entire Spark Cluster. This number of connections MAY overload Elasticsearch when writing the trained model to it. 
 
     If you see task failures, even if retries cause no Job failure, this will help remove the errors by throttling the write operation to ES. The other option is to add to / scale out your ES cluster because this will slow the Spark cluster down by reducing the number of tasks used to write to ES and so remove the errors. The rule of thumb for this setting is (numberOfNodesHostingPrimaries * bulkRequestQueueLength) * 0.75. In general this is (numberOfESCores * 50) * 0.75, where 50 comes from the Elasticsearch bulk queue default.
-* **seed** optional, default: random Set this if you want repeatable downsampling for some offline tests. This can be ignored and shouldn't be set in production. 
+* **seed** optional, default: random. Set this if you want repeatable downsampling for some offline tests. This can be ignored and shouldn't be set in production. 

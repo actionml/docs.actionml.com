@@ -13,7 +13,7 @@ DocsHtmlPartials = [
   },
   {
     name: "harnessversionnum",
-    template: "0.5.1",
+    template: "0.6.0",
     ismd: false,
     shouldLoad: false
   },{
@@ -114,7 +114,7 @@ DocsHtmlPartials = [
   },
   {
     name: "esdownload",
-    template: "<a href=' (current stable non-containerized)'>Elasticsearch 7.x</a>",
+    template: "Elasticsearch 7.x",
     ismd: false,
     shouldLoad: false
   },
