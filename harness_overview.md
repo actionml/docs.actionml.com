@@ -59,7 +59,7 @@ Use the Docker host tools for use as a [Docker-Compose Installation](harness_con
 
 See the [Harness Container Guide](harness_container_guide) for further information.
 
-## Source Build
+## Native Source Build
 
 For installation on a host OS such as an AWS instance without Docker, the minimum requirements are
  
@@ -71,11 +71,13 @@ For installation on a host OS such as an AWS instance without Docker, the minimu
 
 Each Engine has its own requirements driven by decisions like what compute engine to use (Spark, TensorFlow, Vowpal Wabbit, DL4J, etc) as well as what Libraries it may need. See specific Engines for their extra requirements. 
 
-See [**Source Build**](harness_install) for more details.
+See the [Harness Native Guide](harness_native_guide) for more details.
 
 ## Kubernetes
 
-We have a full [Kubernetes depoloyement](harness_kubernetes) based on Docker images, helm charts, and Kops specifications that is available for custom installations. Ask [ActionML Support](mailto:support@actionml.com) for details.
+We have a full [Kubernetes depoloyement](harness_kubernetes) based on Docker images, helm charts, and Kops specifications that is available for custom installations. [Contact AcionML](/#contact) for more information.
+
+See [Harness Kubernetes](harness_kubernetes) for more.
 
 # Architecture
 

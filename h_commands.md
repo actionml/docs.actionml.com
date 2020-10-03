@@ -1,27 +1,21 @@
 # Commands
 
-Harness includes an Admin command line interface. It runs using the Harness REST interface and can be run remotely.
+Harness includes an Admin command line interface. It runs using the Harness REST interface and can be run remotely. See the [Workflow](h_workflow) section for more detail.
 
 ## Conventions
 
-Internal to Harness are ***Engines Instances*** that implement some algorithm and contain datasets and configuration parameters. All input data is validated by the engine, and must be readable by the algorithm. The simple form of workflow is:
-
- 1. start server
- 2. add engine
- 3. input data to the engine
- 4. train (for Lambda, Kappa will auto train with each new input)
- 5. query 
-
-See the [Workflow](h_workflow) section for more detail.
+Internal to Harness are ***Engines Instances*** that implement some algorithm and contain datasets and configuration parameters. All input data is validated by the engine, and must be readable by the algorithm.
 
 Harness uses resource-ids to identify all objects in the system. The Engine Instance must have a JSON file, which contains all parameters for Harness engine management including its Engine Instance resource-id as well as algorithm parameters that are specific to the Engine type. All Harness global configuration is stored in `harness-env` see [Harness Config](harness_config) for details.
 
  - The file `<some-engine.json>` can be named anything and put anywhere.
- - The working copy of all engine parameters and input data is actually in a shared database. Add or update an Engine Instance to change its configuraiton. Changing the file will not update the Engine Instance. See the `add` and `update` commands. 
+ - The working copy of all engine parameters and input data is actually in a shared database. Add or update an Engine Instance to change its configuration. Changing the file will not automatically update the Engine Instance. See the `add` and `update` commands. 
 
-# Harness Start and Stop
+# Harness Start and Stop (Optional)
 
-Scripts that start and stop Harness are included with the project in the `sbin/`. These are used inside container startup and can be used directly in the OS level installation.
+If you are managing Harness with Docker of Kubernetes you will not need to use these scripts directly.
+
+If you are deploying the Native Harness Build you can use scripts that start and stop Harness included in the project's `bin/`. These are used inside container startup and can be used directly in the OS level installation.
 
  - **`harness-start [-f]`** starts the harness server based on configuration in `harness-env`. The `-f` argument forces a restart if Harness is already running. All other commands require the service to be running, it is always started as a daemon/background process. All previously configured engines are started in the state they were in when harness was last run.
 
@@ -39,7 +33,7 @@ The Admin CLI is invoked with `hctl` or optionally `harness-cli`.
  - **`hctl export <some-engine-id> [<some-directory> | <some-file>]`** If the directory is supplied with the protocol "file:" the export will go to the harness server host's file system. This is for use with vertically scaled Harness. For more general storage use HDFS (the Hadoop File System) flagged by the protocol `hdfs` for example: `hdfs://some-hdfs-server:9000/users/<some-user>/<some-directory>`. [**not yet implemented in {{> harnessname}}**]
  - **`hctl train <some-engine-id>`** For Lambda style engines like the UR this will create or update a model. This is required for Lambda Engines before queries will return values.
 
-# Harness Auth-server Administration
+# Harness Auth-server Administration (Optional)
 
 There are several extended commands that manage Users and Roles. These are only needed when using the Harness Auth-server to create secure multi-tenancy. Open multi-tenancy is the default and requires no Auth-Server, meaning Harness supports multiple Engine Instances with no authorization required to access them. 
 
