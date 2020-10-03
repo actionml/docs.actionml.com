@@ -11,12 +11,6 @@ Harness has a REST API and command line interface. It is run as a service. To us
 
 See [Workflow](h_workflow) and [Commands](h_commands) for more details.
 
-## Architecture
- - **Microservice Architecture** Harness uses best-in-class services to achieve scalable performant operation and packages internal systems, where possible as lightweight microservices. 
- - **Single REST API** comes with a Command Line Interface to make admin easier and SDKs for input and queries all accessible through a complete REST API. 
- - **Apache Spark Support** Supports Spark optionally so engines with MLlib algorithms are easy to create and the Universal Recommender Engine uses Spark to create Models. 
- - **Compute-Engine Neutral**: supports any compute engine or pre-packaged algorithm library that is JVM compatible. For example Spark, TensorFlow, Vowpal Wabbit, MLlib, Mahout etc. Does not require Spark, or HDFS but supports them with the Harness Toolbox.
-
 ## Operation
 
  - **Scalability**: to very large datasets via indefinitely scalable compute engines like Spark and databases like MongoDB.
@@ -51,19 +45,19 @@ See [Workflow](h_workflow) and [Commands](h_commands) for more details.
  - **TLS/SSL** support from akka-http on the Server as well as in the Java and Python Client SDKs.
  - **User and Permission Management**: Built-in user+secret generation with permissions management at the Engine instance level.
    
-# Pre-requisites
+# Installation Options
 
 In its simplest form Harness has few external pre-requisites. To run it on one machine the requirements are:
 
 ## Docker-Compose
 
-The Docker host tools for use with `docker-compose` or run it in a single container, dependent services installed separately. Prerequisites:
+Use the Docker host tools for use as a [Docker-Compose Installation](harness_container_guide) or run it in a single container, dependent services installed separately. Prerequisites:
 
  - `nix style Host OS
  - Docker
  - Docker-compose
 
-See the `harness-docker-compose` [project](harness_container_guide) for further information.
+See the [Harness Container Guide](harness_container_guide) for further information.
 
 ## Source Build
 
@@ -77,9 +71,15 @@ For installation on a host OS such as an AWS instance without Docker, the minimu
 
 Each Engine has its own requirements driven by decisions like what compute engine to use (Spark, TensorFlow, Vowpal Wabbit, DL4J, etc) as well as what Libraries it may need. See specific Engines for their extra requirements. 
 
+See [**Source Build**](harness_install) for more details.
+
+## Kubernetes
+
+We have a full [Kubernetes depoloyement](harness_kubernetes) based on Docker images, helm charts, and Kops specifications that is available for custom installations. Ask [ActionML Support](mailto:support@actionml.com) for details.
+
 # Architecture
 
-At its core Harness is a fast lightweight Server that supplies 2 very flexible APIs and manages Engines. Engines can be used together or as a single solution. 
+At its core Harness is a fast lightweight Server that supplies APIs to manage Engine Instances, input data, execute queries, and manage Users and Roles for security. Harness can be used as-is with built-in Engines like the Universal Recommender of can be customized by modfying or adding new Engines. 
 
 ![Harness with Multiple Engines](https://docs.google.com/drawings/d/e/2PACX-1vTsEtxnVUKnZ6UCoQd9CE7ZSKXqp59Uf9fEtkXJZKtXPFZ1kRrYDnFC-K1y46HTLl5uvXXA-pCZ-ZED/pub?w=1250&h=818)
 
@@ -153,16 +153,16 @@ Disregarding the optional TLS and Authentication, simple input and queries for t
        "targetEntityType" : "item",
        "targetEntityId" : "iPad",
        "eventTime" : "2019-02-17T21:02:49.228Z"
-    }' http://localhost:9090/engines/<some-engine-id>/events
+    }' http://<localhost:9090>/engines/<some-engine-id>/events
 
-Notice that this posts the JSON body to the `http://localhost:9090/engines/<some-engine-id>/events` endpoint.     
+Notice that this posts the JSON body to the `http://<localhost:9090>/engines/<some-engine-id>/events` endpoint.     
 
 **Example Query**
     
     curl -H "Content-Type: application/json" -d '
     {
       "user": "John Doe"
-    }' http://localhost:9090/engines/<some-engine-id>/queries
+    }' http://<localhost:9090>/engines/<some-engine-id>/queries
     
 Notice that this posts the JSON body to the `http://localhost:9090/engines/<some-engine-id>/queries` endpoint.         
 
@@ -204,9 +204,3 @@ For specifics of the format and use of events and queries see the Engine specifi
 
     To change this and other global behavior (not engine specific) read the [Config Page](harness_config.md)
     
-# Installation
-
-There are several ways to install and run Harness. The primary method we release is through container images but a source project is also maintained for thos who wish to use it.
-
- - [**Docker-Compose Installation**](harness_container_guide) to install an entire system using containers for all services on a single machine,
- - [**Source Build**](harness_install)
