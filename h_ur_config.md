@@ -26,6 +26,7 @@ We will make heavy use of default settings that have been chosen in the Universa
     "engineId": "ecom_ur",
     "engineFactory": "com.actionml.engines.ur.UREngine",
     "sparkConf": {
+        "master": "local",
         "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
         "spark.kryo.registrator": "org.apache.mahout.sparkbindings.io.MahoutKryoRegistrator",
         "spark.kryo.referenceTracking": "false",
@@ -76,6 +77,7 @@ How to read config settings:
         "ttl": "<356 days>",
     },
     "sparkConf": {
+        "master": "local",
         "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
         "spark.kryo.registrator": "org.apache.mahout.sparkbindings.io.MahoutKryoRegistrator",
         "spark.kryo.referenceTracking": "false",
