@@ -46,11 +46,11 @@ If training and query times are not a factor these can safely be increased with 
 
 The default `blacklistIndicators` in the engine parameters is the single primary event. This means that if the user took the primary event on an item it will not be returned in recommendations. This is often the right thing to do but there are exceptions.
 
-In some cases an item may be consumed periodically like Clothing, or Food so reminding a user that they like an item may be good. To disable the blacklist set the following `"blacklistEvents": []`, which means to return all recommendations without restriction. 
+In some cases an item may be consumed periodically like Clothing, or Food so reminding a user that they like an item may be good. To disable the blacklist set the following `"blacklistIndicators": []`, which means to return all recommendations without restriction. 
 
 It is possible with this setting to get only things the user is already familiar with. Disabling the blacklist may not be the best way to handle this. For instance lets say you have 10 recommendations to show; it might be better to get 9 recommendations (with the blacklist) and put in one item you already know the user prefers from your own data. Any mixing of items the user is familiar with and recommendations can be done as part of the application logic, not implemented by the recommender.
 
-In other cases you may want to be more restrictive and use more than the primary event  to filter out items from recs. Setting to `"blacklistEvents": ["buy", "view"]` is a good example, where anything the use bought or any item detail page the user viewed will will result in those items not being returned as recommendations.
+In other cases you may want to be more restrictive and use more than the primary event  to filter out items from recs. Setting to `"blacklistIndicators": ["buy", "view"]` is a good example, where anything the use bought or any item detail page the user viewed will will result in those items not being returned as recommendations.
 
 ## Anti Flood
 
