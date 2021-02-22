@@ -14,7 +14,7 @@ This gets all default values from the engine.json and uses only action correlato
 
 ## Simple Item Set / Shopping Cart Query
 
-Technically this is to find the things missing in the itemSet. Another term for this is "Complimentary Purchase" but the idea applies to a wide variety  of lists, like watchlists, favorites, shopping carts, wishlists, etc. To get the missing items you will need to train a model with itemSets. For instance items purchased at one time or the contents of a wishlist whenever it changes. See the Item Set use cases for more description.
+Technically this is to find the things missing in the itemSet. Another term for this is "Complementary Purchase" but the idea applies to a wide variety  of lists, like watchlists, favorites, shopping carts, wishlists, etc. To get the missing items you will need to train a model with itemSets. For instance items purchased at one time or the contents of a wishlist whenever it changes. See the Item Set use cases for more description.
 
 ```
 {
@@ -22,9 +22,9 @@ Technically this is to find the things missing in the itemSet. Another term for 
 }
 ```
     
-When using a model trained on itemSets this returns the "missing items" or things that go with the items in the list. This type of model and query combination returns "complimentary items". The list in the query is the current contents of the shopping cart, wishlist, etc.
+When using a model trained on itemSets this returns the "missing items" or things that go with the items in the list. This type of model and query combination returns "complementary items". The list in the query is the current contents of the shopping cart, wishlist, etc.
 
-The query can also be used with the typical model of indicators, in which case the results are more like, "what items are similar to the ones in the query". This may be useful since it is easy to get from an existing model but will not return items missing from the set /complimentary items.
+The query can also be used with the typical model of indicators, in which case the results are more like, "what items are similar to the ones in the query". This may be useful since it is easy to get from an existing model but will not return items missing from the set /complementary items.
 
 See [Use Cases](ur_use_cases.md)
 
