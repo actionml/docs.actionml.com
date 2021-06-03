@@ -178,7 +178,7 @@ All resources are either ephemeral or stored in a persistence service like a DB.
         <td>/system</td>
         <td>none</td>
         <td>See Collection responses</td>
-        <td>JSON describing system config (<1.0) or cluster connection status (1.0+)</td>
+        <td>JSON describing system config (&lt;1.0) or cluster connection status (1.0+)</td>
         <td>Describes system status</td>
     </tr>
     <tr>
