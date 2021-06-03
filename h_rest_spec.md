@@ -4,11 +4,11 @@ REST stands for [REpresentational State Transfer](https://en.wikipedia.org/wiki/
 
 # Harness REST
 
-From the outside Harness looks like a single server that fields all REST APIs, but behind this are serval more heavy-weight services (like databases or compute engines). In cases where Harness needs to define a service we use a ***microservices*** architecture, meaning the service is itself invoked via HTTP APIs and encapsulates some clear function, like the Harness Auth-server. All of these Services and Microservices are invisible to the outside and used only by Harness.
+From the outside Harness looks like a single server that fields all REST APIs, but behind this are serval more heavy-weight services (like databases or compute engines). In cases where Harness needs to define a service we use a ***microservices*** architecture, meaning the service is itself invoked via theiir own service APIs to encapsulates some clear function, like the Harness Auth-server. All of these microservices are invisible to the outside and used only by Harness although they may be accessed for troubleshooting.
 
-The Harness CLI (harness-cli) is implemented in Python as calls to the Harness REST API. See [Commands](h_commands.md) for more about the CLI.
+The Harness CLI (`hctl`) is implemented in Python as calls to the Harness REST API. See [Commands](h_commands.md) for more about the CLI. 
 
-All input, query, and admin operations are implemented through the REST API. The client application may use one of the provided client SDKs or may use HTTP/HTTPS directly.
+All input, query, and admin operations are implemented through the REST API. The client application may use one of the provided client SDKs or may use HTTP directly.
 
 # Harness HTTP Response Codes
 <table>
@@ -126,16 +126,11 @@ All input, query, and admin operations are implemented through the REST API. The
     </tr>
 </table>    
 
-# Harness ML/AI REST
-
-Most of the Harness API deals with Engines, which have sub-resources: Events, Queries, Jobs & others. There are also some REST 
-APIs that are administrative in nature. 
-
 # JSON 
 
 Harness uses JSON for all request and response bodies. The format of these bodies are under the control of the Specific Engines with some information layered on by Harness itself.
 
-See the Engine docs for request/response formats.
+See the Engine docs for request/response content and formats.
 
 # Harness REST Resource Types
 
@@ -144,6 +139,8 @@ Harness REST resources may own sub-resources as shown.
 ![](https://docs.google.com/drawings/d/e/2PACX-1vToTQAtggzYIupQMN6emdlKyqmtXSv1DSM-ZMl2hiAxzxLNAXy3vXCSDrnGoWYZD_YXr2DOc6GIQ6Tg/pub?w=915&h=1007)
 
 All resources are either ephemeral or stored in a persistence service like a DB. Harness itself is stateless, storing nothing.
+
+ - **System**: Contains system config information. Starting with Harness 1.0 all nodes of Harness in a multi-node setup are known via their status kept in etcd. The System object has information about all nodes and their internal status.
 
  - **Engines**: Each Engine Instance has defining configuration JSON in some file. This config must contain an `engineId` which is used throughout the REST API. There are other generic params defined in [Harness Config](harness_config.md) but many are Engine specific Algorithm parameters, which are defined by the Engine (the [Universal Recommender](h_ur_config.md) for instance)
 
@@ -155,7 +152,7 @@ All resources are either ephemeral or stored in a persistence service like a DB.
 
     For example POST `/engines/<some-ur-instance>/jobs` will cause the Universal Recommender to queue up a training Job to be executed on Spark. This POST will have a response with a job-id. This can be used to monitor progress by successive GET `/engines/<some-ur-instance>`, which return job-ids and their status. If it is necessary to abort or cancel a job, just execute DELETE `/engines/<some-ur-instance/jobs/<some-job-id>`. These are more easily performed using harness-cli.
 
- - **Users**: Users can be created (with the help of the Auth-server) for roles of "client" or "admin". Client Users have CRU access to one or more Engine Instance (only an admin can delete). An admin User has access to all resources and all CRUD. Users are only needed when using the Auth-server's Authentication and Authorization to control access to resources.
+ - **Users**: Users are only relevant if using the Auth-server Harness extension and can be created with the roles of "client" or "admin". Client Users have CRU access to one or more Engine Instance (only an admin can delete). An admin User has access to all resources and all CRUD. Users are only needed when using the Auth-server's Authentication and Authorization to control access to resources.
 
 # REST API
 
@@ -173,8 +170,16 @@ All resources are either ephemeral or stored in a persistence service like a DB.
         <td>/</td>
         <td>none</td>
         <td>See Collection responses</td>
-        <td>JSON describing Harness server status</td>
-        <td>Used to get server config information, currently defined Engines, and other pertinent information about the ML/AI operations</td>
+        <td>"OK"</td>
+        <td>Used for liveness check only, i.e Kubernetes</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td>/system</td>
+        <td>none</td>
+        <td>See Collection responses</td>
+        <td>JSON describing system config (<1.0) or cluster connection status (1.0+)</td>
+        <td>Describes system status</td>
     </tr>
     <tr>
         <td>POST</td>
