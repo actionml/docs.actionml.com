@@ -38,7 +38,7 @@ Create a JSON file for the UR substituting your values from the PIO version of `
 Harness can run many instances of Engines like the UR. Once you have installed Harness and the Harness-cli you can add one that will work like your PIO UR:
 
  - `hctl status` checks only harness running status, so hand check that MongoDB and Elasticsearch are also running
- - `harness add </path/to/ur/config/json>` This will create an Engine Instance for the UR with the `engineId` named in the JSON file
+ - `hctl add </path/to/ur/config/json>` This will create an Engine Instance for the UR with the `engineId` named in the JSON file
  - `hctl status engines <ur-instance-id>` see the params you set for this instance and verify everything is running.
  - `hctl import <ur-instance-id> </path/to/export/location>` import from data exported by PIO + UR.
  - `hctl train <ur-instance-id>` when completed, this will allow you to query the UR using REST or the new Harness SKD (Java, Scala, Python). 
