@@ -52,4 +52,4 @@ To move data from PredictionIO, you may wish to export from PIO and import the i
 
 # Backup and Restore without Export
 
-Since not all Harness engines store input data so the "export" function cannot be implemented. Instead Harness can [mirror](h_mirroring) all data received by an engine instance (if configured in the engine's config), which operates like a log of events. These files are written in a form that can be imported when needed.
+Since not all Harness engines store input data the "export" function cannot be implemented. Instead Harness can [mirror](h_mirroring) all data received by an engine instance (if configured in the engine's config), which operates like a log of events. These files are written in a form that can be imported when needed.
