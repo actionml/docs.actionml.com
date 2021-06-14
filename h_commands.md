@@ -25,12 +25,12 @@ If you are deploying the Native Harness Build you can use scripts that start and
 
 The Admin CLI is invoked with `hctl` or optionally `harness-cli`.
 
- - **`hctl status [engines [<engine-id>], users [<user-id>]]`** These print status information about the objects requested. Asking for user status requires the Harness Auth-server, which is optional.
+ - **`hctl status [engines [<engine-id>] | users [<user-id>] | system]`** These print status information about the objects requested. Asking for user status requires the Harness Auth-server, which is optional. System status returns information about the configuration and health of the system including all microservices.
  - **`hctl add <some-engine.json>`** creates and starts an Engine Instance of the type defined by the `engineFactory` parameter.
  - **`hctl update <some-engine.json>`** updates an existing Engine Instance with values defined in `some-engine.json`. The Engine knows what is safe to update and may warn if some value is not updatable but this will be rare.
  - **`hctl delete <some-engine-id>`** The Engine Instance will be stopped and the accumulated dataset and model will be deleted. No artifacts of the Engine Instance will remain except the `some-engine.json` file and any mirrored events.
- - **`hctl import <some-engine-id> [<some-directory> | <some-file>]`** This is typically used to replay previously mirrored events or load bootstrap datasets created from application logs. It is equivalent to sending all imported events to the REST API.
- - **`hctl export <some-engine-id> [<some-directory> | <some-file>]`** If the directory is supplied with the protocol "file:" the export will go to the harness server host's file system. This is for use with vertically scaled Harness. For more general storage use HDFS (the Hadoop File System) flagged by the protocol `hdfs` for example: `hdfs://some-hdfs-server:9000/users/<some-user>/<some-directory>`. [**not yet implemented in {{> harnessname}}**]
+ - **`hctl import <some-engine-id> [<some-directory> | <some-file>]`** This is typically used to replay previously mirrored events or load bootstrap datasets created from application logs. It is equivalent to sending all imported events to the REST API. The file must be accessible by the Harness server.
+ - **`hctl export <some-engine-id> [<some-directory> | <some-file>]`** not yet implemented in {{> harnessname}} Use [mirroring](h_mirroring) to create a running log of all events received by an engine, which is equivalent to exporting the same data.
  - **`hctl train <some-engine-id>`** For Lambda style engines like the UR this will create or update a model. This is required for Lambda Engines before queries will return values.
 
 # Harness Auth-server Administration (Optional)
@@ -48,10 +48,8 @@ If the Harness Auth-Server is not used it is assumed that Harness API access is 
 
 Import can be used to restore backed up data but also for bootstrapping a new Engine instance with previously logged or collected batches of data. Imagine a recommender that takes in people's purchase history. This might exist in server logs and converting these to files of JSON events is an easy and reproducible way to "bootstrap" your recommender with previous data before you start to send live events. This, in effect, trains your recommender retro-actively, improving the quality of recommendations at its first startup. See [Harness Administration](h_commands#harness-administration).
 
-# Backup with Export
+To move data from PredictionIO, you may wish to export from PIO and import the identical data into Harness. The same file format is supported.
 
-**Note: not yet implemented in {{> harnessname}}**
+# Backup and Restore without Export
 
-Lambda style Engines, which store all Events, usually support `hctl export ...` This command will create files with a single JSON Event per line in the same format as the [Mirror](mirroring.md) function. To backup an Engine Instance use the export function or mirror incoming events as they come in. These functions create files that can be re-imported to re-create an Engine Instance with a snapshot of its dataset.
-
-Engines that follow the Kappa style do not save input but rather update the model with every new input Event. So use [Mirroring](mirroring.md) to log each new Event. In a sense this is an automatic backup that can also be used to re-instantiate a Kappa style model.
+Since not all Harness engines store input data so the "export" function cannot be implemented. Instead Harness can [mirror](h_mirroring) all data received by an engine instance (if configured in the engine's config), which operates like a log of events. These files are written in a form that can be imported when needed.
