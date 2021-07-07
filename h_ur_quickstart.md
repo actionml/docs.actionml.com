@@ -20,6 +20,7 @@ The required part of the UR JSON looks like this:
     "engineId": "<some_engine_id>",
     "engineFactory": "com.actionml.engines.ur.UREngine",
     "sparkConf": {
+        "master":"local",
         "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
         "spark.kryo.registrator": "org.apache.mahout.sparkbindings.io.MahoutKryoRegistrator",
         "spark.kryo.referenceTracking": "false",
@@ -37,7 +38,7 @@ The required part of the UR JSON looks like this:
             },{
                 "name": "<detail-page-view>"
             }
-        ],
+        ]
     }
 }
 ```
